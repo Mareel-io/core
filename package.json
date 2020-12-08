@@ -1,5 +1,5 @@
 {
-  "name": "@mareel/core",
+  "name": "@mareel-io/core",
   "description": "Universal network device control module.",
   "license": "MIT",
   "version": "0.0.1",
@@ -17,10 +17,13 @@
     "url": "git://github.com/Mareel-io/core.git"
   },
   "scripts": {
-    "build": "node_modules/.bin/tsc"
+    "login": "npm login --scope=@OWNER --registry=https://npm.pkg.github.com",
+    "build": "node_modules/.bin/tsc",
+    "deploy": "yarn login"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "typescript": "^4.1.2"
