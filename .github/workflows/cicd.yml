@@ -14,9 +14,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
-      - run: npm install
-      - run: npm test
-      - run: npm build
+      - run: yarn
+      - run: yarn test
+      - run: yarn build
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.TOKEN }}

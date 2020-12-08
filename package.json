@@ -18,8 +18,7 @@
   },
   "scripts": {
     "login": "npm login --scope=@OWNER --registry=https://npm.pkg.github.com",
-    "build": "node_modules/.bin/tsc",
-    "deploy": "yarn login"
+    "build": "node_modules/.bin/tsc"
   },
   "publishConfig": {
     "access": "public",
