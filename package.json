@@ -1,7 +1,28 @@
 {
-  "name": "core",
+  "name": "@mareel/core",
+  "description": "Universal network device control module.",
+  "license": "MIT",
   "version": "0.0.1",
   "main": "dist/index.js",
-  "license": "MIT",
-  "repository": {}
+  "types": "dist/index.d.ts",
+  "author": {
+    "name": "Mareel Team",
+    "email": "dev@mareel.io",
+    "url": "https://www.mareel.io"
+  },
+  "keywords": [
+    "mareel"
+  ],
+  "repository": {
+    "url": "git://github.com/Mareel-io/core.git"
+  },
+  "scripts": {
+    "build": "node_modules/.bin/tsc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.2"
+  }
 }
