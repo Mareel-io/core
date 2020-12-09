@@ -12,6 +12,7 @@ export class ControllerFactory extends GenericControllerFactory {
         this.api = axios.create({
             baseURL: deviceaddress,
             headers: {
+                'User-Agent': 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0',
                 Referer: deviceaddress, // CSRF bypass
             },
         });
@@ -21,7 +22,7 @@ export class ControllerFactory extends GenericControllerFactory {
         const form = qs.stringify({
             init_status: 1,
             captcha_on: 0, // Cannot support captcha_on=1, unless we train the neural net.
-            useranem: credential.id,
+            username: credential.id,
             passwd: credential.pass,
         });
         const res = await this.api.post('/sess-bin/login_handler.cgi', form, {
