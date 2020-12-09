@@ -12,7 +12,6 @@ export class ControllerFactory extends GenericControllerFactory {
         this.api = axios.create({
             baseURL: deviceaddress,
             headers: {
-                'User-Agent': 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0',
                 Referer: deviceaddress, // CSRF bypass
             },
         });
@@ -31,10 +30,19 @@ export class ControllerFactory extends GenericControllerFactory {
             },
         });
 
-        // Debug output
-        console.log(res);
+        // Cookie extraction
+        // Executing JS in sandbox? I don't think that is good idea...
+        if (res == null || res.data == null) {
+            throw new Error('Authentication rejected.');
+        }
+        const cookie: string | null = res.data.match(/setCookie\('([^']*)'\);/)[1]
 
-        // TODO: Extract efm_session_id from response javascript
+        if (cookie == null) {
+            throw new Error('Authentication rejected.');
+        }
+
+        this.credential = cookie;
+        this.api.defaults.headers['Cookie'] = `efm_session_id=${encodeURIComponent(cookie)}`
     }
 
     public getWLANConfigurator(): EFMWLANConfigurator {
