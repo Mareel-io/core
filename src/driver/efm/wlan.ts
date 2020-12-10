@@ -12,12 +12,11 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         this.api = axios;
     }
 
-    async getDeviceCfg(devname: string) {
-        // TODO: Implement meeee...
+    async getDeviceCfg(devname: 'wlan5g' | 'wlan2g') {
         const params = {
             tmenu: 'iframe',
             smenu: 'hiddenwlsetup',
-            wlmode: 1, // todo: derive this using devname
+            wlmode: (devname === 'wlan5g') ? 1 : 0, // Crude but it will work
             action: 'changebssid',
             sidx: 0, // Root device, not ssid
         }
@@ -45,7 +44,30 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         // TODO: Implement meee...
     }
 
-    async getIFaceCfg(devname: string) {
+    async getIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string) {
+        const params = {
+            tmenu: 'iframe',
+            smenu: 'hiddenwlsetup',
+            wlmode: (devname === 'wlan5g') ? 1 : 0, // Crude but it will work
+            action: 'changebssid',
+            sidx: 1,
+        }
+
+        const res = await this.api.post('/sess-bin/timepro.cgi', qs.stringify(params), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+
+        const dom = new JSDOM(res.data);
+        const fields = dom.window.document.body.getElementsByTagName('input');
+        const map = {} as any;
+        for (let i = 0; i < fields.length; i++) {
+            const field = fields[i];
+            map[field.name] = field.value;
+        }
+
+        console.log(map)
         // TODO: Implement meee...
         return new WLANIFaceCfg();
     }
