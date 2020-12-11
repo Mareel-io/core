@@ -197,7 +197,9 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         const currentCfg = await this.getRawConfig(devname, ifname);
         const baseCfg = Object.assign(Object.assign({}, templateCfg), currentCfg);
 
-        baseCfg.action = 'allsubmit'; // TODO: Support WLAN shutdown
+        // If we changed disabled flag, need to submit twice
+        const changeActivation = cfg.disabled !== (currentCfg.run === '0');
+        baseCfg.action = changeActivation ? 'bssidonoff' : 'allsubmit'
         baseCfg.run = cfg.disabled ? 0 : 1;
         baseCfg.ssid = cfg.ssid;
         baseCfg.broadcast = cfg.hidden ? 0 : 1;
@@ -211,5 +213,9 @@ export class WLANConfigurator extends GenericWLANConfigurator {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
+
+        if (changeActivation) {
+            await this.setIFaceCfg(devname, ifname, cfg);
+        }
     }
 }
