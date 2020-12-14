@@ -3,6 +3,7 @@ import FormData from 'form-data';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
 import { WLANConfigurator as EFMWLANConfigurator } from './wlan';
 import qs from 'qs';
+import { WLANUserDeviceStat } from './WLANUserDeviceStat';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -47,5 +48,9 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getWLANConfigurator(): EFMWLANConfigurator {
         return new EFMWLANConfigurator(this.api);
+    }
+
+    public getWLANUserDeviceStat(): WLANUserDeviceStat {
+        return new WLANUserDeviceStat(this.api);
     }
 }
