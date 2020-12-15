@@ -131,7 +131,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return map;
     }
     
-    async getDeviceCfg(devname: 'wlan5g' | 'wlan2g'): WLANDevConfiguration {
+    async getDeviceCfg(devname: 'wlan5g' | 'wlan2g'): Promise<WLANDevConfiguration> {
         const devcfg = await this.getRawConfig(devname, '0') as DeviceCfg;
         const wlanDevCfg = new WLANDevConfiguration();
         wlanDevCfg.disabled = devcfg.run === '1';
@@ -150,7 +150,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return wlanDevCfg;
     }
     
-    async setDeviceCfg(devname: 'wlan5g' | 'wlan2g', cfg: WLANDevConfiguration): void {
+    async setDeviceCfg(devname: 'wlan5g' | 'wlan2g', cfg: WLANDevConfiguration): Promise<void> {
         const currentCfg = await this.getRawConfig(devname, '0');
         const baseCfg = Object.assign(Object.assign({}, templateCfg), currentCfg);
         baseCfg.wlmode = devname === 'wlan5g' ? 1 : 0;
@@ -177,7 +177,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         });
     }
     
-    async getIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string): WLANIFaceCfg {
+    async getIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<WLANIFaceCfg> {
         const ifacecfg = await this.getRawConfig(devname, ifname) as IFaceCfg;
         const wlanIfaceCfg = new WLANIFaceCfg();
         
@@ -196,7 +196,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return wlanIfaceCfg;
     }
     
-    async setIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string, cfg: WLANIFaceCfg): void {
+    async setIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string, cfg: WLANIFaceCfg): Promise<void> {
         const currentCfg = await this.getRawConfig(devname, ifname);
         const baseCfg = Object.assign(Object.assign({}, templateCfg), currentCfg);
 
