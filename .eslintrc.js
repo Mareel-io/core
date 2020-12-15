@@ -1,14 +1,15 @@
 module.exports =  {
     plugins: [
-        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint",
         "eslint-plugin-tsdoc"
     ],
     extends:  [
+        'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-	'google'
     ],
     rules: {
         indent: ['error', 4],
+        'require-jsdoc': 0, // We are using tsdoc
     },
     parser:  '@typescript-eslint/parser',
     parserOptions: {
