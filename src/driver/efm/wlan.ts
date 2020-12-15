@@ -103,6 +103,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         this.api = axios;
     }
 
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     async getRawConfig(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<any> {
         const params = {
             tmenu: 'iframe',
@@ -120,6 +121,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         
         const dom = new JSDOM(res.data);
         const fields = dom.window.document.body.getElementsByTagName('input');
+        //eslint-disable-next-line @typescript-eslint/no-explicit-any
         const map = {} as any;
         for (let i = 0; i < fields.length; i++) {
             const field = fields[i];
@@ -129,13 +131,14 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return map;
     }
     
-    async getDeviceCfg(devname: 'wlan5g' | 'wlan2g') {
+    async getDeviceCfg(devname: 'wlan5g' | 'wlan2g'): WLANDevConfiguration {
         const devcfg = await this.getRawConfig(devname, '0') as DeviceCfg;
         const wlanDevCfg = new WLANDevConfiguration();
         wlanDevCfg.disabled = devcfg.run === '1';
         wlanDevCfg.channel = parseInt(devcfg.cntchannel, 10);
         wlanDevCfg.hwmode = devcfg.wlmode === '1' ? 'a' : 'g';
         wlanDevCfg.htmode = 'HT20'; // Does not affect here
+        //eslint-disable-next-line @typescript-eslint/no-explicit-any
         wlanDevCfg.chanbw = devcfg.channelwidth as any;
         wlanDevCfg.txpower = parseInt(devcfg.txpower, 10);
         wlanDevCfg.diversity = parseInt(devcfg.mimoant, 10) > 1;
@@ -147,7 +150,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return wlanDevCfg;
     }
     
-    async setDeviceCfg(devname: 'wlan5g' | 'wlan2g', cfg: WLANDevConfiguration) {
+    async setDeviceCfg(devname: 'wlan5g' | 'wlan2g', cfg: WLANDevConfiguration): void {
         const currentCfg = await this.getRawConfig(devname, '0');
         const baseCfg = Object.assign(Object.assign({}, templateCfg), currentCfg);
         baseCfg.wlmode = devname === 'wlan5g' ? 1 : 0;
@@ -167,14 +170,14 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         // TODO: Implement meee...
 
         const form = qs.stringify(baseCfg);
-        const res = await this.api.post('/sess-bin/timepro.cgi', form, {
+        await this.api.post('/sess-bin/timepro.cgi', form, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
     }
     
-    async getIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string) {
+    async getIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string): WLANIFaceCfg {
         const ifacecfg = await this.getRawConfig(devname, ifname) as IFaceCfg;
         const wlanIfaceCfg = new WLANIFaceCfg();
         
@@ -193,7 +196,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return wlanIfaceCfg;
     }
     
-    async setIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string, cfg: WLANIFaceCfg) {
+    async setIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string, cfg: WLANIFaceCfg): void {
         const currentCfg = await this.getRawConfig(devname, ifname);
         const baseCfg = Object.assign(Object.assign({}, templateCfg), currentCfg);
 
@@ -208,7 +211,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         baseCfg.wpapsk = cfg.key; // TODO: Support for other mechanisms
 
         const form = qs.stringify(baseCfg);
-        const res = await this.api.post('/sess-bin/timepro.cgi', form, {
+        await this.api.post('/sess-bin/timepro.cgi', form, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },

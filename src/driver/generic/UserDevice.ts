@@ -1,9 +1,11 @@
+// FIXME: Create typedef for OUI pkg
+//eslint-disable-next-line @typescript-eslint/no-var-requires
 const oui = require('oui');
 
 export abstract class UserDevice {
-    protected _macaddr: string = '';
-    protected _vendor: string = 'Invalid MAC';
-    public uptime: number = 0; // in seconds
+    protected _macaddr = '';
+    protected _vendor = 'Invalid MAC';
+    public uptime = 0; // in seconds
     constructor() {
         //
     }

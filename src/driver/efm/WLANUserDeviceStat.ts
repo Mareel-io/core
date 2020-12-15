@@ -1,6 +1,5 @@
 import { AxiosInstance } from 'axios';
 import { JSDOM } from 'jsdom';
-import { stringify } from 'qs';
 import { WLANUserDeviceStat as GenericWLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { User80211Device } from './User80211Device';
 
@@ -49,6 +48,8 @@ export class WLANUserDeviceStat extends GenericWLANUserDeviceStat {
 
         const dom = new JSDOM(res.data);
         const rows = dom.window.document.body.getElementsByTagName('tr');
+        // TODO: FIXME
+        //eslint-disable-next-line @typescript-eslint/no-explicit-any
         const list: [{mac: string, bandwidth: string, uptime: number, ip: string}] = [] as any;
 
         for (let i = 0; i < rows.length; i++) {
@@ -70,8 +71,8 @@ export class WLANUserDeviceStat extends GenericWLANUserDeviceStat {
             list.push(entry);
         }
 
-        const ret: [User80211Device] = [] as any;
-        for (let i of list) {
+        const ret: [User80211Device] = [] as unknown as [User80211Device];
+        for (const i of list) {
             const rxspd = i.bandwidth.split('/')[0];
             const txspd = i.bandwidth.split('/')[1].replace(/[a-zA-Z]*/g, '');
             const entry = new User80211Device();
