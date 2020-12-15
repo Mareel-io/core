@@ -19,7 +19,8 @@
   "scripts": {
     "login": "npm login --scope=@OWNER --registry=https://npm.pkg.github.com",
     "build": "node_modules/.bin/tsc",
-    "lint": "eslint ./src/"
+    "lint": "eslint ./src/",
+    "doc": "typedoc --out docs /src"
   },
   "publishConfig": {
     "access": "public",
@@ -32,6 +33,7 @@
     "eslint": "^7.15.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-tsdoc": "^0.2.10",
+    "typedoc": "^0.19.2",
     "typescript": "^4.1.2"
   },
   "dependencies": {
