@@ -21,7 +21,7 @@ yarn doc
 ## Example codes
 Please refer to
 
-[https://github.com/Mareel-io/core/tree/main/examples]
+https://github.com/Mareel-io/core/tree/main/examples
 
 ## Implementation status
 ### EFM Networks
