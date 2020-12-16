@@ -28,9 +28,14 @@ jobs:
           submodules: true  # Fetch all submodule (if exists)
           #fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Deps
+        run: yarn
       - name: Build
         run: yarn doc
-
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
