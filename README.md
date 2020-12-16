@@ -18,6 +18,11 @@ Please run following command to generate library documentation (gh page WIP)
 yarn doc
 ```
 
+## Example codes
+Please refer to
+
+[https://github.com/Mareel-io/core/tree/main/examples]
+
 ## Implementation status
 ### EFM Networks
 Currently tested on A8004T model
