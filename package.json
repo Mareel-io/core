@@ -1,8 +1,11 @@
 {
-  "name": "@mareel-io/core",
-  "description": "Universal network device control module.",
+  "name": "@mareel/core",
+  "description": "Zero-dependent network management solution.",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.3",
+  "files": [
+    "./dist"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": {
@@ -17,15 +20,11 @@
     "url": "git://github.com/Mareel-io/core.git"
   },
   "scripts": {
-    "login": "npm login --scope=@OWNER --registry=https://npm.pkg.github.com",
     "build": "node_modules/.bin/tsc",
+    "publish": "npm publish",
     "lint": "eslint ./src/",
     "test": "yarn lint; mocha",
     "doc": "typedoc"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@microsoft/tsdoc": "^0.12.24",
