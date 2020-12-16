@@ -3,6 +3,9 @@ import { JSDOM } from 'jsdom';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { EthernetPort } from './EthernetPort';
 
+/**
+ * Ethernet switch configurator
+ */
 export class SwitchConfigurator extends GenericSwitchConfigurator {
     private api: AxiosInstance;
     constructor(api: AxiosInstance) {
@@ -10,6 +13,11 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         this.api = api;
     }
 
+    /**
+     * Get Ethernet switch ports status
+     * 
+     * @returns EthernetPort array
+     */
     public async getSwitchPorts(): Promise<[EthernetPort]> {
         const res = await this.api.get('/sess-bin/timepro.cgi', {
             params: {
