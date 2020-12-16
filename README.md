@@ -9,6 +9,15 @@ $ yarn add @mareel/core
 # npm i @mareel/core
 ```
 
+## Documentation
+This project uses typedoc to generate library documentation automatically.
+
+Please run following command to generate library documentation (gh page WIP)
+
+```bash
+yarn doc
+```
+
 ## Implementation status
 ### EFM Networks
 Currently tested on A8004T model
