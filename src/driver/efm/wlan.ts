@@ -103,8 +103,14 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         this.api = axios;
     }
 
+    /**
+     * get raw config from EFM router
+     * 
+     * @param devname - device name. wlan5g and wlan2g is possible value.
+     * @param ifname - interface number as string. 0 to 3.
+     */
     //eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async getRawConfig(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<any> {
+    private async getRawConfig(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<any> {
         const params = {
             tmenu: 'iframe',
             smenu: 'hiddenwlsetup',
@@ -130,7 +136,24 @@ export class WLANConfigurator extends GenericWLANConfigurator {
 
         return map;
     }
-    
+   
+    /**
+     * Get device name.
+     * 
+     * Currently supported features:
+     * 
+     * * WLANDevConfiguration.disabled
+     * * WLANDevConfiguration.channel
+     * * WLANDevConfiguration.hwmode - READ ONLY
+     * * WLANDevConfiguration.chanbw
+     * * WLANDevConfiguration.txpower - not mW, but percent of max txpwr
+     * * WLANDevConfiguration.diversity
+     * * WLANDevConfiguration.country - partially, WIP. do not use value other then KR (yet)
+     * * WLANDevConfiguration.beacon_int
+     * 
+     * @param devname - device name. wlan5g and wlan2g is possible value.
+     * @returns WLANDevConfiguration array
+     */
     async getDeviceCfg(devname: 'wlan5g' | 'wlan2g'): Promise<WLANDevConfiguration> {
         const devcfg = await this.getRawConfig(devname, '0') as DeviceCfg;
         const wlanDevCfg = new WLANDevConfiguration();
@@ -150,6 +173,20 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return wlanDevCfg;
     }
     
+    /**
+     * Set device configuration using given cfg.
+     * 
+     * Supported features:
+     * * WLANDevConfiguration.disabled
+     * * WLANDevConfiguration.channel - 'auto' is not supported. fallback code WIP
+     * * WLANDevConfiguration.chanbw - '80+80' is not supported.
+     * * WLANDevConfiguration.txpower - partially. not in mW, but percent of max txpwr
+     * * WLANDevConfiguration.country - WIP, does not support value other then KR
+     * * WLANDevConfiguration.beacon_int
+     * 
+     * @param devname - Device name. wlan5g and wlan2g is supported.
+     * @param cfg - WLANDevConfiguration object. see notes for supported feature.
+     */
     async setDeviceCfg(devname: 'wlan5g' | 'wlan2g', cfg: WLANDevConfiguration): Promise<void> {
         const currentCfg = await this.getRawConfig(devname, '0');
         const baseCfg = Object.assign(Object.assign({}, templateCfg), currentCfg);
@@ -177,6 +214,20 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         });
     }
     
+    /**
+     * Get interface configuration
+     * 
+     * Supported features:
+     * * WLANIFaceCfg.disabled
+     * * WLANIFaceCfg.ssid
+     * * WLANIFaceCfg.hidden
+     * * WLANIFaceCfg.wmm
+     * * WLANIFaceCfg.encryption - partial. translation layer is not written yet
+     * * WLANIFaceCfg.key
+     * 
+     * @param devname - device name. wlan5g and wlan2g is possible value.
+     * @param ifname - interface number as string. 0 to 3.
+     */
     async getIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<WLANIFaceCfg> {
         const ifacecfg = await this.getRawConfig(devname, ifname) as IFaceCfg;
         const wlanIfaceCfg = new WLANIFaceCfg();
@@ -196,6 +247,20 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return wlanIfaceCfg;
     }
     
+    /**
+     * Set WLAN interface configuration.
+     * 
+     * WLANIFaceCfg.disabled
+     * WLANIFaceCfg.ssid
+     * WLANIFaceCfg.hidden
+     * WLANIFaceCfg.wmm
+     * WLANIFaceCfg.encryption - not yet fully supported. WIP
+     * WLANIFaceCfg.key
+     * 
+     * @param devname - device name. wlan5g and wlan2g is possible value.
+     * @param ifname - interface number as string. 0 to 3.
+     * @param cfg - WLANIfaceCfg. see notes for capability
+     */
     async setIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string, cfg: WLANIFaceCfg): Promise<void> {
         const currentCfg = await this.getRawConfig(devname, ifname);
         const baseCfg = Object.assign(Object.assign({}, templateCfg), currentCfg);

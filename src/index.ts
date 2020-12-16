@@ -1,6 +1,5 @@
-import { ControllerFactory as EFMControllerFactory } from './driver/efm/lib';
-
 export class Mareel {
 }
 
-export {EFMControllerFactory};
+export { ControllerFactory as EFMControllerFactory} from './driver/efm/lib';
+export { ControllerFactory as GenericControllerFactory} from './driver/generic/lib';

@@ -1,14 +1,30 @@
+/**
+ * Ethernet port config object
+ */
 export abstract class EthernetPort {
+    /**
+     * Name of the Ethernet port
+     */
     public portName = '';
     public isActive = false;
     private _linkSpeed = 0; // in Mbps
     public duplex: 'Full' | 'Half' | 'None' = 'None';
     
+    /**
+     * linkspeed getter
+     * 
+     * @returns Current link speed of the port
+     */
     public get linkSpeed(): string {
         // TODO: Implement automatic unit changer
         return this._linkSpeed + 'Mbps';
     }
 
+    /**
+     * linkspeed setter
+     * 
+     * @param speed - linkspeed in following format: [0-9]+[KMGTP]bps
+     */
     public set linkSpeed(speed: string) {
         console.log(speed)
         const split = speed.match(/([0-9]+)([KMGTP]bps)/);
