@@ -4,6 +4,8 @@ import { WLANConfigurator as EFMWLANConfigurator } from './wlan';
 import qs from 'qs';
 import { WLANUserDeviceStat } from './WLANUserDeviceStat';
 import { SwitchConfigurator } from './SwitchConfigurator';
+import { JSDOM } from 'jsdom';
+import { EFMCaptcha } from './CredentialConfigurator';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -24,17 +26,49 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     /**
+     * Get CAPTCHA challenge from router
+     * 
+     * @returns Captcha image(gif) with its name
+     */
+    public async getCaptchaChallenge(): Promise<{ name: string, data: Buffer }> {
+        const res = await this.api.get('http://192.168.0.1/sess-bin/captcha.cgi');
+        
+        const page = new JSDOM(res.data);
+        const imageElem = page.window.document.body.getElementsByTagName('img').item(0);
+        const fileNameElem = page.window.document.body.getElementsByTagName('input').item(0);
+        const filename = (fileNameElem as Element).getAttribute('value') as string;
+        const imageURL = (imageElem as Element).getAttribute('src') as string;
+
+        const imageRes = await this.api.get(imageURL, { responseType: 'arraybuffer' });
+
+        return {
+            name: filename,
+            data: Buffer.from(imageRes.data),
+        };
+    }
+
+    /**
      * Log-in ipTIME router with given credential and get session cookie from the result.
      *  
      * @param credential - authentication credential of ipTIME router
+     * @param captcha - CAPTCHA login support. You must supply captcha filename and challenge response
      */
-    public async authenticate(credential: {id: string, pass: string}): Promise<void> {
-        const form = qs.stringify({
+    public async authenticate(credential: {id: string, pass: string}, captcha: EFMCaptcha | null = null): Promise<void> {
+        const formbase = {
             init_status: 1,
-            captcha_on: 0, // Cannot support captcha_on=1, unless we train the neural net.
+            captcha_on: 0,
             username: credential.id,
             passwd: credential.pass,
-        });
+            captcha_file: undefined as string | undefined,
+            captcha_code: undefined as string | undefined,
+        };
+
+        if (captcha != null) {
+            formbase.captcha_on = 1;
+            formbase.captcha_file = captcha.filename;
+            formbase.captcha_code = captcha.code;
+        }
+        const form = qs.stringify(formbase);
         const res = await this.api.post('/sess-bin/login_handler.cgi', form, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
