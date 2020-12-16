@@ -5,6 +5,7 @@ import qs from 'qs';
 import { WLANUserDeviceStat } from './WLANUserDeviceStat';
 import { SwitchConfigurator } from './SwitchConfigurator';
 import { JSDOM } from 'jsdom';
+import { EFMCaptcha } from './CredentialConfigurator';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -52,7 +53,7 @@ export class ControllerFactory extends GenericControllerFactory {
      * @param credential - authentication credential of ipTIME router
      * @param captcha - CAPTCHA login support. You must supply captcha filename and challenge response
      */
-    public async authenticate(credential: {id: string, pass: string}, captcha: { filename: string, code: string } | null = null): Promise<void> {
+    public async authenticate(credential: {id: string, pass: string}, captcha: EFMCaptcha | null = null): Promise<void> {
         const formbase = {
             init_status: 1,
             captcha_on: 0,
