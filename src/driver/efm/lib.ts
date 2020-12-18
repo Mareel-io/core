@@ -31,7 +31,7 @@ export class ControllerFactory extends GenericControllerFactory {
      * @returns Captcha image(gif) with its name
      */
     public async getCaptchaChallenge(): Promise<{ name: string, data: Buffer }> {
-        const res = await this.api.get('http://192.168.0.1/sess-bin/captcha.cgi');
+        const res = await this.api.get('/sess-bin/captcha.cgi');
         
         const page = new JSDOM(res.data);
         const imageElem = page.window.document.body.getElementsByTagName('img').item(0);
@@ -80,7 +80,8 @@ export class ControllerFactory extends GenericControllerFactory {
         if (res == null || res.data == null) {
             throw new Error('Authentication rejected.');
         }
-        const cookie: string | null = res.data.match(/setCookie\('([^']*)'\);/)[1]
+        const match = res.data.match(/setCookie\('([^']*)'\);/);
+        const cookie: string | null = match == null ? null : match[1];
 
         if (cookie == null) {
             throw new Error('Authentication rejected.');
