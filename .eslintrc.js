@@ -20,5 +20,8 @@ module.exports =  {
     },
     rules: {
         "tsdoc/syntax": "warn"
-    }
+    },
+    env: {
+        node: true,
+    },
 };
