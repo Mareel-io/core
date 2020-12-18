@@ -136,6 +136,24 @@ export class WLANConfigurator extends GenericWLANConfigurator {
 
         return map;
     }
+
+    async getDeviceCapability(): Promise<void> { // Typedef TODO
+        const res = await this.api.get('/sess-bin/timepro.cgi', {
+            params: {
+                tmenu: 'iframe',
+                smenu: 'extendsetup',
+            },
+        });
+
+        const dom = new JSDOM(res.data);
+        const scriptElems = dom.window.document.body.getElementsByTagName('script');
+        for (let i = 0; i < scriptElems.length; i++) {
+            const elem = scriptElems.item(i);
+            const script = (elem as Element).innerHTML;
+
+            // TODO: Implement script parsing (avoid eval as possible as we can)
+        }
+    }
    
     /**
      * Get device name.
@@ -222,7 +240,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
      * * WLANIFaceCfg.ssid
      * * WLANIFaceCfg.hidden
      * * WLANIFaceCfg.wmm
-     * * WLANIFaceCfg.encryption - partial. translation layer is not written yet
+     * * WLANIFaceCfg.encryption
      * * WLANIFaceCfg.key
      * 
      * @param devname - device name. wlan5g and wlan2g is possible value.
@@ -241,7 +259,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         wlanIfaceCfg.isolate = false; // TODO: Implement this
         wlanIfaceCfg.doth = true; // There is no feature to disable it
         wlanIfaceCfg.wmm = ifacecfg.wmm === '1';
-        wlanIfaceCfg.encryption = ifacecfg.personallist; // TODO: Translation layer between OpenWRT notation and ipTIME notation
+        wlanIfaceCfg.encryption_efm = ifacecfg.personallist;
         wlanIfaceCfg.key = ifacecfg.wpapsk; // TODO: Support for other mechanisms
         
         return wlanIfaceCfg;
@@ -254,7 +272,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
      * WLANIFaceCfg.ssid
      * WLANIFaceCfg.hidden
      * WLANIFaceCfg.wmm
-     * WLANIFaceCfg.encryption - not yet fully supported. WIP
+     * WLANIFaceCfg.encryption
      * WLANIFaceCfg.key
      * 
      * @param devname - device name. wlan5g and wlan2g is possible value.
@@ -272,7 +290,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         baseCfg.ssid = cfg.ssid;
         baseCfg.broadcast = cfg.hidden ? 0 : 1;
         baseCfg.wmm = cfg.wmm ? 1 : 0;
-        baseCfg.personallist = cfg.encryption; // TODO: Translation layer between OWRT and ipTIME
+        baseCfg.personallist = cfg.encryption_efm;
         baseCfg.wpapsk = cfg.key; // TODO: Support for other mechanisms
 
         const form = qs.stringify(baseCfg);
