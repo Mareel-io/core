@@ -86,8 +86,22 @@ export class ControllerFactory extends GenericControllerFactory {
             throw new Error('Authentication rejected.');
         }
 
+        this.authCookie = cookie;
+    }
+
+    /**
+     * Set credential using EFM ipTIME auth cookie.
+     */
+    public set authCookie(cookie: string) {
         this.credential = cookie;
         this.api.defaults.headers['Cookie'] = `efm_session_id=${encodeURIComponent(cookie)}`
+    }
+
+    /**
+     * Retreve authenticaion session cookie.
+     */
+    public get authCookie(): string {
+        return this.credential;
     }
 
     /**
