@@ -1,14 +1,14 @@
 const maril = require('../');
 
 const ssids = [
-    '01 Three Rings for the Elven-kings under the sky',
-    '02 Seven for the Dwarf-lords in their halls of stone',
-    '03 Nine for Mortal Men doomed to die',
-    '04 One for the Dark Lord on his dark throne',
-    '05 In the Land of Mordor where the Shadows lie',
-    '06 One Ring to rule them all, One Ring to find them',
-    '07 One Ring to bring them all, and in the darkness bind them',
-    '08 In the Land of Mordor where the Shadows lie',
+    'Maril-TB AP01 donotuse-001',
+    'Maril-TB AP01 donotuse-002',
+    'Maril-TB AP01 donotuse-003',
+    'Maril-TB AP01 donotuse-004',
+    'Maril-TB AP01 donotuse-005',
+    'Maril-TB AP01 donotuse-006',
+    'Maril-TB AP01 donotuse-007',
+    'Maril-TB AP01 donotuse-008',
 ];
 
 async function main() {
@@ -25,6 +25,8 @@ async function main() {
         const ifaceCfg = await wlanconfigurator.getIFaceCfg(devName, `${i % 4}`);
         console.log(i)
         console.log(ifaceCfg);
+        ifaceCfg.encryption = 'psk2+ccmp';
+        ifaceCfg.key = 'Pa55w0rd!@'
         ifaceCfg.ssid = ssids[i];
         ifaceCfg.disabled = false;
         ifaceCfg.hidden = false;
