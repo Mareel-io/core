@@ -80,7 +80,8 @@ export class ControllerFactory extends GenericControllerFactory {
         if (res == null || res.data == null) {
             throw new Error('Authentication rejected.');
         }
-        const cookie: string | null = res.data.match(/setCookie\('([^']*)'\);/)[1]
+        const match = res.data.match(/setCookie\('([^']*)'\);/);
+        const cookie: string | null = match == null ? null : match[1];
 
         if (cookie == null) {
             throw new Error('Authentication rejected.');
