@@ -96,6 +96,22 @@ const templateCfg = {
     realchanwidth: 80,
 }
 
+interface EFMCapKV {
+    value: string, text: string,
+}
+
+interface wlancap {
+    exttitle: string,
+    options5g: [EFMCapKV] | undefined,
+    options2g: [EFMCapKV] | undefined,
+    chanwidth5g: [EFMCapKV] | undefined,
+    chanwidth2g: [EFMCapKV] | undefined,
+    mumimo5g: [EFMCapKV] | undefined,
+    mumimo2g: [EFMCapKV] | undefined,
+    mimoant5g: [EFMCapKV] | undefined,
+    mimoant2g: [EFMCapKV] | undefined,
+}
+
 export class WLANConfigurator extends GenericWLANConfigurator {
     protected api: AxiosInstance;
     constructor(axios: AxiosInstance) {
@@ -137,7 +153,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return map;
     }
 
-    async getDeviceCapability(): Promise<void> { // Typedef TODO
+    async getDeviceCapability(): Promise<wlancap> { // Typedef TODO
         const res = await this.api.get('/sess-bin/timepro.cgi', {
             params: {
                 tmenu: 'iframe',
@@ -146,13 +162,50 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         });
 
         const dom = new JSDOM(res.data);
-        const scriptElems = dom.window.document.body.getElementsByTagName('script');
+        const scriptElems = dom.window.document.getElementsByTagName('script');
         for (let i = 0; i < scriptElems.length; i++) {
             const elem = scriptElems.item(i);
             const script = (elem as Element).innerHTML;
+            const flag = script.match(/^parent\.document/);
+            if (flag == null) continue;
 
-            // TODO: Implement script parsing (avoid eval as possible as we can)
+            const configs = script.replace(/ /g, '').split(';').filter((elem) => {
+                return elem.startsWith('parent.document')
+            }).map((elem) => {
+                const arr = elem.split('=');
+                // Note: it can break easily...
+                return {
+                    key: arr[0].replace('parent.document.', ''),
+                    value: JSON.parse(arr[1].replace(/'/g, "\"")) as EFMCapKV | string,
+                };
+            }).reduce((acc, curVal) => {
+                const arrChk = curVal.key.match(/^([^\[]*)\[([^]*)]\]*$/);
+                if (arrChk != null) {
+                    if (!(acc[arrChk[1]] instanceof Array)) {
+                        acc[arrChk[1]] = [] as unknown as [EFMCapKV];
+                    }
+
+                    if (typeof curVal.value === 'string') {
+                        throw new Error('Huh?');
+                    }
+
+                    (acc[arrChk[1]] as [EFMCapKV])[parseInt(arrChk[2], 10)] = curVal.value;
+                } else {
+                    if (curVal.key.match(/\.length$/) != null) return acc;
+                    if (curVal.value === '[]' || curVal.value instanceof Array) return acc;
+                    if (typeof curVal.value !== 'string') {
+                        throw new Error('Huh?');
+                    }
+                    acc[curVal.key] = curVal.value;
+                }
+                return acc;
+            }, {} as { [key: string]: [EFMCapKV] | string});
+
+            // TODO: Re-format in fine config. Current return value just sucks
+            return configs as unknown as wlancap;
         }
+
+        throw new Error('Failed to fetch WLAN capability.');
     }
    
     /**
