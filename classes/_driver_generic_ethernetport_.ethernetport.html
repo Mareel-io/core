@@ -97,15 +97,24 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_driver_generic_ethernetport_.ethernetport.html#_linkspeed" class="tsd-kind-icon">_link<wbr>Speed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_driver_generic_ethernetport_.ethernetport.html#autoneg" class="tsd-kind-icon">autoneg</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_driver_generic_ethernetport_.ethernetport.html#duplex" class="tsd-kind-icon">duplex</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_driver_generic_ethernetport_.ethernetport.html#isactive" class="tsd-kind-icon">is<wbr>Active</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_driver_generic_ethernetport_.ethernetport.html#portname" class="tsd-kind-icon">port<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_driver_generic_ethernetport_.ethernetport.html#tag" class="tsd-kind-icon">tag</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="_driver_generic_ethernetport_.ethernetport.html#linkspeed" class="tsd-kind-icon">link<wbr>Speed</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_driver_generic_ethernetport_.ethernetport.html#taglabel" class="tsd-kind-icon">tag<wbr>Label</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_driver_generic_ethernetport_.ethernetport.html#linkspeedasnumeric" class="tsd-kind-icon">link<wbr>Speed<wbr>AsNumeric</a></li>
 							</ul>
 						</section>
 					</div>
@@ -119,7 +128,17 @@
 					<div class="tsd-signature tsd-kind-icon">_link<wbr>Speed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/eba10f1/src/driver/generic/EthernetPort.ts#L10">driver/generic/EthernetPort.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L14">driver/generic/EthernetPort.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="autoneg" class="tsd-anchor"></a>
+					<h3>autoneg</h3>
+					<div class="tsd-signature tsd-kind-icon">autoneg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L15">driver/generic/EthernetPort.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -129,7 +148,7 @@
 					<div class="tsd-signature tsd-kind-icon">duplex<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Full"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"Half"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"None"</span><span class="tsd-signature-symbol"> = &quot;None&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/eba10f1/src/driver/generic/EthernetPort.ts#L11">driver/generic/EthernetPort.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L16">driver/generic/EthernetPort.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -139,7 +158,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Active<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/eba10f1/src/driver/generic/EthernetPort.ts#L9">driver/generic/EthernetPort.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L13">driver/generic/EthernetPort.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -149,12 +168,27 @@
 					<div class="tsd-signature tsd-kind-icon">port<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/eba10f1/src/driver/generic/EthernetPort.ts#L8">driver/generic/EthernetPort.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L8">driver/generic/EthernetPort.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Name of the Ethernet port</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="tag" class="tsd-anchor"></a>
+					<h3>tag</h3>
+					<div class="tsd-signature tsd-kind-icon">tag<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L12">driver/generic/EthernetPort.ts:12</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>802.1Q tag number</p>
 						</div>
 					</div>
 				</section>
@@ -172,7 +206,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/eba10f1/src/driver/generic/EthernetPort.ts#L18">driver/generic/EthernetPort.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L28">driver/generic/EthernetPort.ts:28</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -186,7 +220,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/eba10f1/src/driver/generic/EthernetPort.ts#L28">driver/generic/EthernetPort.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L38">driver/generic/EthernetPort.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -210,6 +244,59 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="taglabel" class="tsd-anchor"></a>
+					<h3>tag<wbr>Label</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> tagLabel<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L21">driver/generic/EthernetPort.ts:21</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Human readable label for 802.1Q tag</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="linkspeedasnumeric" class="tsd-anchor"></a>
+					<h3>link<wbr>Speed<wbr>AsNumeric</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">link<wbr>Speed<wbr>AsNumeric<span class="tsd-signature-symbol">(</span>unit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"Mbps"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c081129/src/driver/generic/EthernetPort.ts#L76">driver/generic/EthernetPort.ts:76</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get linkspeed as number</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>unit: <span class="tsd-signature-type">"Mbps"</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -217,6 +304,9 @@
 				<ul>
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_driver_efm_arpmon_.html">&quot;driver/efm/ARPMon&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/_driver_efm_credentialconfigurator_.html">&quot;driver/efm/<wbr>Credential<wbr>Configurator&quot;</a>
@@ -300,6 +390,9 @@
 								<a href="_driver_generic_ethernetport_.ethernetport.html#_linkspeed" class="tsd-kind-icon">_link<wbr>Speed</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_driver_generic_ethernetport_.ethernetport.html#autoneg" class="tsd-kind-icon">autoneg</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_driver_generic_ethernetport_.ethernetport.html#duplex" class="tsd-kind-icon">duplex</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -308,8 +401,17 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_driver_generic_ethernetport_.ethernetport.html#portname" class="tsd-kind-icon">port<wbr>Name</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_driver_generic_ethernetport_.ethernetport.html#tag" class="tsd-kind-icon">tag</a>
+							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
 								<a href="_driver_generic_ethernetport_.ethernetport.html#linkspeed" class="tsd-kind-icon">link<wbr>Speed</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="_driver_generic_ethernetport_.ethernetport.html#taglabel" class="tsd-kind-icon">tag<wbr>Label</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_driver_generic_ethernetport_.ethernetport.html#linkspeedasnumeric" class="tsd-kind-icon">link<wbr>Speed<wbr>AsNumeric</a>
 							</li>
 						</ul>
 					</li>
@@ -327,6 +429,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
