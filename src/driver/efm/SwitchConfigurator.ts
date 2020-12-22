@@ -83,6 +83,12 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         return ports;
     }
 
+    /**
+     * Convert generic EthernetPort configuration into EFM-specific port configuration
+     *
+     * @param port - EthernetPort object
+     * @param portIdx - Port index.
+     */
     private getPortCfgObject(port: EthernetPort, portIdx: number) {
         const portCfg: {[key: string]: string | number} = {};
         const idx = portIdx - 1;
@@ -102,6 +108,12 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         return portCfg;
     }
 
+    /**
+     * Update Ethernet switch configuration
+     * 
+     * @param port - EthernetPort object
+     * @param portIdx - Port index. Note that it is 1-based index, not zero-based.
+     */
     public async setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
         const portCfg = this.getPortCfgObject(port, portIdx);
         portCfg.tmenu = 'iframe';
