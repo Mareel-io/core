@@ -1,5 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { JSDOM } from 'jsdom';
+import qs from 'qs';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { EthernetPort } from './EthernetPort';
 
@@ -69,9 +70,49 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
                         ports[i - 1].duplex = duplex as 'Full' | 'Half' | 'None';
                         break;
                 }
+
+                // Pseudo-VLAN tagging
+                if (ports[i - 1].portName.startsWith('WAN')) {
+                    ports[i - 1].tag = 1;
+                } else {
+                    ports[i - 1].tag = 2;
+                }
             }
         }
 
         return ports;
+    }
+
+    private getPortCfgObject(port: EthernetPort, portIdx: number) {
+        const portCfg: {[key: string]: string | number} = {};
+        const idx = portIdx - 1;
+
+        let portoff = '0';
+        if (idx === 0) {
+            portoff = `${65537 + idx}`;
+        } else {
+            portoff = `${idx}`.padStart(5, '0');
+        }
+
+        portCfg[`mode${portoff}`] = port.autoneg ? 'auto' : 'forced';
+        portCfg[`speed${portoff}`] = port.linkSpeedAsNumeric('Mbps');
+        portCfg[`duplex${portoff}`] = port.duplex.toLowerCase();
+        portCfg.port = portoff;
+
+        return portCfg;
+    }
+
+    public async setSwitchPort(port: EthernetPort, portIdx: number) {
+        const portCfg = this.getPortCfgObject(port, portIdx);
+        portCfg.tmenu = 'iframe';
+        portCfg.smenu = 'trafficconf_linksetup_linksetup_status';
+        portCfg.act = 'setport'
+
+        const qry = qs.stringify(portCfg);
+        await this.api.post('/sess-bin/timepro.cgi', qry, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
     }
 }

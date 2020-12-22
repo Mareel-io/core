@@ -6,9 +6,19 @@ export abstract class EthernetPort {
      * Name of the Ethernet port
      */
     public portName = '';
+    /**
+     * 802.1Q tag number
+     */
+    public tag = 0;
     public isActive = false;
     private _linkSpeed = 0; // in Mbps
+    public autoneg = true;
     public duplex: 'Full' | 'Half' | 'None' = 'None';
+
+    /**
+     * Human readable label for 802.1Q tag
+     */
+    public abstract get tagLabel(): string;
     
     /**
      * linkspeed getter
@@ -18,6 +28,17 @@ export abstract class EthernetPort {
     public get linkSpeed(): string {
         // TODO: Implement automatic unit changer
         return this._linkSpeed + 'Mbps';
+    }
+
+    /**
+     * Get linkspeed as number
+     */
+    public linkSpeedAsNumeric(unit: 'Mbps'): number {
+        if (unit === 'Mbps') {
+            return this._linkSpeed;
+        } else {
+            throw new Error(`Unsupported unit ${unit}`);
+        }
     }
 
     /**
