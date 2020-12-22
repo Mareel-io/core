@@ -153,7 +153,11 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         return map;
     }
 
-    async getDeviceCapability(): Promise<wlancap> { // Typedef TODO
+    /**
+     * Get raw EFM-specific device capability
+     * Work in progress, return type prone to change
+     */
+    async getDeviceCapability(): Promise<wlancap> {
         const res = await this.api.get('/sess-bin/timepro.cgi', {
             params: {
                 tmenu: 'iframe',
