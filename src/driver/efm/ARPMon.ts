@@ -21,7 +21,7 @@ export class ARPMon {
             },
         });
 
-        const list = res.data.split('\n').map((elem) => {
+        const list = res.data.split('\n').map((elem: string) => {
             const elemArr = elem.split(';');
 
             return {
