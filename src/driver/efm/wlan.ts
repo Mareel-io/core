@@ -179,7 +179,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
                     value: JSON.parse(arr[1].replace(/'/g, "\"")) as EFMCapKV | string,
                 };
             }).reduce((acc, curVal) => {
-                const arrChk = curVal.key.match(/^([^\[]*)\[([^]*)]\]*$/);
+                const arrChk = curVal.key.match(/^([^[]*)\[([^]*)]\]*$/);
                 if (arrChk != null) {
                     if (!(acc[arrChk[1]] instanceof Array)) {
                         acc[arrChk[1]] = [] as unknown as [EFMCapKV];

@@ -102,7 +102,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         return portCfg;
     }
 
-    public async setSwitchPort(port: EthernetPort, portIdx: number) {
+    public async setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
         const portCfg = this.getPortCfgObject(port, portIdx);
         portCfg.tmenu = 'iframe';
         portCfg.smenu = 'trafficconf_linksetup_linksetup_status';

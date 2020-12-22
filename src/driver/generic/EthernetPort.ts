@@ -31,17 +31,6 @@ export abstract class EthernetPort {
     }
 
     /**
-     * Get linkspeed as number
-     */
-    public linkSpeedAsNumeric(unit: 'Mbps'): number {
-        if (unit === 'Mbps') {
-            return this._linkSpeed;
-        } else {
-            throw new Error(`Unsupported unit ${unit}`);
-        }
-    }
-
-    /**
      * linkspeed setter
      * 
      * @param speed - linkspeed in following format: [0-9]+[KMGTP]bps
@@ -79,5 +68,16 @@ export abstract class EthernetPort {
         }
 
         this._linkSpeed = base * multiplier;
+    }
+
+    /**
+     * Get linkspeed as number
+     */
+    public linkSpeedAsNumeric(unit: 'Mbps'): number {
+        if (unit === 'Mbps') {
+            return this._linkSpeed;
+        } else {
+            throw new Error(`Unsupported unit ${unit}`);
+        }
     }
 }
