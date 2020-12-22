@@ -12,7 +12,7 @@ $ yarn add @mareel/core
 ## Documentation
 This project uses typedoc to generate library documentation automatically.
 
-Please run following command to generate library documentation (gh page WIP)
+Please run following command to generate library documentation (or, visit https://mareel-io.github.io/core/)
 
 ```bash
 yarn doc
