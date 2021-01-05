@@ -12,6 +12,12 @@ export class Logman extends GenericLogman {
         this.api = api;
     }
 
+    /**
+     * Retrieve system log (EFM specific)
+     * 
+     * @param from - Log start date
+     * @param to - Log end date
+     */
     private async syslog(from: Date | undefined, to: Date | undefined): Promise<LogEntry[]> {
         const res = await this.api.get('/sess-bin/timepro.cgi', {
             params: {
@@ -53,6 +59,13 @@ export class Logman extends GenericLogman {
         return logArr;
     }
 
+    /**
+     * Retrieve log from target
+     * 
+     * @param source - Log source. ipTIME only supports syslog.
+     * @param from - Log start date
+     * @param to - Log end date
+     */
     public async queryLog(source: string, from: Date | undefined, to: Date| undefined): Promise<LogEntry[]> {
         if (source == 'syslog') {
             return this.syslog(from, to);
