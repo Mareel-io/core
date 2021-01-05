@@ -22,27 +22,26 @@ export class Logman extends GenericLogman {
         const res = await this.api.get('/sess-bin/timepro.cgi', {
             params: {
                 tmenu: 'iframe',
-                smenu: 'sysconf_syslog_log',
+                smenu: 'sysconf_syslog_log_status',
             }
         });
 
         const dom = new JSDOM(res.data);
-        const logTbl = dom.window.document.body.getElementsByClassName('tr');
-
+        const logTbl = dom.window.document.body.getElementsByTagName('tr');
         const logArr = [] as unknown as [LogEntry];
         for (let i = 0; i < logTbl.length; i++) {
             const entry = logTbl[i];
             const children = entry.childNodes;
-            if (!(children[1] instanceof HTMLElement)) continue;
             let timestamp = moment(children[0].textContent, 'YYYY/MM/DD HH:mm:ss');
             const message = children[1].textContent;
 
-            if (timestamp == null) {
+            if (!timestamp.isValid()) {
                 timestamp = moment('1970-01-01T00:00:00Z');
             }
 
-            logArr.push(new LogEntry(timestamp.toDate(), `${message}`));
+            logArr.push(new LogEntry(timestamp.toDate(), `${message}`.trim()));
         }
+        console.log(logArr);
 
         logArr.filter((elem) => {
             let flag = true;
