@@ -2,7 +2,7 @@
   "name": "@mareel/core",
   "description": "Zero-dependent network management solution.",
   "license": "MIT",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "files": [
     "./dist"
   ],
