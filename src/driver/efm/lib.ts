@@ -6,6 +6,7 @@ import { WLANUserDeviceStat } from './WLANUserDeviceStat';
 import { SwitchConfigurator } from './SwitchConfigurator';
 import { JSDOM } from 'jsdom';
 import { EFMCaptcha } from './CredentialConfigurator';
+import { Logman } from './Logman';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -130,5 +131,14 @@ export class ControllerFactory extends GenericControllerFactory {
      */
     public getSwitchConfigurator(): SwitchConfigurator {
         return new SwitchConfigurator(this.api);
+    }
+
+    /**
+     * Get log manager object
+     * 
+     * @returns Logman object with auth cookie.
+     */
+    public getLogman(): Logman {
+        return new Logman(this.api);
     }
 }
