@@ -3,6 +3,7 @@ import { JSDOM } from 'jsdom';
 import qs from 'qs';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { EthernetPort } from './EthernetPort';
+import { ResponseChecker } from './ResponseChecker';
 
 /**
  * Ethernet switch configurator
@@ -26,6 +27,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
                 smenu: 'trafficconf_linksetup_linkstatus_status',
             },
         });
+        ResponseChecker.check(res.data);
 
         const dom = new JSDOM(res.data);
         const portTable = dom.window.document.body.getElementsByTagName('tr');
@@ -121,10 +123,11 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         portCfg.act = 'setport'
 
         const qry = qs.stringify(portCfg);
-        await this.api.post('/sess-bin/timepro.cgi', qry, {
+        const res = await this.api.post('/sess-bin/timepro.cgi', qry, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
+        ResponseChecker.check(res.data);
     }
 }

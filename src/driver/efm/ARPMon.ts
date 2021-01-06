@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { ResponseChecker } from "./ResponseChecker";
 
 interface ARPEntry {
     ip: string,
@@ -20,6 +21,7 @@ export class ARPMon {
                 act: 'node_list',
             },
         });
+        ResponseChecker.check(res.data);
 
         const list = res.data.split('\n').map((elem: string) => {
             const elemArr = elem.split(';');

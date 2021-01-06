@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { JSDOM } from 'jsdom';
 import { WLANUserDeviceStat as GenericWLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
+import { ResponseChecker } from './ResponseChecker';
 import { User80211Device } from './User80211Device';
 
 export class WLANUserDeviceStat extends GenericWLANUserDeviceStat {
@@ -45,6 +46,7 @@ export class WLANUserDeviceStat extends GenericWLANUserDeviceStat {
                 bssidx: bssidx,
             },
         });
+        ResponseChecker.check(res.data);
 
         const dom = new JSDOM(res.data);
         const rows = dom.window.document.body.getElementsByTagName('tr');

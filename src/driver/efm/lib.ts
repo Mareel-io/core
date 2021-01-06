@@ -7,6 +7,7 @@ import { SwitchConfigurator } from './SwitchConfigurator';
 import { JSDOM } from 'jsdom';
 import { EFMCaptcha } from './CredentialConfigurator';
 import { Logman } from './Logman';
+import { ResponseChecker } from './ResponseChecker';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -33,6 +34,7 @@ export class ControllerFactory extends GenericControllerFactory {
      */
     public async getCaptchaChallenge(): Promise<{ name: string, data: Buffer }> {
         const res = await this.api.get('/sess-bin/captcha.cgi');
+        ResponseChecker.check(res.data);
         
         const page = new JSDOM(res.data);
         const imageElem = page.window.document.body.getElementsByTagName('img').item(0);
@@ -41,6 +43,7 @@ export class ControllerFactory extends GenericControllerFactory {
         const imageURL = (imageElem as Element).getAttribute('src') as string;
 
         const imageRes = await this.api.get(imageURL, { responseType: 'arraybuffer' });
+        ResponseChecker.check(imageRes.data);
 
         return {
             name: filename,
@@ -75,6 +78,7 @@ export class ControllerFactory extends GenericControllerFactory {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
+        ResponseChecker.check(res.data);
 
         // Cookie extraction
         // Executing JS in sandbox? I don't think that is good idea...

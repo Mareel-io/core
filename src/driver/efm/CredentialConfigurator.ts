@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import qs from 'qs';
+import { ResponseChecker } from "./ResponseChecker";
 
 export interface EFMCaptcha {
     filename: string,
@@ -29,11 +30,12 @@ export class CredentialConfigurator {
             new_login: 'admin',
         });
 
-        await this.api.post('/sess-bin/timepro.cgi', form, {
+        const res = await this.api.post('/sess-bin/timepro.cgi', form, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
+        ResponseChecker.check(res.data);
     }
 
     /**
@@ -53,10 +55,11 @@ export class CredentialConfigurator {
             captcha_attempt: 3,
         });
 
-        await this.api.post('/sess-bin/timepro.cgi', form, {
+        const res = await this.api.post('/sess-bin/timepro.cgi', form, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
+        ResponseChecker.check(res.data);
     }
 }
