@@ -41,7 +41,6 @@ export class Logman extends GenericLogman {
 
             logArr.push(new LogEntry(timestamp.toDate(), `${message}`.trim()));
         }
-        console.log(logArr);
 
         logArr.filter((elem) => {
             let flag = true;
