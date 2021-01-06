@@ -19,7 +19,7 @@ jobs:
       - run: yarn build
       - uses: JS-DevTools/npm-publish@v1
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.NPM_TOKEN }}
   docs:
     runs-on: ubuntu-latest
     steps:

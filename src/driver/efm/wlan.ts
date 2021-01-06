@@ -4,6 +4,7 @@ import { WLANDevConfiguration } from '../efm/WLANDevConfiguration';
 import { WLANIFaceCfg } from '../efm/WLANIFaceCfg';
 import qs from 'qs';
 import { JSDOM } from 'jsdom';
+import { ResponseChecker } from './ResponseChecker';
 
 // Internal types for ipTIME
 interface DeviceCfg {
@@ -140,6 +141,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
+        ResponseChecker.check(res.data);
         
         const dom = new JSDOM(res.data);
         const fields = dom.window.document.body.getElementsByTagName('input');
@@ -164,6 +166,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
                 smenu: 'extendsetup',
             },
         });
+        ResponseChecker.check(res.data);
 
         const dom = new JSDOM(res.data);
         const scriptElems = dom.window.document.getElementsByTagName('script');
@@ -282,11 +285,12 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         // TODO: Implement meee...
 
         const form = qs.stringify(baseCfg);
-        await this.api.post('/sess-bin/timepro.cgi', form, {
+        const res = await this.api.post('/sess-bin/timepro.cgi', form, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
+        ResponseChecker.check(res.data);
     }
     
     /**
@@ -351,11 +355,12 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         baseCfg.wpapsk = cfg.key; // TODO: Support for other mechanisms
 
         const form = qs.stringify(baseCfg);
-        await this.api.post('/sess-bin/timepro.cgi', form, {
+        const res = await this.api.post('/sess-bin/timepro.cgi', form, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         });
+        ResponseChecker.check(res.data);
 
         if (changeActivation) {
             await this.setIFaceCfg(devname, ifname, cfg);
