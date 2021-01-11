@@ -1,20 +1,19 @@
 MAIN -> 
-  HEADER
+  STMT
   | MAIN SECTIONS
 
-HEADER ->
+STMT ->
   null
-  | HEADER LINE {% (arr) => [arr[0], arr[1]] %}
-  | HEADER [\r\n] {% (arr) => arr[0] %}
+  | STMT LINE {% (arr) => arr[0].concat(arr[1]) %}
+  | STMT [\r\n] {% (arr) => arr[0] %}
 
 LINE ->
   _ KVP {% (arr) => arr[1] %}
   | _ COMMENT {% (arr) => arr[1] %}
-  | _ KVP _ COMMENT {% (arr) => [arr[1], arr[3]] %}
 
 SECTIONS ->
-  SECTIONMARK HEADER {% (arr) => [arr[0], arr[2]] %}
-  | SECTIONS "{" HEADER "}" {% (arr) => [arr[0], [arr[2]]] %}
+  SECTIONMARK STMT {% (arr) => [arr[0], arr[2]] %}
+  | SECTIONS "{" STMT "}" {% (arr) => [arr[0], [arr[2]]] %}
 
 SECTIONMARK -> "[" KEY "]" {% (arr) => {return {section: arr[1]}} %}
 
