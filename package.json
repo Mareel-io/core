@@ -20,7 +20,7 @@
     "url": "git://github.com/Mareel-io/core.git"
   },
   "scripts": {
-    "build": "node_modules/.bin/tsc",
+    "build": "make -C src/grammar && node_modules/.bin/tsc",
     "publish": "npm publish",
     "lint": "eslint ./src/",
     "test": "yarn lint; mocha",
