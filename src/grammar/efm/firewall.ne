@@ -4,7 +4,7 @@ MAIN ->
 
 STMT ->
   null
-  | STMT LINE {% (arr) => arr[0].concat(arr[1]) %}
+  | STMT LINE {% (arr) => { return [...arr[0], arr[1]]}%}
   | STMT [\r\n] {% (arr) => arr[0] %}
 
 LINE ->
@@ -12,12 +12,12 @@ LINE ->
   | _ COMMENT {% (arr) => arr[1] %}
 
 SECTIONS ->
-  SECTIONMARK STMT {% (arr) => [arr[0], arr[2]] %}
+  SECTIONMARK STMT {% (arr) => [arr[0], arr[1]] %}
   | SECTIONS "{" STMT "}" {% (arr) => [arr[0], [arr[2]]] %}
 
 SECTIONMARK -> "[" KEY "]" {% (arr) => {return {section: arr[1]}} %}
 
-KVP -> KEY _ "=" _ VALUE {% (arr) => {return {[arr[0]]: arr[4]}} %}
+KVP -> KEY _ "=" _ VALUE {% (arr) => {return {type: 'kvp', key: arr[0], value: arr[4]}} %}
 
 # Key and value
 KEY -> [a-zA-Z_]:+ {% (arr) => arr[0].join('') %}
@@ -28,7 +28,7 @@ VALUE ->
   
 VALUECHAR -> [a-zA-Z0-9\.\-] {% arr => arr[0] %}
 
-COMMENT -> "#" [^\r\n]:+ {% (arr) => {return {comment: arr[1].join('')}} %}
+COMMENT -> "#" [^\r\n]:+ {% (arr) => {return {type: 'comment', value: arr[1].join('')}} %}
 
 DELIM -> [\r\n]:+
 
