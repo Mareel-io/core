@@ -4,16 +4,16 @@ MAIN ->
 
 STMT ->
   null
-  | STMT LINE {% (arr) => { return [...arr[0], arr[1]]}%}
+  | STMT LINE {% (arr) => { return [...arr[0], ...arr[1]]}%}
   | STMT [\r\n] {% (arr) => arr[0] %}
 
 LINE ->
-  _ KVP {% (arr) => arr[1] %}
-  | _ COMMENT {% (arr) => arr[1] %}
+  _ KVP {% (arr) => [arr[1]] %}
+  | _ COMMENT {% (arr) => [] %}
 
 SECTIONS ->
   SECTIONMARK
-  | SECTIONS LINE {% (arr) => [arr[0], arr[1]] %}
+  | SECTIONS LINE {% (arr) => [...arr[0], arr[1]] %}
   | SECTIONS "{" STMT "}" {% (arr) => [arr[0], [arr[2]]] %}
   | SECTIONS [\r\n] {% arr=> arr[0] %}
 
