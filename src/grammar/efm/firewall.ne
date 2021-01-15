@@ -13,7 +13,7 @@ LINE ->
 
 SECTIONS ->
   SECTIONMARK
-  | SECTIONS LINE {% (arr) => [...arr[0], arr[1]] %}
+  | SECTIONS LINE {% (arr) => [...arr[0], ...arr[1]] %}
   | SECTIONS "{" STMT "}" {% (arr) => [arr[0], [arr[2]]] %}
   | SECTIONS [\r\n] {% arr=> arr[0] %}
 
