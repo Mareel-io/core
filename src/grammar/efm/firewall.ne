@@ -1,6 +1,6 @@
 MAIN -> 
   STMT
-  | MAIN SECTIONS
+  | MAIN SECTIONS {% (arr) => [...arr[0], arr[1]]%}
 
 STMT ->
   null
@@ -14,10 +14,10 @@ LINE ->
 SECTIONS ->
   SECTIONMARK
   | SECTIONS LINE {% (arr) => [...arr[0], ...arr[1]] %}
-  | SECTIONS "{" STMT "}" {% (arr) => [arr[0], [arr[2]]] %}
+  | SECTIONS "{" STMT "}" {% (arr) => [...arr[0], arr[2]] %}
   | SECTIONS [\r\n] {% arr=> arr[0] %}
 
-SECTIONMARK -> "[" KEY "]" {% (arr) => {return {section: arr[1]}} %}
+SECTIONMARK -> "[" KEY "]" {% (arr) => {return {type: 'section', value: arr[1]}} %}
 
 KVP -> KEY _ "=" _ VALUE {% (arr) => {return {type: 'kvp', key: arr[0], value: arr[4]}} %}
 
