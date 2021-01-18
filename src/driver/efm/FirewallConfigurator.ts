@@ -39,6 +39,11 @@ interface ParserEntry {
     value: string,
 }
 
+interface Section {
+    section: string,
+    kvps: [ParserEntry]
+}
+
 /**
  * Firewall configurator class
  */
@@ -48,11 +53,13 @@ export class FirewallConfigurator {
         this.api = api;
     }
 
-    private analyzeFirewallConfig(parserOutput: ParserEntry | [ParserEntry], acc = {} as any): void {
+    protected analyzeFirewallConfig(parserOutput: Section | ParserEntry | [ParserEntry], acc = {} as any): void {
         if (!(parserOutput instanceof Array)) {
-            
+            if ((parserOutput as ParserEntry).type === 'section') {
+                // Section
+            }
         } else {
-            
+            //
         }
     }
 
@@ -74,6 +81,7 @@ export class FirewallConfigurator {
         for (const rule of rules) {
             const section = rule as ParserEntry | [ParserEntry];
             if (!(section instanceof Array)) {
+                //
             } else if (section[0].type == 'token') {
                 // Recurse!
             }
@@ -94,7 +102,7 @@ lang=utf-8 # Do not modify
             const srcType = i.src_mac != null ? 'mac' : 'ip'
             const section = `
 [${i.name}]
-enable = ${enabledb}
+enable = ${enabled}
 flag = 0
 schedule = 0000000 0000 0000
 {
