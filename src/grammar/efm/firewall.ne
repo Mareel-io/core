@@ -1,6 +1,6 @@
 MAIN -> 
   STMT
-  | MAIN SECTIONS {% (arr) => [...arr[0], arr[1]]%}
+  | MAIN SECTIONS {% (arr) => [...arr[0], {section: arr[1][0].value, kvps: arr[1].slice(1)}]%}
 
 STMT ->
   null
