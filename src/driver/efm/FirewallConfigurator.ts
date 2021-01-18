@@ -35,7 +35,7 @@ export interface FirewallEntry {
 
 interface ParserEntry {
     type: string,
-    key: string | undefined,
+    key: string,
     value: string,
 }
 
@@ -53,13 +53,36 @@ export class FirewallConfigurator {
         this.api = api;
     }
 
-    protected analyzeFirewallConfig(parserOutput: Section | ParserEntry | [ParserEntry], acc = {} as any): void {
+    protected analyzeFirewallConfig(parserOutput: Section | ParserEntry | ParserEntry[], acc: {section: string, kvps: ParserEntry[]}[]): ParserEntry[] {
         if (!(parserOutput instanceof Array)) {
-            if ((parserOutput as ParserEntry).type === 'section') {
-                // Section
+            if (typeof (parserOutput as Section).section === 'string') {
+                // it is section
+                let arr = [] as ParserEntry[];
+                for (const elem of (parserOutput as Section).kvps) {
+                    // TODO: Do something with ACC & return
+                    arr = [...arr, ...(this.analyzeFirewallConfig(elem, acc))];
+                }
+
+                acc.push({
+                    section: (parserOutput as Section).section,
+                    kvps: arr,
+                });
+                return arr;
+            } else if ((parserOutput as ParserEntry).type === 'kvp') {
+                // it is kvp
+                return [parserOutput as ParserEntry]
+            } else {
+                // How have you been here?
+                throw new Error('Invalid parser data structure.');
             }
         } else {
-            //
+            // Hey, it is array!
+            let arr = [] as ParserEntry[];
+            for (const elem of parserOutput) {
+                // TODO: Do something with ACC & return
+                arr = [...arr, ...(this.analyzeFirewallConfig(elem, acc))];
+            }
+            return arr;
         }
     }
 
