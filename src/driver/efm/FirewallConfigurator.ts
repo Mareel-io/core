@@ -4,12 +4,21 @@ import { Grammar, Parser } from 'nearley';
 // @ts-ignore
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
 
+/**
+ * 
+ */
 export interface FirewallEntry {
+    /** rule name (human readable) */
     name: string,
+    /** source zone */
     src: string | undefined | null,
+    /** Source IP address. */
     src_ip: string | undefined | null,
+    /** Source MAC address. */
     src_mac: string | undefined | null,
+    /** Source port */
     src_port: number | undefined | null,
+    /** Protocol */
     proto: 'all' | 'tcp' | 'udp' | 'igmp', // Or whatever. Need to research more
     icmp_type: string | undefined | null,
     dest: string | undefined | null,
@@ -24,16 +33,32 @@ export interface FirewallEntry {
     enabled: boolean,
 }
 
+interface ParserEntry {
+    type: string,
+    key: string | undefined,
+    value: string,
+}
+
+/**
+ * Firewall configurator class
+ */
 export class FirewallConfigurator {
     private api: AxiosInstance;
     constructor(api: AxiosInstance) {
         this.api = api;
     }
 
+    private analyzeFirewallConfig(parserOutput: ParserEntry | [ParserEntry], acc = {} as any): void {
+        if (!(parserOutput instanceof Array)) {
+            
+        } else {
+            
+        }
+    }
+
     public async getFirewallConfiguration(): Promise<[FirewallEntry]> {
         let res = null;
         try {
-            //
             res = await this.api.get('/sess-bin/download_firewall.cgi');
         } catch(e) {
             // TODO: Match error if it is 502 or not
@@ -43,9 +68,17 @@ export class FirewallConfigurator {
 
         const firewallParser = new Parser(Grammar.fromCompiled(EFMFirewallGrammar))
         firewallParser.feed(res.data);
-        const rules = firewallParser.results;
+        const rules = firewallParser.results[0]; // Use first result only
 
-        console.log(JSON.stringify(rules));
+        // Dirty quick data extraction
+        for (const rule of rules) {
+            const section = rule as ParserEntry | [ParserEntry];
+            if (!(section instanceof Array)) {
+            } else if (section[0].type == 'token') {
+                // Recurse!
+            }
+            console.log(section);
+        }
         return [] as unknown as [FirewallEntry];
     }
 
@@ -61,7 +94,7 @@ lang=utf-8 # Do not modify
             const srcType = i.src_mac != null ? 'mac' : 'ip'
             const section = `
 [${i.name}]
-enable = ${enabled}
+enable = ${enabledb}
 flag = 0
 schedule = 0000000 0000 0000
 {
