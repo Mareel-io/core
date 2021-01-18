@@ -23,11 +23,12 @@
     "build": "make -C src/grammar && node_modules/.bin/tsc && rm -rf dist/grammar && cp -ar src/grammar dist/grammar",
     "publish": "npm publish",
     "lint": "eslint ./src/",
-    "test": "yarn lint; mocha",
+    "test": "yarn lint && mocha -r node_modules/ts-node/register 'test/**/*.ts'",
     "doc": "typedoc"
   },
   "devDependencies": {
     "@microsoft/tsdoc": "^0.12.24",
+    "@types/mocha": "^8.2.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "chai": "^4.2.0",
@@ -35,6 +36,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-tsdoc": "^0.2.10",
     "mocha": "^8.2.1",
+    "ts-node": "^9.1.1",
     "typedoc": "^0.19.2",
     "typescript": "^4.1.2"
   },
