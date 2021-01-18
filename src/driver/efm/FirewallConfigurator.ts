@@ -86,31 +86,33 @@ export class FirewallConfigurator {
         }
     }
 
-    public async getFirewallConfiguration(): Promise<[FirewallEntry]> {
+    public async getFirewallConfiguration(): Promise<FirewallEntry[]> {
         let res = null;
         try {
             res = await this.api.get('/sess-bin/download_firewall.cgi');
         } catch(e) {
             // TODO: Match error if it is 502 or not
             // if 502, it means the configuration is empty.
-            return [] as unknown as [FirewallEntry];
+            return [] as FirewallEntry[];
         }
 
         const firewallParser = new Parser(Grammar.fromCompiled(EFMFirewallGrammar))
         firewallParser.feed(res.data);
         const rules = firewallParser.results[0]; // Use first result only
 
-        // Dirty quick data extraction
-        for (const rule of rules) {
-            const section = rule as ParserEntry | [ParserEntry];
-            if (!(section instanceof Array)) {
-                //
-            } else if (section[0].type == 'token') {
-                // Recurse!
-            }
-            console.log(section);
+        const acc = [] as {section: string, kvps: ParserEntry[]}[];
+        this.analyzeFirewallConfig(rules, acc);
+
+        const ret = [] as FirewallEntry[];
+        for (const section of acc) {
+            const elem = {
+                name: section.section,
+                // TODO: Implement me.
+            } as FirewallEntry;
+            ret.push(elem);
         }
-        return [] as unknown as [FirewallEntry];
+
+        return ret;
     }
 
     public async setFirewallConfiguration(cfgs: [FirewallEntry]):Promise<void> {
