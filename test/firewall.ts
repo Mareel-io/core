@@ -25,8 +25,9 @@ class FirewallConfiguratorTestFixture extends FirewallConfigurator {
     }
 
     public analyzeFirewallConfigTest(arg: any) {
-        console.log(arg);
-        this.analyzeFirewallConfig(arg)
+        const acc = [] as any[];
+        this.analyzeFirewallConfig(arg, acc)
+        console.log(acc);
     }
 }
 
