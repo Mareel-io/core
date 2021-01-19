@@ -4,6 +4,7 @@ import { UnsupportedFeatureError } from '../../error/MarilError';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
+import FormData from 'form-data';
 
 /**
  * 
@@ -129,6 +130,12 @@ export class FirewallConfigurator {
             return [];
         }
 
+        if (map.enable === '1') {
+            elem.enabled = true;
+        } else {
+            elem.enabled = false;
+        }
+
         // Override
         (elem.proto as string) = map.protocol;
         elem.target = map.policy.toUpperCase();
@@ -232,7 +239,17 @@ schedule = 0000000 0000 0000
             firewallCfg += section;
         }
 
-        console.log(firewallCfg);
+        const form = new FormData();
+        form.append('tmenu', 'iframe');
+        form.append('smenu', 'restore_firewall');
+        form.append('commit', 'fw_restore');
+        form.append('fw_restore_file', Buffer.from(dummy), {
+            filename: 'maril.cfg',
+        });
+
+        await this.api.post('/sess-bin/timepro.cgi', form, {headers: {...form.getHeaders()}});
+
+        //console.log(firewallCfg);
         // Now, ready to POST
     }
 }
