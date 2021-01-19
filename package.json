@@ -20,10 +20,11 @@
     "url": "git://github.com/Mareel-io/core.git"
   },
   "scripts": {
-    "build": "make -C src/grammar && node_modules/.bin/tsc && rm -rf dist/grammar && cp -ar src/grammar dist/grammar",
+    "build": "make -C src/grammar && node_modules/.bin/tsc",
     "publish": "npm publish",
     "lint": "eslint ./src/",
     "test": "yarn lint && mocha -r node_modules/ts-node/register 'test/**/*.ts'",
+    "clean": "rm -rf ./dist",
     "doc": "typedoc"
   },
   "devDependencies": {
