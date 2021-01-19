@@ -18,13 +18,13 @@ export interface FirewallEntry {
     /** Source MAC address. */
     src_mac: string | undefined | null,
     /** Source port */
-    src_port: number | undefined | null,
+    src_port: number | string | undefined | null,
     /** Protocol */
     proto: 'all' | 'tcp' | 'udp' | 'igmp', // Or whatever. Need to research more
     icmp_type: string | undefined | null,
     dest: string | undefined | null,
     dest_ip: string | undefined | null,
-    dest_port: string | undefined | null,
+    dest_port: number | string | undefined | null,
     ipset: string | undefined | null,
     mark: number | undefined | null,
     target: string | undefined | null,
@@ -87,6 +87,55 @@ export class FirewallConfigurator {
         }
     }
 
+    protected translateFirewallCfg(section: string, ents: ParserEntry[]): FirewallEntry[] {
+        const map = ents.reduce((acc: {[key: string]: string}, ent: ParserEntry): {[key: string]: string} => {
+            acc[ent.key] = ent.value;
+            return acc;
+        }, {});
+
+        const elem = {
+            name: section,
+        } as FirewallEntry;
+
+        let src = null as string | null;
+        if (map.src_type === 'ip') {
+            src = map.src_ip_address;
+        } else if (map.src_type === 'mac') {
+            src = map.src_mac_address;
+        } else {
+            // Huh? Please report to us.
+            throw new Error('Bad value!');
+        }
+
+        if (map.direction === 'inout') {
+            elem.src = 'LAN';
+            elem.dest = 'WAN';
+            if (map.src_type === 'ip') {
+                elem.src_ip = src;
+            } else {
+                elem.src_mac = src;
+            }
+            elem.dest_ip = map.dest_ip_address;
+            elem.dest_port = map.port;
+        } else if (map.direction === 'outin') {
+            elem.src = 'WAN';
+            elem.dest = 'LAN';
+            elem.dest_ip = src;
+            elem.src_ip = map.dest_ip_address;
+            elem.src_port = map.port;
+        } else {
+            // TODO: Handle this
+            console.error('[WARN] both direction is not supported yet...');
+            return [];
+        }
+
+        // Override
+        (elem.proto as string) = map.protocol;
+        elem.target = map.policy.toUpperCase();
+
+        return [elem];
+    }
+
     public async getFirewallConfiguration(): Promise<FirewallEntry[]> {
         let res = null;
         try {
@@ -104,13 +153,9 @@ export class FirewallConfigurator {
         const acc = [] as {section: string, kvps: ParserEntry[]}[];
         this.analyzeFirewallConfig(rules, acc);
 
-        const ret = [] as FirewallEntry[];
+        let ret = [] as FirewallEntry[];
         for (const section of acc) {
-            const elem = {
-                name: section.section,
-                // TODO: Implement me.
-            } as FirewallEntry;
-            ret.push(elem);
+            ret = [...ret, ...(this.translateFirewallCfg(section.section, section.kvps))];
         }
 
         return ret;
@@ -179,12 +224,15 @@ schedule = 0000000 0000 0000
             }
 
             if (cfg.target != null) {
-                section += `    policy = ${cfg.target}\n`;
+                section += `    policy = ${cfg.target.toLowerCase()}\n`;
             }
+
+            section += '}\n';
 
             firewallCfg += section;
         }
 
+        console.log(firewallCfg);
         // Now, ready to POST
     }
 }

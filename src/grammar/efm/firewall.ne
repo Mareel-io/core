@@ -22,7 +22,7 @@ SECTIONMARK -> "[" KEY "]" {% (arr) => {return {type: 'section', value: arr[1]}}
 KVP -> KEY _ "=" _ VALUE {% (arr) => {return {type: 'kvp', key: arr[0], value: arr[4]}} %}
 
 # Key and value
-KEY -> [a-zA-Z_]:+ {% (arr) => arr[0].join('') %}
+KEY -> [a-zA-Z_-]:+ {% (arr) => arr[0].join('') %}
 VALUE ->
     VALUECHAR {% arr => arr[0] %}
   | VALUE VALUECHAR {% arr => arr.join('') %}
