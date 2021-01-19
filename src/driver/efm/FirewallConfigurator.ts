@@ -1,5 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { Grammar, Parser } from 'nearley';
+import { UnsupportedFeatureError } from '../../error/MarilError';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
@@ -121,26 +122,69 @@ Version=1.0.0 # Do not modify
 lang=utf-8 # Do not modify
 `;
         
-        for (const i of cfgs) {
-            const enabled = i.enabled ? 1 : 0;
-            const direction = i.dest == 'WAN' ? 'out' : 'in';
-            const srcType = i.src_mac != null ? 'mac' : 'ip'
-            const section = `
-[${i.name}]
-enable = ${enabled}
+        for (const cfg of cfgs) {
+            let section = `
+[${cfg.name}]
+enable = ${cfg.enabled ? 1 : 0}
 flag = 0
 schedule = 0000000 0000 0000
 {
-    direction = ${direction}
-    src_type = ${srcType}
-    src_${srcType}_address = ${srcType == 'mac' ? i.src_mac : i.src_ip}
-    protocol = ${i.proto /*TODO: ResearchME*/}
-    policy = drop
-}
 `;
+
+            // Generate elements for it
+            // Field desc
+            // direction = inout | outin | both
+            // src_type = ip | mac
+            // src_ip_address = <ipaddr> | <ipaddr>-<ipaddr> # NOTE THAT IT MEANS DEST ADDR WHEN DIRECTION IS OUTIN
+            // src_mac_address = <macaddr>
+            // dest_ip_address = <ipaddr> | <ipaddr>-<ipaddr> # NOTE THAT IT MEANS SRC ADDR WHEN DIRECTION IS OUTIN
+            // protocol = none | tcp | udp | icmp | gre | tcpudp
+            // port = <number> | <number>-<number>
+            // policy = drop | accept
+
+            const srcType = cfg.src_mac != null ? 'mac' : 'ip'
+            const srcTarget = srcType == 'mac' ? cfg.src_mac : cfg.src_ip;
+            if (cfg.family == 'ipv6') {
+                throw new UnsupportedFeatureError('EFM device does not support ipv6 at all.');
+            }
+
+            if (cfg.src_mac != null && cfg.src_ip != null) {
+                throw new UnsupportedFeatureError('You cannot specify src_mac and src_ip at the same time in EFM device.');
+            }
+
+            section += `    src_type = ${srcType}\n`
+
+            if (cfg.dest == 'WAN' && cfg.src == 'LAN') {
+                section += '    direction = inout\n';
+                section += `    src_${srcType}_address = ${srcTarget}\n`
+                if (cfg.dest_ip != null) {
+                    section += `    dest_ip_address = ${cfg.dest_ip}\n`;
+                }
+            } else if(cfg.dest == 'LAN' && cfg.src == 'WAN') {
+                section += '    direction = outin\n';
+                section += `    dest_${srcType}_address = ${srcTarget}\n`;
+                if (cfg.dest_ip != null) {
+                    section += `    src_ip_address = ${cfg.src_ip}\n`;
+                }
+            } else {
+                throw new UnsupportedFeatureError('EFM device does not support zones other then WAN and LAN');
+            }
+
+            if (cfg.proto != null) {
+                section += `    protocol = ${cfg.proto}\n`;
+            }
+
+            if (cfg.dest_port != null) {
+                section += `    port = ${cfg.dest_port}\n`;
+            }
+
+            if (cfg.target != null) {
+                section += `    policy = ${cfg.target}\n`;
+            }
 
             firewallCfg += section;
         }
-        // 
+
+        // Now, ready to POST
     }
 }
