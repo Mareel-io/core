@@ -5,6 +5,7 @@ import { UnsupportedFeatureError } from '../../error/MarilError';
 // @ts-ignore
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
 import FormData from 'form-data';
+import { reporters } from 'mocha';
 
 /**
  * 
@@ -243,13 +244,26 @@ schedule = 0000000 0000 0000
         form.append('tmenu', 'iframe');
         form.append('smenu', 'restore_firewall');
         form.append('commit', 'fw_restore');
-        form.append('fw_restore_file', Buffer.from(dummy), {
+        form.append('fw_restore_file', Buffer.from(firewallCfg), {
             filename: 'maril.cfg',
         });
 
-        await this.api.post('/sess-bin/timepro.cgi', form, {headers: {...form.getHeaders()}});
+        // Calculate length for form multipart data
+        const length = await new Promise((res, rej) => {
+            form.getLength((err, len) => {
+                if (err != null) {
+                    rej(err);
+                    return;
+                }
 
-        //console.log(firewallCfg);
+                res(len);
+            });
+        });
+
         // Now, ready to POST
+        await this.api.post('/sess-bin/timepro.cgi', form, {headers: {
+            'Content-Length': length,
+            ...form.getHeaders()
+        }});
     }
 }
