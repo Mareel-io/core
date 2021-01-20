@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { Grammar, Parser } from 'nearley';
-import { UnsupportedFeatureError } from '../../error/MarilError';
+import { MarilError, UnsupportedFeatureError } from '../../error/MarilError';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
@@ -261,9 +261,15 @@ schedule = 0000000 0000 0000
         });
 
         // Now, ready to POST
-        await this.api.post('/sess-bin/timepro.cgi', form, {headers: {
+        const result = await this.api.post('/sess-bin/timepro.cgi', form, {headers: {
             'Content-Length': length,
             ...form.getHeaders()
         }});
+
+        const chkFail = result.data.match(/규칙 복원에 실패하였습니다/);
+
+        if (chkFail != null) {
+            throw new MarilError('Unknown error occured while applying firewall rules.');
+        }
     }
 }
