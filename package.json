@@ -20,14 +20,16 @@
     "url": "git://github.com/Mareel-io/core.git"
   },
   "scripts": {
-    "build": "node_modules/.bin/tsc",
+    "build": "make -C src/grammar && node_modules/.bin/tsc",
     "publish": "npm publish",
     "lint": "eslint ./src/",
-    "test": "yarn lint; mocha",
+    "test": "yarn lint && mocha -r node_modules/ts-node/register 'test/**/*.ts'",
+    "clean": "rm -rf ./dist",
     "doc": "typedoc"
   },
   "devDependencies": {
     "@microsoft/tsdoc": "^0.12.24",
+    "@types/mocha": "^8.2.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "chai": "^4.2.0",
@@ -35,16 +37,19 @@
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-tsdoc": "^0.2.10",
     "mocha": "^8.2.1",
+    "ts-node": "^9.1.1",
     "typedoc": "^0.19.2",
     "typescript": "^4.1.2"
   },
   "dependencies": {
     "@types/jsdom": "^16.2.5",
+    "@types/nearley": "^2.11.1",
     "@types/qs": "^6.9.5",
     "axios": "^0.21.0",
     "form-data": "^3.0.0",
     "jsdom": "^16.4.0",
     "moment": "^2.29.1",
+    "nearley": "^2.20.1",
     "oui": "^11.0.46",
     "qs": "^6.9.4"
   }

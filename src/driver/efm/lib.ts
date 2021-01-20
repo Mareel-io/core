@@ -8,6 +8,7 @@ import { JSDOM } from 'jsdom';
 import { EFMCaptcha } from './CredentialConfigurator';
 import { Logman } from './Logman';
 import { ResponseChecker } from './ResponseChecker';
+import { FirewallConfigurator } from './FirewallConfigurator';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -144,5 +145,12 @@ export class ControllerFactory extends GenericControllerFactory {
      */
     public getLogman(): Logman {
         return new Logman(this.api);
+    }
+
+    /**
+     * Get firewall configurator object
+     */
+    public getFirewallConfigurator(): FirewallConfigurator {
+        return new FirewallConfigurator(this.api);
     }
 }
