@@ -189,14 +189,14 @@ export class WLANConfigurator extends GenericWLANConfigurator {
                 const arrChk = curVal.key.match(/^([^[]*)\[([^]*)]\]*$/);
                 if (arrChk != null) {
                     if (!(acc[arrChk[1]] instanceof Array)) {
-                        acc[arrChk[1]] = [] as unknown as [EFMCapKV];
+                        acc[arrChk[1]] = [] as EFMCapKV[];
                     }
 
                     if (typeof curVal.value === 'string') {
                         throw new Error('Huh?');
                     }
 
-                    (acc[arrChk[1]] as [EFMCapKV])[parseInt(arrChk[2], 10)] = curVal.value;
+                    (acc[arrChk[1]] as EFMCapKV[])[parseInt(arrChk[2], 10)] = curVal.value;
                 } else {
                     if (curVal.key.match(/\.length$/) != null) return acc;
                     if (curVal.value === '[]' || curVal.value instanceof Array) return acc;
@@ -206,7 +206,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
                     acc[curVal.key] = curVal.value;
                 }
                 return acc;
-            }, {} as { [key: string]: [EFMCapKV] | string});
+            }, {} as { [key: string]: EFMCapKV[] | string});
 
             // TODO: Re-format in fine config. Current return value just sucks
             return configs as unknown as wlancap;

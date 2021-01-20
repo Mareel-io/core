@@ -37,7 +37,7 @@ export class WLANUserDeviceStat extends GenericWLANUserDeviceStat {
         return this.parseTime(parseRes[3], base * multiplier + baseTime);
     }
 
-    public async getUserDevices(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<[User80211Device]> {
+    public async getUserDevices(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<User80211Device[]> {
         const bssidx = (devname === 'wlan5g' ? 65536 : 0) + parseInt(ifname, 10);
         const res = await this.api.get('/sess-bin/timepro.cgi', {
             params: {
@@ -73,7 +73,7 @@ export class WLANUserDeviceStat extends GenericWLANUserDeviceStat {
             list.push(entry);
         }
 
-        const ret: [User80211Device] = [] as unknown as [User80211Device];
+        const ret: User80211Device[] = [];
         for (const i of list) {
             const rxspd = i.bandwidth.split('/')[0];
             const txspd = i.bandwidth.split('/')[1].replace(/[a-zA-Z]*/g, '');

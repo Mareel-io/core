@@ -20,7 +20,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      * 
      * @returns EthernetPort array
      */
-    public async getSwitchPorts(): Promise<[EthernetPort]> {
+    public async getSwitchPorts(): Promise<EthernetPort[]> {
         const res = await this.api.get('/sess-bin/timepro.cgi', {
             params: {
                 tmenu: 'iframe',
@@ -32,7 +32,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         const dom = new JSDOM(res.data);
         const portTable = dom.window.document.body.getElementsByTagName('tr');
 
-        const ports = [] as unknown as [EthernetPort];
+        const ports = [] as EthernetPort[];
         for (let i = 0; i < portTable.length; i++) {
             const row = portTable[i].childNodes;
             console.log(row.item(0).textContent)

@@ -2,6 +2,7 @@ import { AxiosInstance } from 'axios';
 import { JSDOM } from 'jsdom';
 import { Logman as GenericLogman, LogEntry } from '../generic/Logman';
 import moment from 'moment';
+import { ResponseChecker } from './ResponseChecker';
 export { LogEntry };
 
 export class Logman extends GenericLogman {
@@ -25,10 +26,11 @@ export class Logman extends GenericLogman {
                 smenu: 'sysconf_syslog_log_status',
             }
         });
+        ResponseChecker.check(res.data);
 
         const dom = new JSDOM(res.data);
         const logTbl = dom.window.document.body.getElementsByTagName('tr');
-        const logArr = [] as unknown as [LogEntry];
+        const logArr = [] as LogEntry[];
         for (let i = 0; i < logTbl.length; i++) {
             const entry = logTbl[i];
             const children = entry.childNodes;
