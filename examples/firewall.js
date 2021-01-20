@@ -6,6 +6,7 @@ async function main() {
     const firewallConfigurator = efmController.getFirewallConfigurator();
     const res = await firewallConfigurator.getFirewallConfiguration();
     console.log(res);
+    await firewallConfigurator.setFirewallConfiguration(res);
 }
 
 main();
