@@ -5,5 +5,5 @@ export abstract class WLANUserDeviceStat {
         //
     }
 
-    public abstract getUserDevices(devname: string, ifname: string): Promise<[User80211Device]>;
+    public abstract getUserDevices(devname: string, ifname: string): Promise<User80211Device[]>;
 }

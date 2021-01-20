@@ -5,5 +5,5 @@ export abstract class SwitchConfigurator {
         //
     }
 
-    public abstract getSwitchPorts(): Promise<[EthernetPort]>;
+    public abstract getSwitchPorts(): Promise<EthernetPort[]>;
 }
