@@ -5,11 +5,7 @@ import { MarilError, UnsupportedFeatureError } from '../../error/MarilError';
 // @ts-ignore
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
 import FormData from 'form-data';
-import { reporters } from 'mocha';
 
-/**
- * 
- */
 export interface FirewallEntry {
     /** rule name (human readable) */
     name: string,
@@ -144,6 +140,9 @@ export class FirewallConfigurator {
         return [elem];
     }
 
+    /**
+     * Get current fireall configuration
+     */
     public async getFirewallConfiguration(): Promise<FirewallEntry[]> {
         let res = null;
         try {
@@ -169,6 +168,31 @@ export class FirewallConfigurator {
         return ret;
     }
 
+    /**
+     * Set firewall configuration using given firewall entries
+     * 
+     * Supported features are:
+     * 
+     * * name: Rule alias
+     * * src : Source zone. LAN or WAN is accepted in ipTIME
+     * * src_ip: Source IP address (or range)
+     * * src_mac: Source MAC address (or range) (only one will be active)
+     * * src_port: Source port. Depends on direction, only src_port or dest_port will work.
+     * * proto: Protocol
+     * * icmp_type: ICMP type. not supported in ipTIME.
+     * * dest: Destination zone. LAN or WAN is accepted in ipTIME
+     * * dest_ip: Destination IP address
+     * * dest_port: Destination port. Depends on direction, only src_port or dest_port will work.
+     * * ipset: Not supported in ipTIME.
+     * * mark: Not supported in ipTIME.
+     * * target: only ACCEPT or DROP is supported in ipTIME.
+     * * set_mark: Not supported in ipTIME.
+     * * set_xmark: Not supported in ipTIME.
+     * * family: 'any' and 'ipv4' is supported in ipTIME. ipTIME firmware does not support ipv6.
+     * * enabled: Enable rule or not.
+     * 
+     * @param cfgs - Firewall entries
+     */
     public async setFirewallConfiguration(cfgs: [FirewallEntry]):Promise<void> {
         let firewallCfg = `Type=firewall # Do not modify
 Version=1.0.0 # Do not modify
