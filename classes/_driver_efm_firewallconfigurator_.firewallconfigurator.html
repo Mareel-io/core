@@ -124,7 +124,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/de0a4b6/src/driver/efm/FirewallConfigurator.ts#L54">src/driver/efm/FirewallConfigurator.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c6b08fe/src/driver/efm/FirewallConfigurator.ts#L50">src/driver/efm/FirewallConfigurator.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -146,7 +146,7 @@
 					<div class="tsd-signature tsd-kind-icon">api<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AxiosInstance</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/de0a4b6/src/driver/efm/FirewallConfigurator.ts#L54">src/driver/efm/FirewallConfigurator.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c6b08fe/src/driver/efm/FirewallConfigurator.ts#L50">src/driver/efm/FirewallConfigurator.ts:50</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -163,7 +163,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/de0a4b6/src/driver/efm/FirewallConfigurator.ts#L59">src/driver/efm/FirewallConfigurator.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c6b08fe/src/driver/efm/FirewallConfigurator.ts#L55">src/driver/efm/FirewallConfigurator.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -189,9 +189,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/de0a4b6/src/driver/efm/FirewallConfigurator.ts#L147">src/driver/efm/FirewallConfigurator.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c6b08fe/src/driver/efm/FirewallConfigurator.ts#L146">src/driver/efm/FirewallConfigurator.ts:146</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get current fireall configuration</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_driver_efm_firewallconfigurator_.firewallentry.html" class="tsd-signature-type">FirewallEntry</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -206,13 +211,41 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/de0a4b6/src/driver/efm/FirewallConfigurator.ts#L172">src/driver/efm/FirewallConfigurator.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c6b08fe/src/driver/efm/FirewallConfigurator.ts#L196">src/driver/efm/FirewallConfigurator.ts:196</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set firewall configuration using given firewall entries</p>
+								</div>
+								<p>Supported features are:</p>
+								<ul>
+									<li>name: Rule alias</li>
+									<li>src : Source zone. LAN or WAN is accepted in ipTIME</li>
+									<li>src_ip: Source IP address (or range)</li>
+									<li>src_mac: Source MAC address (or range) (only one will be active)</li>
+									<li>src_port: Source port. Depends on direction, only src_port or dest_port will work.</li>
+									<li>proto: Protocol</li>
+									<li>icmp_type: ICMP type. not supported in ipTIME.</li>
+									<li>dest: Destination zone. LAN or WAN is accepted in ipTIME</li>
+									<li>dest_ip: Destination IP address</li>
+									<li>dest_port: Destination port. Depends on direction, only src_port or dest_port will work.</li>
+									<li>ipset: Not supported in ipTIME.</li>
+									<li>mark: Not supported in ipTIME.</li>
+									<li>target: only ACCEPT or DROP is supported in ipTIME.</li>
+									<li>set_mark: Not supported in ipTIME.</li>
+									<li>set_xmark: Not supported in ipTIME.</li>
+									<li>family: &#39;any&#39; and &#39;ipv4&#39; is supported in ipTIME. ipTIME firmware does not support ipv6.</li>
+									<li>enabled: Enable rule or not.</li>
+								</ul>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>cfgs: <span class="tsd-signature-symbol">[</span><a href="../interfaces/_driver_efm_firewallconfigurator_.firewallentry.html" class="tsd-signature-type">FirewallEntry</a><span class="tsd-signature-symbol">]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Firewall entries</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -229,7 +262,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/de0a4b6/src/driver/efm/FirewallConfigurator.ts#L92">src/driver/efm/FirewallConfigurator.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/c6b08fe/src/driver/efm/FirewallConfigurator.ts#L88">src/driver/efm/FirewallConfigurator.ts:88</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
