@@ -52,6 +52,12 @@ export class FirewallConfigurator {
         this.api = api;
     }
 
+    /**
+     * Transform firewall parser output into object
+     * 
+     * @param parserOutput - Parser output data
+     * @param acc - Accumulator which will hold analyzed result.
+     */
     protected analyzeFirewallConfig(parserOutput: Section | ParserEntry | ParserEntry[], acc: {section: string, kvps: ParserEntry[]}[]): ParserEntry[] {
         if (!(parserOutput instanceof Array)) {
             if (typeof (parserOutput as Section).section === 'string') {
@@ -85,6 +91,12 @@ export class FirewallConfigurator {
         }
     }
 
+    /**
+     * Transform parser entries into (internal) firewall config objects
+     * 
+     * @param section - Firewall entry name
+     * @param ents - Firewall entries from parser
+     */
     protected translateFirewallCfg(section: string, ents: ParserEntry[]): FirewallEntry[] {
         const map = ents.reduce((acc: {[key: string]: string}, ent: ParserEntry): {[key: string]: string} => {
             acc[ent.key] = ent.value;

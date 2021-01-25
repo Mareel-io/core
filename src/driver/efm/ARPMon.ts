@@ -15,6 +15,9 @@ export class ARPMon {
         this.api = api;
     }
 
+    /**
+     * Get ARP Table from router
+     */
     public async getARPTable(): Promise<ARPEntry> {
         const res = await this.api.get('/sess-bin/info.cgi', {
             params: {
