@@ -79,6 +79,58 @@
 				<p>This project uses typedoc to generate library documentation automatically.</p>
 				<p>Please run following command to generate library documentation (or, visit <a href="https://mareel-io.github.io/core/">https://mareel-io.github.io/core/</a>)</p>
 				<pre><code class="language-bash">yarn doc</code></pre>
+				<a href="#efm-captcha-access-flow" id="efm-captcha-access-flow" style="color: inherit; text-decoration: none;">
+					<h2>(EFM) CAPTCHA access flow</h2>
+				</a>
+				<p><img src="./flow.png" alt="flow diagram"></p>
+				<a href="#access-flow-example" id="access-flow-example" style="color: inherit; text-decoration: none;">
+					<h2>Access flow example</h2>
+				</a>
+				<pre><code>const maril = require(<span class="hljs-string">&#x27;../&#x27;</span>);
+
+async <span class="hljs-keyword">function</span> main() {
+    // Initialize controller factory <span class="hljs-keyword">with</span> target IP address
+    const efmController = <span class="hljs-built_in">new</span> maril.EFMControllerFactory(<span class="hljs-string">&#x27;http://192.168.0.1/&#x27;</span>);
+
+    // <span class="hljs-keyword">Get</span> captcha challenge <span class="hljs-keyword">from</span> EFM
+    // Implementer should hand CAPTCHA image <span class="hljs-keyword">to</span> <span class="hljs-keyword">user</span>(<span class="hljs-keyword">or</span> automatic captcha solver) <span class="hljs-keyword">and</span> <span class="hljs-keyword">get</span> response <span class="hljs-keyword">from</span> it.
+    const resp = await efmController.getCaptchaChallenge();
+
+    // Authenticate <span class="hljs-keyword">using</span> CAPTCHA challenge response
+    await efmController.authenticate({
+        id: <span class="hljs-string">&#x27;admin&#x27;</span>,
+        pass: <span class="hljs-string">&#x27;admin&#x27;</span>
+    }, {
+        filename: resp.name,
+        code: <span class="hljs-string">&#x27;captcha_challenge_response_from_user&#x27;</span>
+    });
+
+    // <span class="hljs-keyword">Get</span> WLAN configurator <span class="hljs-keyword">with</span> <span class="hljs-keyword">session</span> cookie
+    const wlanconfigurator = efmController.getWLANConfigurator();
+
+    // <span class="hljs-keyword">Get</span> device <span class="hljs-keyword">configuration</span> <span class="hljs-keyword">of</span> device <span class="hljs-string">&#x27;wlan5g&#x27;</span> <span class="hljs-keyword">using</span> configurator
+    const deviceCfg = await wlanconfigurator.getDeviceCfg(<span class="hljs-string">&#x27;wlan5g&#x27;</span>);
+
+    // <span class="hljs-keyword">Get</span> interface <span class="hljs-keyword">configuration</span> <span class="hljs-keyword">of</span> <span class="hljs-number">0</span>th interface <span class="hljs-keyword">of</span> <span class="hljs-string">&#x27;wlan5g&#x27;</span>
+    const ifaceCfg = await wlanconfigurator.getIFaceCfg(<span class="hljs-string">&#x27;wlan5g&#x27;</span>, <span class="hljs-number">0</span>);
+
+    // Change Wi-Fi <span class="hljs-keyword">security</span> parameters.
+    // Use WPA2-PSK CCMP <span class="hljs-keyword">only</span> mode
+    ifaceCfg.encryption = <span class="hljs-string">&#x27;psk2+ccmp&#x27;</span>;
+    // Use <span class="hljs-keyword">password</span> <span class="hljs-string">&#x27;Pa55w0rd!@&#x27;</span>
+    ifaceCfg.key = <span class="hljs-string">&#x27;Pa55w0rd!@&#x27;</span>
+    // <span class="hljs-keyword">Set</span> Wi-Fi SSID <span class="hljs-keyword">to</span> <span class="hljs-string">&#x27;MarilForever-5G&#x27;</span>
+    ifaceCfg.ssid = <span class="hljs-string">&#x27;MarilForever-5G&#x27;</span>;
+    // <span class="hljs-keyword">Enable</span> interface
+    ifaceCfg.disabled = <span class="hljs-keyword">false</span>;
+    // <span class="hljs-keyword">enable</span> beacon broadcast (<span class="hljs-keyword">to</span> <span class="hljs-keyword">show</span> up <span class="hljs-keyword">in</span> Wi-Fi scan result)
+    ifaceCfg.hidden = <span class="hljs-keyword">false</span>;
+
+    // Apply <span class="hljs-built_in">new</span> config
+    await wlanconfigurator.setIFaceCfg(<span class="hljs-string">&#x27;wlan5g&#x27;</span>, <span class="hljs-number">0</span>, ifaceCfg);
+}
+
+main();</code></pre>
 				<a href="#example-codes" id="example-codes" style="color: inherit; text-decoration: none;">
 					<h2>Example codes</h2>
 				</a>
