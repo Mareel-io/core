@@ -18,6 +18,9 @@ Please run following command to generate library documentation (or, visit https:
 yarn doc
 ```
 
+## (EFM) CAPTCHA access flow
+![flow diagram](./flow.png)
+
 ## Access flow example
 ```
 const maril = require('../');
