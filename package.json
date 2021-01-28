@@ -21,7 +21,6 @@
   },
   "scripts": {
     "build": "make -C src/grammar && node_modules/.bin/tsc",
-    "publish": "npm publish",
     "lint": "eslint ./src/",
     "test": "yarn lint && mocha -r node_modules/ts-node/register 'test/**/*.ts'",
     "clean": "rm -rf ./dist",
