@@ -9,6 +9,7 @@ import { EFMCaptcha } from './CredentialConfigurator';
 import { Logman } from './Logman';
 import { ResponseChecker } from './ResponseChecker';
 import { FirewallConfigurator } from './FirewallConfigurator';
+import { NetTester } from './monitor/NetTester';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -152,5 +153,9 @@ export class ControllerFactory extends GenericControllerFactory {
      */
     public getFirewallConfigurator(): FirewallConfigurator {
         return new FirewallConfigurator(this.api);
+    }
+
+    public getNetTester(): NetTester {
+        return new NetTester(this.api);
     }
 }
