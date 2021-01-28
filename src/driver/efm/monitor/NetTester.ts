@@ -6,7 +6,7 @@ import { sleep } from '../../../util/sleep';
 import qs from 'qs';
 
 // TODO: Implement locking for async operation
-let lockTable: {[key: string]: boolean | undefined} = {};
+const lockTable: {[key: string]: boolean | undefined} = {};
 
 export class NetTester {
     private api: AxiosInstance;
