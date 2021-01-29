@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "0.0.12",
   "files": [
-    "./dist"
+    "dist"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
