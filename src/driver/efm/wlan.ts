@@ -1,10 +1,11 @@
-import { AxiosInstance } from 'axios';
+import Axios, { AxiosInstance } from 'axios';
 import { WLANConfigurator as GenericWLANConfigurator } from '../generic/wlan';
 import { WLANDevConfiguration } from '../efm/WLANDevConfiguration';
 import { WLANIFaceCfg } from '../efm/WLANIFaceCfg';
 import qs from 'qs';
 import { JSDOM } from 'jsdom';
 import { ResponseChecker } from './ResponseChecker';
+import { MarilError } from '../../error/MarilError';
 
 // Internal types for ipTIME
 interface DeviceCfg {
@@ -365,5 +366,189 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         if (changeActivation) {
             await this.setIFaceCfg(devname, ifname, cfg);
         }
+    }
+
+    async setIFaceMACAuthMode(devname: 'wlan5g' | 'wlan2g', ifname: string, mode: 'white' | 'black' | 'deactivate'): Promise<void> {
+        let policy = '';
+        switch (mode) {
+            case 'white':
+                policy = 'accept';
+                break;
+            case 'black':
+                policy = 'reject';
+                break;
+            case 'deactivate':
+                policy = 'open';
+                break;
+            default:
+                throw new MarilError(`Invalid mode value ${mode}`)
+        }
+
+        const query = qs.stringify({
+            tmenu: 'iframe',
+            smenu: 'macauth_bsslist_submit',
+            act: 'apply',
+            policy_mode: policy,
+            m_policy: 'open',
+            m_bssidx: (devname === 'wlan2g' ? 0 : 65536) + parseInt(ifname, 10),
+        });
+        
+        await this.api.post('/sess-bin/timepro.cgi', query, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+
+    async setIFaceMACAuthDevice(devname: 'wlan5g' | 'wlan2g', ifname: string, devices: any): Promise<void> {
+        const query = qs.stringify({
+            tmenu: 'iframe',
+            smenu: 'macauth_dblist_submit',
+            act: 'manual_register',
+            bssidx: (devname === 'wlan2g' ? 0 : 65536) + parseInt(ifname, 10),
+            maxmac_count: 128,
+            rmac_count: 0,
+            manual_mac: devices.macaddr,
+            info: devices.name,
+        });
+
+        this.api.post('/sess-bin/timepro.cgi', query, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+
+    async getIFaceMACAuthMode(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<'white' | 'black' | 'open'> {
+        const res = await this.api.get('/sess-bin/timepro.cgi', {
+            params: {
+                tmenu: 'iframe',
+                smenu: 'macauth_bsslist',
+                wl_mode: 1,
+                bssidx: devname === 'wlan5g' ? 65536 : 0,
+            }
+        });
+
+        ResponseChecker.check(res.data);
+
+        const dom = new JSDOM(res.data);
+
+        const rows = dom.window.document.getElementsByTagName('tr');
+
+        const rowArray: HTMLTableRowElement[] = [];
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+
+            rowArray.push(row);
+        }
+
+        const ifstats = rowArray.map((row) => {
+            const fields = row.getElementsByTagName('input');
+
+            const ret: {mode: string, devname: 'wlan5g' | 'wlan2g', ifname: string} = {mode: '', devname: 'wlan5g', ifname: ''};
+            for (let j = 0; j < fields.length; j++) {
+                const field = fields[j];
+
+                if (field.name === 'm_policy') {
+                    if (field.value === 'accept') {
+                        ret.mode = 'white';
+                    } else if (field.value === 'reject') {
+                        ret.mode = 'black';
+                    } else {
+                        ret.mode = 'deactivate';
+                    }
+                }
+
+                if (field.name === 'm_bssidx') {
+                    const ifidx = parseInt(field.value, 10);
+                    const devidx = Math.trunc(ifidx / 65536);
+
+                    if (devidx === 1) {
+                        ret.devname = 'wlan5g';
+                    } else {
+                        ret.devname = 'wlan2g';
+                    }
+
+                    ret.ifname = `${ifidx - devidx * 65536}`;
+                }
+            }
+
+            return ret;
+        });
+
+        for (const ifstat of ifstats) {
+            if (ifstat.devname === devname && ifstat.ifname === ifname) {
+                return ifstat.mode as 'white' | 'black' | 'open';
+            }
+        }
+
+        throw new MarilError('Interface not found');
+    }
+
+    async getIFaceMACAuthList(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<{mac: string, alias: string}[]> {
+        const res = await this.api.get('/sess-bin/timepro.cgi', {
+            params: {
+                tmenu: 'iframe',
+                smenu: 'macauth_dblist_submit',
+                bssidx: (devname === 'wlan5g' ? 65536 : 0) + parseInt(ifname, 10),
+            }
+        });
+        ResponseChecker.check(res.data);
+
+        const dom = new JSDOM(res.data);
+        const rows = dom.window.document.getElementsByTagName('tr');
+
+        const rowArr: HTMLTableRowElement[] = [];
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            rowArr.push(row);
+        }
+
+        return rowArr.map((row) => {
+            const datas = row.getElementsByTagName('td');
+
+            const mac = datas[0].innerText.replace(/-/g, ':');
+            const alias = datas[1].innerText;
+
+            return {
+                mac: mac,
+                alias: alias,
+            };
+        });
+    }
+
+    async removeIFaceMACAuthDevice(devname: 'wlan5g' | 'wlan2g', ifname: string, macaddr: string) {
+        const list = await this.getIFaceMACAuthList(devname, ifname);
+
+        let off = -1;
+
+        for (let i = 0; i < list.length; i++) {
+            if ([list[i].mac === macaddr]) {
+                off = i;
+                break;
+            }
+        }
+
+        if (off === -1) {
+            throw new MarilError('Mac address not found in list');
+        }
+
+        const payload = qs.stringify({
+            tmenu: 'iframe',
+            smenu: 'macauth_dblist_submit',
+            act: 'unregister',
+            bssidx: (devname === 'wlan5g' ? 65536 : 0) + parseInt(ifname, 10),
+            macmac_count: 50,
+            rmac_count: off,
+            manual_mac: '',
+            info: '',
+            rmacchk: macaddr,
+        });
+
+        await this.api.post('/sess-bin/timepro.cgi', payload, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        });
     }
 }
