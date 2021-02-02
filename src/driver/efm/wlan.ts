@@ -400,7 +400,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         });
     }
 
-    async setIFaceMACAuthDevice(devname: 'wlan5g' | 'wlan2g', ifname: string, devices: any): Promise<void> {
+    async setIFaceMACAuthDevice(devname: 'wlan5g' | 'wlan2g', ifname: string, devices: {macaddr: string, name: string}): Promise<void> {
         const query = qs.stringify({
             tmenu: 'iframe',
             smenu: 'macauth_dblist_submit',
@@ -501,14 +501,16 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         const rowArr: HTMLTableRowElement[] = [];
         for (let i = 0; i < rows.length; i++) {
             const row = rows[i];
+            const datas = row.getElementsByTagName('td');
+            if (datas[1] == null) continue;
             rowArr.push(row);
         }
 
         return rowArr.map((row) => {
             const datas = row.getElementsByTagName('td');
 
-            const mac = datas[0].innerText.replace(/-/g, ':');
-            const alias = datas[1].innerText;
+            const mac = (datas[0].textContent as string).replace(/-/g, ':');
+            const alias = datas[1].textContent as string;
 
             return {
                 mac: mac,
@@ -517,13 +519,13 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         });
     }
 
-    async removeIFaceMACAuthDevice(devname: 'wlan5g' | 'wlan2g', ifname: string, macaddr: string) {
+    async removeIFaceMACAuthDevice(devname: 'wlan5g' | 'wlan2g', ifname: string, macaddr: string): Promise<void> {
         const list = await this.getIFaceMACAuthList(devname, ifname);
 
         let off = -1;
 
         for (let i = 0; i < list.length; i++) {
-            if ([list[i].mac === macaddr]) {
+            if (list[i].mac === macaddr) {
                 off = i;
                 break;
             }
@@ -539,10 +541,10 @@ export class WLANConfigurator extends GenericWLANConfigurator {
             act: 'unregister',
             bssidx: (devname === 'wlan5g' ? 65536 : 0) + parseInt(ifname, 10),
             macmac_count: 50,
-            rmac_count: off,
+            rmac_count: off + 1,
             manual_mac: '',
             info: '',
-            rmacchk: macaddr,
+            rmmacchk: macaddr,
         });
 
         await this.api.post('/sess-bin/timepro.cgi', payload, {
