@@ -1,0 +1,26 @@
+const maril = require('../');
+
+async function main() {
+    const efmController = new maril.EFMControllerFactory('http://192.168.0.1/');
+    await efmController.authenticate({id: 'admin', pass: 'admin'});
+    const wlanConfigurator = efmController.getWLANConfigurator();
+    await wlanConfigurator.setIFaceMACAuthMode('wlan5g', 0, 'white');
+    await wlanConfigurator.setIFaceMACAuthDevice('wlan5g', 0, {
+        macaddr: '00:01:02:03:04:05',
+        name: 'testmac',
+    });
+
+    // Wait for configuration request
+    await new Promise((ful, _rej) => {
+        setTimeout(() => { ful() }, 100);
+    });
+
+    let res = await wlanConfigurator.getIFaceMACAuthList('wlan5g', 0);
+    console.log(res);
+    await wlanConfigurator.removeIFaceMACAuthDevice('wlan5g', 0, '00:01:02:03:04:05');
+    res = await wlanConfigurator.getIFaceMACAuthList('wlan5g', 0);
+    console.log(res);
+    await wlanConfigurator.setIFaceMACAuthMode('wlan5g', 0, 'deactivate');
+}
+
+main();
