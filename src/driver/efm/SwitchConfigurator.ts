@@ -4,6 +4,7 @@ import qs from 'qs';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { EthernetPort } from './EthernetPort';
 import { ResponseChecker } from './ResponseChecker';
+import { VLAN } from './VLAN';
 
 /**
  * Ethernet switch configurator
@@ -129,5 +130,17 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
             },
         });
         ResponseChecker.check(res.data);
+    }
+
+    public async getAllVLAN(): Promise<VLAN[]> {
+        return []; // TODO: Implement me
+    }
+
+    public async getVLAN(vid: number): Promise<VLAN> {
+        return new VLAN('port-based'); //TODO: Implement me
+    }
+
+    public async setVLAN(vlan: VLAN): Promise<void> {
+        //
     }
 }
