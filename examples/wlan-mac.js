@@ -4,8 +4,9 @@ async function main() {
     const efmController = new maril.EFMControllerFactory('http://192.168.0.1/');
     await efmController.authenticate({id: 'admin', pass: 'admin'});
     const wlanConfigurator = efmController.getWLANConfigurator();
-    await wlanConfigurator.setIFaceMACAuthMode('wlan5g', 0, 'white');
-    await wlanConfigurator.setIFaceMACAuthDevice('wlan5g', 0, {
+    const deviceList = await wlanConfigurator.getDeviceList();
+    await wlanConfigurator.setIFaceMACAuthMode(deviceList[1], 0, 'white');
+    await wlanConfigurator.setIFaceMACAuthDevice(deviceList[1], 0, {
         macaddr: '00:01:02:03:04:05',
         name: 'testmac',
     });
@@ -15,12 +16,12 @@ async function main() {
         setTimeout(() => { ful() }, 100);
     });
 
-    let res = await wlanConfigurator.getIFaceMACAuthList('wlan5g', 0);
+    let res = await wlanConfigurator.getIFaceMACAuthList(deviceList[1], 0);
     console.log(res);
-    await wlanConfigurator.removeIFaceMACAuthDevice('wlan5g', 0, '00:01:02:03:04:05');
-    res = await wlanConfigurator.getIFaceMACAuthList('wlan5g', 0);
+    await wlanConfigurator.removeIFaceMACAuthDevice(deviceList[1], 0, '00:01:02:03:04:05');
+    res = await wlanConfigurator.getIFaceMACAuthList(deviceList[1], 0);
     console.log(res);
-    await wlanConfigurator.setIFaceMACAuthMode('wlan5g', 0, 'deactivate');
+    await wlanConfigurator.setIFaceMACAuthMode(deviceList[1], 0, 'deactivate');
 }
 
 main();
