@@ -95,7 +95,11 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_driver_generic_switchconfigurator_.switchconfigurator.html#getallvlan" class="tsd-kind-icon">get<wbr>AllVLAN</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_driver_generic_switchconfigurator_.switchconfigurator.html#getswitchports" class="tsd-kind-icon">get<wbr>Switch<wbr>Ports</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_driver_generic_switchconfigurator_.switchconfigurator.html#getvlan" class="tsd-kind-icon">getVLAN</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_driver_generic_switchconfigurator_.switchconfigurator.html#setswitchport" class="tsd-kind-icon">set<wbr>Switch<wbr>Port</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_driver_generic_switchconfigurator_.switchconfigurator.html#setvlan" class="tsd-kind-icon">setVLAN</a></li>
 							</ul>
 						</section>
 					</div>
@@ -113,7 +117,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/9ade9e4/src/driver/generic/SwitchConfigurator.ts#L3">src/driver/generic/SwitchConfigurator.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/8b137b3/src/driver/generic/SwitchConfigurator.ts#L4">src/driver/generic/SwitchConfigurator.ts:4</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_driver_generic_switchconfigurator_.switchconfigurator.html" class="tsd-signature-type">SwitchConfigurator</a></h4>
@@ -124,6 +128,23 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getallvlan" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> get<wbr>AllVLAN</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>AllVLAN<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_driver_generic_vlan_.vlan.html" class="tsd-signature-type">VLAN</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/8b137b3/src/driver/generic/SwitchConfigurator.ts#L12">src/driver/generic/SwitchConfigurator.ts:12</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_driver_generic_vlan_.vlan.html" class="tsd-signature-type">VLAN</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getswitchports" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> get<wbr>Switch<wbr>Ports</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -133,10 +154,82 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/9ade9e4/src/driver/generic/SwitchConfigurator.ts#L8">src/driver/generic/SwitchConfigurator.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/8b137b3/src/driver/generic/SwitchConfigurator.ts#L9">src/driver/generic/SwitchConfigurator.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_driver_generic_ethernetport_.ethernetport.html" class="tsd-signature-type">EthernetPort</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getvlan" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> getVLAN</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">getVLAN<span class="tsd-signature-symbol">(</span>vid<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_driver_generic_vlan_.vlan.html" class="tsd-signature-type">VLAN</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/8b137b3/src/driver/generic/SwitchConfigurator.ts#L13">src/driver/generic/SwitchConfigurator.ts:13</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>vid: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_driver_generic_vlan_.vlan.html" class="tsd-signature-type">VLAN</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setswitchport" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> set<wbr>Switch<wbr>Port</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Switch<wbr>Port<span class="tsd-signature-symbol">(</span>port<span class="tsd-signature-symbol">: </span><a href="_driver_generic_ethernetport_.ethernetport.html" class="tsd-signature-type">EthernetPort</a>, portIdx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/8b137b3/src/driver/generic/SwitchConfigurator.ts#L10">src/driver/generic/SwitchConfigurator.ts:10</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>port: <a href="_driver_generic_ethernetport_.ethernetport.html" class="tsd-signature-type">EthernetPort</a></h5>
+								</li>
+								<li>
+									<h5>portIdx: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setvlan" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> setVLAN</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">setVLAN<span class="tsd-signature-symbol">(</span>vlan<span class="tsd-signature-symbol">: </span><a href="_driver_generic_vlan_.vlan.html" class="tsd-signature-type">VLAN</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/8b137b3/src/driver/generic/SwitchConfigurator.ts#L14">src/driver/generic/SwitchConfigurator.ts:14</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>vlan: <a href="_driver_generic_vlan_.vlan.html" class="tsd-signature-type">VLAN</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -164,7 +257,19 @@
 								<a href="_driver_generic_switchconfigurator_.switchconfigurator.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_driver_generic_switchconfigurator_.switchconfigurator.html#getallvlan" class="tsd-kind-icon">get<wbr>AllVLAN</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_driver_generic_switchconfigurator_.switchconfigurator.html#getswitchports" class="tsd-kind-icon">get<wbr>Switch<wbr>Ports</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_driver_generic_switchconfigurator_.switchconfigurator.html#getvlan" class="tsd-kind-icon">getVLAN</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_driver_generic_switchconfigurator_.switchconfigurator.html#setswitchport" class="tsd-kind-icon">set<wbr>Switch<wbr>Port</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_driver_generic_switchconfigurator_.switchconfigurator.html#setvlan" class="tsd-kind-icon">setVLAN</a>
 							</li>
 						</ul>
 					</li>
