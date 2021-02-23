@@ -6,6 +6,7 @@ export abstract class WLANConfigurator {
         //
     }
 
+    abstract getDeviceList(): Promise<string[]>;
     abstract getDeviceCfg(devname: string): Promise<WLANDevConfiguration>;
     abstract setDeviceCfg(devname: string, cfg: WLANDevConfiguration): Promise<void>;
     abstract getIFaceCfg(devname: string, ifname: string): Promise<WLANIFaceCfg>;
