@@ -121,18 +121,61 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         this.api = axios;
     }
 
+    public async getDeviceList(): Promise<string[]> {
+        const res = await this.api.get('/sess-bin/timepro.cgi?tmenu=menu_titlebar&smenu=wirelessconf_macauth');
+        ResponseChecker.check(res.data);
+
+        const dom = new JSDOM(res.data);
+        const iflist = dom.window.document.body.getElementsByTagName('select')[0].childNodes;
+
+        const ifacelist: string[] = [];
+        for (let i = 0; i < iflist.length; i++) {
+            const iface = iflist[i];
+            let ifname = (iface as Element).innerHTML;
+            if (ifname.match(/2.4[ ]*GHz$/) != null) {
+                ifname = 'wlan2g';
+            } else if (ifname.match(/5[ ]*GHz$/) != null) {
+                ifname = 'wlan5g';
+            } else if (ifname.match(/5[ ]*GHz[ ]*\(([0-9]+)\)/) != null) {
+                const match = ifname.match(/5[ ]*GHz[ ]*\(([0-9]+)\)/);
+                if (match == null) {
+                    throw new MarilError('Huh?');
+                }
+                const idx = parseInt(match[1], 10);
+
+                ifname = `wlan5g_${idx}`;
+            } else {
+                console.warn(`[WARN] Interface doesnot fit in given category: ${ifname}`);
+                console.warn('Passing through it.');
+            }
+            ifacelist[parseInt((iface as any).value, 10)] = ifname;
+        }
+
+        return ifacelist;
+    }
+
+    private async getDeviceOffset(devname: string): Promise<number> {
+        const deviceList = await this.getDeviceList();
+        const off = deviceList.indexOf(devname);
+        if (off < 0) {
+            throw new MarilError('WLAN device does not exist.');
+        }
+
+        return off;
+    }
+
     /**
      * get raw config from EFM router
      * 
-     * @param devname - device name. wlan5g and wlan2g is possible value.
+     * @param devname - device name.
      * @param ifname - interface number as string. 0 to 3.
      */
     //eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private async getRawConfig(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<any> {
+    private async getRawConfig(devname: string, ifname: string): Promise<any> {
         const params = {
             tmenu: 'iframe',
             smenu: 'hiddenwlsetup',
-            wlmode: (devname === 'wlan5g') ? 1 : 0, // Crude but it will work
+            wlmode: await this.getDeviceOffset(devname),
             action: 'changebssid',
             sidx: parseInt(ifname, 10),
         }
@@ -230,10 +273,10 @@ export class WLANConfigurator extends GenericWLANConfigurator {
      * * WLANDevConfiguration.country - partially, WIP. do not use value other then KR (yet)
      * * WLANDevConfiguration.beacon_int
      * 
-     * @param devname - device name. wlan5g and wlan2g is possible value.
+     * @param devname - device name.
      * @returns WLANDevConfiguration array
      */
-    async getDeviceCfg(devname: 'wlan5g' | 'wlan2g'): Promise<WLANDevConfiguration> {
+    async getDeviceCfg(devname: string): Promise<WLANDevConfiguration> {
         const devcfg = await this.getRawConfig(devname, '0') as DeviceCfg;
         const wlanDevCfg = new WLANDevConfiguration();
         wlanDevCfg.disabled = devcfg.run === '1';
@@ -263,14 +306,14 @@ export class WLANConfigurator extends GenericWLANConfigurator {
      * * WLANDevConfiguration.country - WIP, does not support value other then KR
      * * WLANDevConfiguration.beacon_int
      * 
-     * @param devname - Device name. wlan5g and wlan2g is supported.
+     * @param devname - Device name.
      * @param cfg - WLANDevConfiguration object. see notes for supported feature.
      */
-    async setDeviceCfg(devname: 'wlan5g' | 'wlan2g', cfg: WLANDevConfiguration): Promise<void> {
+    async setDeviceCfg(devname: string, cfg: WLANDevConfiguration): Promise<void> {
         const currentCfg = await this.getRawConfig(devname, '0');
         const baseCfg = Object.assign(Object.assign({}, templateCfg), currentCfg);
-        baseCfg.wlmode = devname === 'wlan5g' ? 1 : 0;
-        baseCfg.wlmodetxt = devname === 'wlan5g' ? '5g' : '2g';
+        baseCfg.wlmode = await this.getDeviceOffset(devname);
+        baseCfg.wlmodetxt = devname.match(/wlan5g/) != null ? '5g' : '2g';
         baseCfg.action = 'allsubmit'; // TODO: Support WLAN shutdown
         baseCfg.sidx = 0; // We are configuring master wlan
         baseCfg.run = cfg.disabled ? 0 : 1,
@@ -305,10 +348,10 @@ export class WLANConfigurator extends GenericWLANConfigurator {
      * * WLANIFaceCfg.encryption
      * * WLANIFaceCfg.key
      * 
-     * @param devname - device name. wlan5g and wlan2g is possible value.
+     * @param devname - device name.
      * @param ifname - interface number as string. 0 to 3.
      */
-    async getIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<WLANIFaceCfg> {
+    async getIFaceCfg(devname: string, ifname: string): Promise<WLANIFaceCfg> {
         const ifacecfg = await this.getRawConfig(devname, ifname) as IFaceCfg;
         const wlanIfaceCfg = new WLANIFaceCfg();
         
@@ -337,11 +380,11 @@ export class WLANConfigurator extends GenericWLANConfigurator {
      * WLANIFaceCfg.encryption
      * WLANIFaceCfg.key
      * 
-     * @param devname - device name. wlan5g and wlan2g is possible value.
+     * @param devname - device name.
      * @param ifname - interface number as string. 0 to 3.
      * @param cfg - WLANIfaceCfg. see notes for capability
      */
-    async setIFaceCfg(devname: 'wlan5g' | 'wlan2g', ifname: string, cfg: WLANIFaceCfg): Promise<void> {
+    async setIFaceCfg(devname: string, ifname: string, cfg: WLANIFaceCfg): Promise<void> {
         const currentCfg = await this.getRawConfig(devname, ifname);
         const baseCfg = Object.assign(Object.assign({}, templateCfg), currentCfg);
 
@@ -368,7 +411,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         }
     }
 
-    async setIFaceMACAuthMode(devname: 'wlan5g' | 'wlan2g', ifname: string, mode: 'white' | 'black' | 'deactivate'): Promise<void> {
+    async setIFaceMACAuthMode(devname: string, ifname: string, mode: 'white' | 'black' | 'deactivate'): Promise<void> {
         let policy = '';
         switch (mode) {
             case 'white':
@@ -390,7 +433,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
             act: 'apply',
             policy_mode: policy,
             m_policy: 'open',
-            m_bssidx: (devname === 'wlan2g' ? 0 : 65536) + parseInt(ifname, 10),
+            m_bssidx: (await this.getDeviceOffset(devname)) * 65536 + parseInt(ifname, 10),
         });
         
         await this.api.post('/sess-bin/timepro.cgi', query, {
@@ -400,12 +443,12 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         });
     }
 
-    async setIFaceMACAuthDevice(devname: 'wlan5g' | 'wlan2g', ifname: string, devices: {macaddr: string, name: string}): Promise<void> {
+    async setIFaceMACAuthDevice(devname: string, ifname: string, devices: {macaddr: string, name: string}): Promise<void> {
         const query = qs.stringify({
             tmenu: 'iframe',
             smenu: 'macauth_dblist_submit',
             act: 'manual_register',
-            bssidx: (devname === 'wlan2g' ? 0 : 65536) + parseInt(ifname, 10),
+            bssidx: (await this.getDeviceOffset(devname)) * 65536 + parseInt(ifname, 10),
             maxmac_count: 128,
             rmac_count: 0,
             manual_mac: devices.macaddr,
@@ -419,13 +462,13 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         });
     }
 
-    async getIFaceMACAuthMode(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<'white' | 'black' | 'open'> {
+    async getIFaceMACAuthMode(devname: string, ifname: string): Promise<'white' | 'black' | 'open'> {
         const res = await this.api.get('/sess-bin/timepro.cgi', {
             params: {
                 tmenu: 'iframe',
                 smenu: 'macauth_bsslist',
                 wl_mode: 1,
-                bssidx: devname === 'wlan5g' ? 65536 : 0,
+                bssidx: (await this.getDeviceOffset(devname)) * 65536 + parseInt(ifname, 10),
             }
         });
 
@@ -442,10 +485,11 @@ export class WLANConfigurator extends GenericWLANConfigurator {
             rowArray.push(row);
         }
 
+        const devlist = await this.getDeviceList();
         const ifstats = rowArray.map((row) => {
             const fields = row.getElementsByTagName('input');
 
-            const ret: {mode: string, devname: 'wlan5g' | 'wlan2g', ifname: string} = {mode: '', devname: 'wlan5g', ifname: ''};
+            const ret: {mode: string, devname: string, ifname: string} = {mode: '', devname: '', ifname: ''};
             for (let j = 0; j < fields.length; j++) {
                 const field = fields[j];
 
@@ -463,12 +507,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
                     const ifidx = parseInt(field.value, 10);
                     const devidx = Math.trunc(ifidx / 65536);
 
-                    if (devidx === 1) {
-                        ret.devname = 'wlan5g';
-                    } else {
-                        ret.devname = 'wlan2g';
-                    }
-
+                    ret.devname = devlist[devidx]
                     ret.ifname = `${ifidx - devidx * 65536}`;
                 }
             }
@@ -485,12 +524,12 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         throw new MarilError('Interface not found');
     }
 
-    async getIFaceMACAuthList(devname: 'wlan5g' | 'wlan2g', ifname: string): Promise<{mac: string, alias: string}[]> {
+    async getIFaceMACAuthList(devname: string, ifname: string): Promise<{mac: string, alias: string}[]> {
         const res = await this.api.get('/sess-bin/timepro.cgi', {
             params: {
                 tmenu: 'iframe',
                 smenu: 'macauth_dblist_submit',
-                bssidx: (devname === 'wlan5g' ? 65536 : 0) + parseInt(ifname, 10),
+                bssidx: (await this.getDeviceOffset(devname)) * 65536 + parseInt(ifname, 10),
             }
         });
         ResponseChecker.check(res.data);
@@ -519,7 +558,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
         });
     }
 
-    async removeIFaceMACAuthDevice(devname: 'wlan5g' | 'wlan2g', ifname: string, macaddr: string): Promise<void> {
+    async removeIFaceMACAuthDevice(devname: string, ifname: string, macaddr: string): Promise<void> {
         const list = await this.getIFaceMACAuthList(devname, ifname);
 
         let off = -1;
@@ -539,7 +578,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
             tmenu: 'iframe',
             smenu: 'macauth_dblist_submit',
             act: 'unregister',
-            bssidx: (devname === 'wlan5g' ? 65536 : 0) + parseInt(ifname, 10),
+            bssidx: (await this.getDeviceOffset(devname)) * 65536 + parseInt(ifname, 10),
             macmac_count: 50,
             rmac_count: off + 1,
             manual_mac: '',
