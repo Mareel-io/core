@@ -35,7 +35,7 @@ export class MIBLoader {
             module: string,
             symbol: string,
             oid: string,
-        },
+        }[],
     } = {};
 
     private file: string;
@@ -88,11 +88,20 @@ export class MIBLoader {
                     type: sym.type,
                 };
     
-                this.symmap[`${ent.name}:${sym.symbol}`] = {
+                if (this.symmap[`${ent.name}:${sym.symbol}`] == null) {
+                    this.symmap[`${ent.name}:${sym.symbol}`] = [];
+                }
+                this.symmap[`${ent.name}:${sym.symbol}`].push({
                     module: ent.name,
                     symbol: sym.symbol,
                     oid: sym.oid,
-                };
+                });
+
+                this.symmap[`${sym.symbol}`].push({
+                    module: ent.name,
+                    symbol: sym.symbol,
+                    oid: sym.oid,
+                });
             }
         }
     }
@@ -119,11 +128,11 @@ export class MIBLoader {
         return acc;
     }
 
-    public lookupOIDBySymbol(symbol: string, module: ?string): string {
+    public lookupOIDBySymbol(symbol: string, module: string | undefined): {module: string, symbol: string, oid: string}[] {
         if (module == null) {
-            //
+            return this.symmap[symbol];
         } else {
-            //
+            return this.symmap[`${module}:${symbol}`];
         }
     }
 }
