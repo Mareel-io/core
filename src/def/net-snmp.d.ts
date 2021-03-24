@@ -1,8 +1,8 @@
 // TODO: Remove all the ANY
 
 interface SNMPSession {
-    get: (oids: string[], cb: (err: Error, val: any) => any) => void,
-    walk: (oid: string, depth: number, walkcb: (varbinds: {oid: string, value: any}[]) => void, cb: (err: Error) => void) => void,
+    get: (oids: string[], cb: (err: Error, val: number | string | Buffer) => void) => void,
+    walk: (oid: string, depth: number, walkcb: (varbinds: {oid: string, type: number, value: number | string | Buffer}[]) => void, cb: (err: Error) => void) => void,
 };
 
 declare module 'net-snmp' {
