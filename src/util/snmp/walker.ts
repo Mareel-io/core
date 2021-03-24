@@ -12,7 +12,7 @@ interface SNMPConfig {
 export class SNMPWalker {
     private cfg: SNMPConfig;
     private mibLoader: MIBLoader;
-    private snmpSession: any;
+    private snmpSession: SNMPSession | undefined;
     private target: string;
 
     constructor(target: string, cfg: SNMPConfig, mibLoader: MIBLoader) {
@@ -57,10 +57,22 @@ export class SNMPWalker {
         });
     }
 
+    public async get(oid: string): Promise<any> {
+        return new Promise((ful, rej) => {
+            this.snmpSession?.get([oid], (err, val) => {
+                if (err == null) {
+                    ful(val);
+                } else {
+                    rej(err);
+                }
+            });
+        });
+    }
+
     public async walk(oid: string, depth: number): Promise<{oid: string, value: any}[]> {
         const valuePairs: {oid: string, value: any}[] = [];
         return new Promise((ful, rej) => {
-            this.snmpSession.walk(oid, depth, (varbinds: {oid: string, value: any}[]) => {
+            this.snmpSession?.walk(oid, depth, (varbinds) => {
                 varbinds.forEach((elem) => {
                     valuePairs.push({
                         oid: elem.oid,
