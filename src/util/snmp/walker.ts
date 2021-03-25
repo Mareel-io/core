@@ -57,7 +57,7 @@ export class SNMPWalker {
         });
     }
 
-    public async get(oid: string): Promise<any> {
+    public async get(oid: string): Promise<number | string | Buffer> {
         return new Promise((ful, rej) => {
             this.snmpSession?.get([oid], (err, val) => {
                 if (err == null) {
@@ -70,12 +70,13 @@ export class SNMPWalker {
     }
 
     public async walk(oid: string, depth: number): Promise<{oid: string, value: any}[]> {
-        const valuePairs: {oid: string, value: any}[] = [];
+        const valuePairs: {oid: string, type: string, value: number | string | Buffer}[] = [];
         return new Promise((ful, rej) => {
             this.snmpSession?.walk(oid, depth, (varbinds) => {
                 varbinds.forEach((elem) => {
                     valuePairs.push({
                         oid: elem.oid,
+                        type: snmp.ObjectType[elem.type],
                         value: elem.value,
                     });
                 });
