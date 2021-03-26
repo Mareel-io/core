@@ -81,15 +81,20 @@ export class MIBLoader {
                 oidEnt.trace = oid;
                 oidEnt.module = ent.name;
                 oidEnt.symbol = sym.symbol;
-    
-                this.oidmap[sym.oid] = {
-                    module: ent.name,
-                    fullSymbol: `${ent.name}:${sym.symbol}`,
-                    type: sym.type,
-                };
+   
+                if (this.oidmap[sym.oid] == null) {
+                    this.oidmap[sym.oid] = {
+                        module: ent.name,
+                        fullSymbol: `${ent.name}:${sym.symbol}`,
+                        type: sym.type,
+                    };
+                }
     
                 if (this.symmap[`${ent.name}:${sym.symbol}`] == null) {
                     this.symmap[`${ent.name}:${sym.symbol}`] = [];
+                }
+                if (this.symmap[`${sym.symbol}`] == null) {
+                    this.symmap[`${sym.symbol}`] = [];
                 }
                 this.symmap[`${ent.name}:${sym.symbol}`].push({
                     module: ent.name,
@@ -110,7 +115,7 @@ export class MIBLoader {
         const oidArr = oid.split('.').map((elem) => parseInt(elem, 10));
         let tmp = this.oidtree;
         let acc = '';
-        for(let i = 0; i < oid.length; i++) {
+        for(let i = 0; i < oidArr.length; i++) {
             if (tmp != undefined) {
                 tmp = tmp[oidArr[i]];
             }
