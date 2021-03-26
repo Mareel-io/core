@@ -1,7 +1,7 @@
 import snmp from 'net-snmp';
 import { MIBLoader } from './mibloader';
 
-interface SNMPConfig {
+export interface SNMPClientConfig {
     id: string,
     authProtocol: undefined | null | 'sha' | 'md5',
     authKey: undefined | null | string,
@@ -9,20 +9,26 @@ interface SNMPConfig {
     privatcyKey: undefined | null | string,
 };
 
-export class SNMPWalker {
-    private cfg: SNMPConfig;
+export interface SNMPResult {
+    oid: string,
+    oidArr: number[],
+    type: string,
+    value: number | string | Buffer,
+};
+
+export class SNMPClient {
+    private cfg: SNMPClientConfig;
     private mibLoader: MIBLoader;
     private snmpSession: SNMPSession | undefined;
     private target: string;
 
-    constructor(target: string, cfg: SNMPConfig, mibLoader: MIBLoader) {
+    constructor(target: string, cfg: SNMPClientConfig, mibLoader: MIBLoader) {
         this.cfg = cfg;
         this.mibLoader = mibLoader;
         this.target = target;
     }
 
     public connect() {
-        // TODO: Find way to translate SNMPconfig to createV3Session API
         let level = snmp.SecurityLevel.noAuthNoPriv;
         let authProtocol = null;
         let privProtocol = null;
@@ -69,13 +75,14 @@ export class SNMPWalker {
         });
     }
 
-    public async walk(oid: string, depth: number): Promise<{oid: string, value: any}[]> {
-        const valuePairs: {oid: string, type: string, value: number | string | Buffer}[] = [];
+    public async walk(oid: string, depth: number): Promise<SNMPResult[]> {
+        const valuePairs: SNMPResult[] = [];
         return new Promise((ful, rej) => {
             this.snmpSession?.walk(oid, depth, (varbinds) => {
                 varbinds.forEach((elem) => {
                     valuePairs.push({
                         oid: elem.oid,
+                        oidArr: elem.oid.split('.').map(elem => parseInt(elem, 10)),
                         type: snmp.ObjectType[elem.type],
                         value: elem.value,
                     });
