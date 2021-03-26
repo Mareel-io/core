@@ -27,11 +27,12 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         const resps = await this.snmp.subtree('1.3.6.1.2.1.31.1.1.1.1', 100);
         const ifs: {[key: number]: string} = {};
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < resps.length; i++) {
             const elem = resps[i];
-            const ifidx = elem.oidArr[elem.oidArr.length - 1];
+            const splittedOID = elem.oid.split('.');
+            const ifidx = parseInt(splittedOID[splittedOID.length - 1], 10);
 
-            ifs[ifidx] = elem.value as string;
+            ifs[ifidx] = elem.value.toString();
         }
 
         return ifs;
@@ -42,12 +43,15 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         console.log(resps);
 
         for (let i = 0; i < resps.length; i++) {
-            //
+            const elem = resps[i];
+            const splittedOID = elem.oid.split('.');
+            const ifidx = parseInt(splittedOID[splittedOID.length - 1], 10);
         }
         return {};
     }
 
     public async getSwitchPorts(): Promise<EthernetPort[]> {
+        console.log(await this.getIFNames());
         await this.getIFProperties();
         return [];
         //throw new Error('Method not implemented.');
