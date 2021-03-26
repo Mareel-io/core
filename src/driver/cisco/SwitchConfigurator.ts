@@ -24,7 +24,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     }
 
     private async getIFNames(): Promise<{[key: number]: string}> {
-        const resps = await this.snmp.walk('1.3.6.1.2.1.31.1.1.1.1', 10);
+        const resps = await this.snmp.subtree('1.3.6.1.2.1.31.1.1.1.1', 100);
         const ifs: {[key: number]: string} = {};
 
         for (let i = 0; i < length; i++) {
@@ -37,17 +37,20 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         return ifs;
     }
 
-    private async getIFProperties(): Promise<{[key: number]: IFProperties> {
-        const resps = await this.snmp.walk('1.3.6.1.2.1.2', 10);
+    private async getIFProperties(): Promise<{[key: number]: IFProperties}> {
+        const resps = await this.snmp.subtree('1.3.6.1.2.1.2', 100);
+        console.log(resps);
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < resps.length; i++) {
             //
         }
         return {};
     }
 
-    public getSwitchPorts(): Promise<EthernetPort[]> {
-        throw new Error('Method not implemented.');
+    public async getSwitchPorts(): Promise<EthernetPort[]> {
+        await this.getIFProperties();
+        return [];
+        //throw new Error('Method not implemented.');
     }
     public setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
         throw new Error('Method not implemented.');
