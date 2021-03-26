@@ -11,8 +11,7 @@ export interface SNMPClientConfig {
 
 export interface SNMPResult {
     oid: string,
-    oidArr: number[],
-    oidHumanReadable: string,
+    oidIRI: string,
     type: string,
     value: number | string | Buffer,
 };
@@ -83,8 +82,7 @@ export class SNMPClient {
                 varbinds.forEach((elem) => {
                     valuePairs.push({
                         oid: elem.oid,
-                        oidArr: elem.oid.split('.').map(elem => parseInt(elem, 10)),
-                        oidHumanReadable: this.mibLoader.resolveOID(elem.oid),
+                        oidIRI: this.mibLoader.resolveOID(elem.oid),
                         type: snmp.ObjectType[elem.type],
                         value: elem.value,
                     });

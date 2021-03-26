@@ -120,13 +120,13 @@ export class MIBLoader {
                 tmp = tmp[oidArr[i]];
             }
             if (tmp == undefined) {
-                acc += `.[${oidArr[i]}]`;
+                acc += `/${oidArr[i]}`;
                 continue;
             }
             if (tmp.symbol != null) {
-                acc += `.${tmp.symbol}`;
+                acc += `/${tmp.symbol}`;
             } else {
-                acc += `.[${oidArr[i]}]`;
+                acc += `/${oidArr[i]}`;
             }
         }
 
