@@ -2,7 +2,8 @@
 
 interface SNMPSession {
     get: (oids: string[], cb: (err: Error, val: number | string | Buffer) => void) => void,
-    walk: (oid: string, depth: number, walkcb: (varbinds: {oid: string, type: number, value: number | string | Buffer}[]) => void, cb: (err: Error) => void) => void,
+    walk: (oid: string, maxRepetitions: number, walkcb: (varbinds: {oid: string, type: number, value: number | string | Buffer}[]) => void, cb: (err: Error) => void) => void,
+    subtree: (oid: string, maxRepetitions: number, walkcb: (varbinds: {oid: string, type: number, value: number | string | Buffer}[]) => void, cb: (err: Error) => void) => void,
 };
 
 declare module 'net-snmp' {
