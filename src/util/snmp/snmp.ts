@@ -6,12 +6,13 @@ export interface SNMPClientConfig {
     authProtocol: undefined | null | 'sha' | 'md5',
     authKey: undefined | null | string,
     privacyProtocol: undefined | null | 'des' | 'aes',
-    privatcyKey: undefined | null | string,
+    privacyKey: undefined | null | string,
 };
 
 export interface SNMPResult {
     oid: string,
     oidArr: number[],
+    oidHumanReadable: string,
     type: string,
     value: number | string | Buffer,
 };
@@ -59,7 +60,7 @@ export class SNMPClient {
             authProtocol: authProtocol,
             authKey: this.cfg.authKey,
             privProtocol: privProtocol,
-            privKey: this.cfg.privatcyKey,
+            privKey: this.cfg.privacyKey,
         });
     }
 
@@ -75,14 +76,15 @@ export class SNMPClient {
         });
     }
 
-    public async walk(oid: string, depth: number): Promise<SNMPResult[]> {
+    public async subtree(oid: string, depth: number): Promise<SNMPResult[]> {
         const valuePairs: SNMPResult[] = [];
         return new Promise((ful, rej) => {
-            this.snmpSession?.walk(oid, depth, (varbinds) => {
+            this.snmpSession?.subtree(oid, depth, (varbinds) => {
                 varbinds.forEach((elem) => {
                     valuePairs.push({
                         oid: elem.oid,
                         oidArr: elem.oid.split('.').map(elem => parseInt(elem, 10)),
+                        oidHumanReadable: this.mibLoader.resolveOID(elem.oid),
                         type: snmp.ObjectType[elem.type],
                         value: elem.value,
                     });
