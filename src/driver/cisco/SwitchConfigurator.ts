@@ -13,7 +13,16 @@ import { VLAN } from '../generic/VLAN';
 //
 
 interface IFProperties {
-    //
+    description: string,
+    mtu: number,
+    speed: number,
+    physAddr: string,
+    allowAdm: number,
+    enabled: number,
+    inOctets: number,
+    inError: number,
+    outOctets: number,
+    outError: number,
 };
 
 export class SwitchConfigurator extends GenericSwitchConfigurator {
@@ -21,6 +30,16 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     constructor(snmp: SNMPClient) {
         super();
         this.snmp = snmp;
+    }
+
+    private convertHWAddr(rawaddr: Buffer) {
+        return rawaddr.reduce((acc: string, val): string => {
+            let digit = val.toString(16).toLowerCase();
+            if (digit.length === 1) {
+                digit = '0' + digit;
+            }
+            return `${acc}:${digit}`;
+        }, '').substr(1);
     }
 
     private async getIFNames(): Promise<{[key: number]: string}> {
@@ -42,10 +61,106 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         const resps = await this.snmp.subtree('1.3.6.1.2.1.2', 100);
         console.log(resps);
 
+        const ret: {[key: number]: IFProperties} = {};
+
         for (let i = 0; i < resps.length; i++) {
             const elem = resps[i];
             const splittedOID = elem.oid.split('.');
+            const splittedIRI = elem.oidIRI.split('/');
             const ifidx = parseInt(splittedOID[splittedOID.length - 1], 10);
+            const propSubOID = parseInt(splittedOID[splittedOID.length - 2], 10);
+            const propSub = splittedIRI[splittedOID.length - 1];
+
+            if (elem.oid === '1.3.6.1.2.1.2.1.0') {
+                // IFace cnt
+            } else if (elem.oid.startsWith('1.3.6.1.2.1.2.2.1.') == true) {
+                if (ret[ifidx] == null) {
+                    ret[ifidx] = {} as IFProperties;
+                }
+
+                switch(propSubOID) {
+                    case 1:
+                        // ifIndex
+                        break;
+                    case 2:
+                        // ifDescr
+                        ret[ifidx].description = (elem.value as Buffer).toString('utf-8');
+                        break;
+                    case 3:
+                        // ifType
+                        //console.log(elem.value);
+                        break;
+                    case 4:
+                        // ifMtu
+                        ret[ifidx].mtu = elem.value as number;
+                        break;
+                    case 5:
+                        // ifSpeed
+                        ret[ifidx].speed = elem.value as number;
+                        break;
+                    case 6:
+                        // ifPhysAddress
+                        ret[ifidx].physAddr = this.convertHWAddr(elem.value as Buffer);
+                        break;
+                    case 7:
+                        // ifAdminStatus
+                        ret[ifidx].allowAdm = elem.value as number;
+                        break;
+                    case 8:
+                        // ifOperStatus
+                        ret[ifidx].enabled = elem.value as number;
+                        break;
+                    case 9:
+                        // ifLastChange
+                        console.log(elem.value);
+                        break;
+                    case 10:
+                        // ifInOctets
+                        ret[ifidx].inOctets = elem.value as number;
+                        break;
+                    case 11:
+                        // ifInUcastPkts
+                        break;
+                    case 12:
+                        // ifInNUcastPkts
+                        break;
+                    case 13:
+                        // ifInDiscards
+                        break;
+                    case 14:
+                        // ifInErrors
+                        ret[ifidx].inError = elem.value as number;
+                        break;
+                    case 15:
+                        // ifInUnknownProtos
+                        break;
+                    case 16:
+                        // ifOutOctets
+                        ret[ifidx].outOctets = elem.value as number;
+                        break;
+                    case 17:
+                        // ifOutUcastPkts
+                        break;
+                    case 18:
+                        // ifOutNUcastPkts
+                        break;
+                    case 19:
+                        // ifOutDiscards
+                        break;
+                    case 20:
+                        // ifOutErrors
+                        ret[ifidx].outError = elem.value as number;
+                        break;
+                    case 22:
+                        // ifSpecific
+                        break;
+                    default:
+                        console.log(`${propSubOID} => ${propSub}`);
+                }
+            } else {
+                throw new Error(`Error: Unknown OID ${elem.oid}, ${elem.oidIRI}`);
+            }
+
         }
         return {};
     }
@@ -54,7 +169,6 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         console.log(await this.getIFNames());
         await this.getIFProperties();
         return [];
-        //throw new Error('Method not implemented.');
     }
     public setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
         throw new Error('Method not implemented.');
