@@ -24,7 +24,8 @@
     "lint": "eslint ./src/",
     "test": "yarn lint && mocha -r node_modules/ts-node/register 'test/**/*.ts'",
     "clean": "rm -rf ./dist",
-    "doc": "typedoc"
+    "doc": "typedoc",
+    "postinstall": "./prepare.sh"
   },
   "devDependencies": {
     "@microsoft/tsdoc": "^0.12.24",
