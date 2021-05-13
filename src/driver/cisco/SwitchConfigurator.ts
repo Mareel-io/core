@@ -1,7 +1,9 @@
 import { SNMPClient } from '../../util/snmp/snmp';
-import { EthernetPort } from '../generic/EthernetPort';
+import { EthernetPort } from './EthernetPort';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { VLAN } from '../generic/VLAN';
+import { CiscoSSHClient } from '../../util/ssh';
+import { ThisConverter } from 'typedoc/dist/lib/converter/types';
 
 // Possible OID table
 // iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) cisco(9) ciscoMgmt(9) ciscoCdpMIB(23)
@@ -27,9 +29,12 @@ interface IFProperties {
 
 export class SwitchConfigurator extends GenericSwitchConfigurator {
     private snmp: SNMPClient;
-    constructor(snmp: SNMPClient) {
+    private ssh: CiscoSSHClient;
+
+    constructor(snmp: SNMPClient, ssh: CiscoSSHClient) {
         super();
         this.snmp = snmp;
+        this.ssh = ssh;
     }
 
     private convertHWAddr(rawaddr: Buffer) {
@@ -46,15 +51,33 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         const resps = await this.snmp.subtree('1.3.6.1.2.1.31.1.1.1.1', 100);
         const ifs: {[key: number]: string} = {};
 
-        for (let i = 0; i < resps.length; i++) {
-            const elem = resps[i];
+        resps.forEach((elem, i) => {
             const splittedOID = elem.oid.split('.');
             const ifidx = parseInt(splittedOID[splittedOID.length - 1], 10);
 
             ifs[ifidx] = elem.value.toString();
-        }
+        });
 
         return ifs;
+    }
+
+    private async getIFVlanMembership(): Promise<{[tag: number]: string[]}> {
+        //const ret: {[key: string]: bitmasks} = [];
+        //// Walk through rldot1qVlanMaembershipTypeTable.rldot1qVlanMembershipTypeEntry
+        //const vlanMembershipType = await this.snmp.subtree('1.3.6.1.4.1.9.6.1.101.48.72.1', 100);
+        //vlanMembershipType.forEach((elem, idx) => {
+        //    console.log(elem);
+        //});
+        //const vlanStaticName = await this.snmp.subtree('1.3.6.1.4.1.9.6.1.101.48.72.1', 100);
+        //vlanStaticName.forEach((elem, idx) => {
+        //    console.log(elem);
+        //});
+        return {};
+    }
+
+    private async getVlanPortModeTable(): Promise<void> {
+        const portModes = await this.snmp.subtree('1.3.6.1.4.1.9.6.1.101.48.22.1.1', 100);
+        //
     }
 
     private async getIFProperties(): Promise<{[key: number]: IFProperties}> {
@@ -63,8 +86,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
 
         const ret: {[key: number]: IFProperties} = {};
 
-        for (let i = 0; i < resps.length; i++) {
-            const elem = resps[i];
+        resps.forEach((elem, i) => {
             const splittedOID = elem.oid.split('.');
             const splittedIRI = elem.oidIRI.split('/');
             const ifidx = parseInt(splittedOID[splittedOID.length - 1], 10);
@@ -161,20 +183,35 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
                 throw new Error(`Error: Unknown OID ${elem.oid}, ${elem.oidIRI}`);
             }
 
-        }
-        return {};
+        })
+        return ret;
+    }
+
+    public async getVLANEntries() {
+        // TODO: Run RPC
     }
 
     public async getSwitchPorts(): Promise<EthernetPort[]> {
-        console.log(await this.getIFNames());
-        await this.getIFProperties();
-        return [];
+        const ret: EthernetPort[] = [];
+        const ifnames = await this.getIFNames();
+        const ifproperties = await this.getIFProperties();
+
+        for(let i = 0; i < Object.keys(ifnames).length; i++) {
+            const k = Object.keys(ifnames)[i] as unknown as number;
+            ret[i] = new EthernetPort();
+            ret[i].portName = ifnames[k];
+            ret[i].isActive = ifproperties[k].enabled == 1 ? true : false;
+            ret[i].linkSpeed = `${ifproperties[k].speed}Mbps`;
+            ret[i].autoneg = true; // TODO: FIXME
+            ret[i].tag = 0; // TODO: FIXME
+        }
+        return ret;
     }
     public setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
         throw new Error('Method not implemented.');
     }
-    public getAllVLAN(): Promise<VLAN[]> {
-        throw new Error('Method not implemented.');
+    public async getAllVLAN(): Promise<VLAN[]> {
+        return [];
     }
     public getVLAN(vid: number): Promise<VLAN> {
         throw new Error('Method not implemented.');
