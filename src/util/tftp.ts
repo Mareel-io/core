@@ -10,8 +10,11 @@ export class CiscoTFTPServer extends EventEmitter {
     constructor() {
         super();
         this.tftpServer = tftp.createServer({
+            host: '0.0.0.0',
             port :69,
-        }, this.reqHandler.bind(this));
+        }, (req, res) => {
+            this.reqHandler(req, res);
+        });
     }
 
     private reqHandler(req: TFTPReq, res: TFTPRes) {
@@ -24,9 +27,11 @@ export class CiscoTFTPServer extends EventEmitter {
             }
         } else if (req.method === 'GET') {
             const ent = this.fileSendTable[req.file];
+            delete this.fileSendTable[req.file];
             if (ent == null) {
                 req.abort(tftp.ENOENT);
             } else {
+                res.setSize(ent.length);
                 res.write(ent);
             }
         } else {

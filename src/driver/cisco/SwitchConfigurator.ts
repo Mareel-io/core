@@ -3,7 +3,11 @@ import { EthernetPort } from './EthernetPort';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { VLAN } from '../generic/VLAN';
 import { CiscoSSHClient } from '../../util/ssh';
-import { ThisConverter } from 'typedoc/dist/lib/converter/types';
+import { CiscoConfigEditor } from './configedit/configeditor';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
+import { CiscoTFTPServer } from '../../util/tftp';
+import { v4 as uuidv4 } from 'uuid';
+import { StringLiteralConverter } from 'typedoc/dist/lib/converter/types';
 
 // Possible OID table
 // iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) cisco(9) ciscoMgmt(9) ciscoCdpMIB(23)
@@ -30,11 +34,46 @@ interface IFProperties {
 export class SwitchConfigurator extends GenericSwitchConfigurator {
     private snmp: SNMPClient;
     private ssh: CiscoSSHClient;
+    private configedit: CiscoConfigEditor;
+    private tftpServer: CiscoTFTPServer;
+    private systemIPv4: string;
 
-    constructor(snmp: SNMPClient, ssh: CiscoSSHClient) {
+    constructor(snmp: SNMPClient, ssh: CiscoSSHClient, tftpServer: CiscoTFTPServer, systemIPv4: string) {
         super();
         this.snmp = snmp;
         this.ssh = ssh;
+        this.tftpServer = tftpServer;
+        this.configedit = new CiscoConfigEditor();
+        this.systemIPv4 = systemIPv4;
+    }
+   
+    private async fetchConfigFile(): Promise<string> {
+        await this.ssh.connect();
+        const filename = `${uuidv4()}.cfg`;
+        const retprom: Promise<string> = new Promise((ful, rej) => {
+            let buf = Buffer.from([]);
+            this.tftpServer.reserveFileToRecv(filename, (stream) => {
+                stream.on('abort', (e) => rej(e));
+                stream.on('error', (e) => rej(e));
+                stream.on('data', (data) => {
+                    buf = Buffer.concat([buf, data]);
+                });
+                stream.on('end', () => {
+                    ful(buf.toString('utf-8'));
+                });
+            });
+        });
+        const foo = await this.ssh.runCiscoCommand(`copy running-config tftp://${this.systemIPv4}/${filename}`);
+        this.ssh.disconnect();
+        return retprom;
+    }
+
+    private async putConfigFile(config: string): Promise<void> {
+        await this.ssh.connect();
+        const filename = `${uuidv4()}.cfg`;
+        this.tftpServer.addFileToServe(filename, Buffer.from(config));
+        await this.ssh.runCiscoCommand(`copy tftp://${this.systemIPv4}/${filename} running-config`);
+        this.ssh.disconnect();
     }
 
     private convertHWAddr(rawaddr: Buffer) {

@@ -7,3 +7,4 @@ export { ControllerFactory as GenericControllerFactory} from './driver/generic/l
 
 // Test export
 export { MIBLoader } from './util/snmp/mibloader';
+export { CiscoTFTPServer } from './util/tftp';

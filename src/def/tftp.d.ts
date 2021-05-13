@@ -1,5 +1,4 @@
-interface TFTPReq extends NodeJS.ReadableStream<Buffer> {
-    on: (event: 'abort', listener: (e: Error) => void) => void;
+interface TFTPReq extends NodeJS.ReadableStream {
     abort: (errno: number) => void;
     file: string,
     method: string,
@@ -10,7 +9,8 @@ interface TFTPRes extends NodeJS.WritableStream {
 }
 
 interface TFTPCfg {
-    port: number;
+    host?: string;
+    port?: number;
 }
 
 interface TFTPServer {

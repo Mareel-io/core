@@ -81,7 +81,9 @@ export class CiscoSSHClient {
     }
 
     public async disconnect(): Promise<void> {
-        this.sshStream?.end();
+        this.sshStream?.removeAllListeners('error');
+        this.sshStream?.on('error', e => {}); // Eat up the error. Bad bad cisco
+        (this.sshStream as any).close();
         this.sshStream = undefined;
     }
 

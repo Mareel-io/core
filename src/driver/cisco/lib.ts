@@ -11,11 +11,13 @@ export class ControllerFactory extends GenericControllerFactory {
     private mibFile: string;
     private tftpServer: CiscoTFTPServer;
     private sshClient: CiscoSSHClient | undefined;
+    private systemIPv4: string;
 
-    constructor(deviceaddress: string, mibFile: string, tftpServer: CiscoTFTPServer) {
+    constructor(deviceaddress: string, mibFile: string, tftpServer: CiscoTFTPServer, systemIPv4: string) {
         super(deviceaddress);
         this.mibFile = mibFile; 
         this.tftpServer = tftpServer;
+        this.systemIPv4 = systemIPv4;
     }
 
     public async authenticate(credential: {snmpCredential: SNMPClientConfig, sshCredential: SSHCredential}) {
@@ -35,6 +37,6 @@ export class ControllerFactory extends GenericControllerFactory {
             throw new Error('Not authenticated.');
         }
 
-        return new CiscoSwitchConfigurator(this.snmp, this.sshClient);
+        return new CiscoSwitchConfigurator(this.snmp, this.sshClient, this.tftpServer, this.systemIPv4);
     }
 }
