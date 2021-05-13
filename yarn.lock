@@ -300,6 +300,11 @@ arg@^4.1.0:
   resolved "https://registry.yarnpkg.com/arg/-/arg-4.1.3.tgz#269fc7ad5b8e42cb63c896d5666017261c144089"
   integrity sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==
 
+argp@1.0.x:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/argp/-/argp-1.0.4.tgz#b31c73075ad6d6ccb1d8c86acd69ff300305b194"
+  integrity sha1-sxxzB1rW1syx2MhqzWn/MAMFsZQ=
+
 argparse@^1.0.7:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
@@ -1126,6 +1131,11 @@ he@1.2.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
+hexy@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/hexy/-/hexy-0.3.1.tgz#51a56aa57a6a092fd0911bede51b6b137173f7c4"
+  integrity sha512-mUarDrcDM53Hwvlm/sMkFQ1TfxOzLhQlDEaSqpIaQV9b+8u7Ba+dPS7zf/Ivx0CVfGzMBbPwuRUUbFy+5vDD7A==
+
 highlight.js@^10.2.0:
   version "10.4.1"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.4.1.tgz#d48fbcf4a9971c4361b3f95f302747afe19dbad0"
@@ -1773,6 +1783,11 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
+progress-bar-formatter@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/progress-bar-formatter/-/progress-bar-formatter-2.0.1.tgz#0d97ebb16467e2c2308373572176b7c3551e556e"
+  integrity sha1-DZfrsWRn4sIwg3NXIXa3w1UeVW4=
+
 progress@^2.0.0, progress@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
@@ -2076,6 +2091,13 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+status-bar@2.0.x:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/status-bar/-/status-bar-2.0.3.tgz#0d2680222c457e12de37cebe1438dd49c4e06e14"
+  integrity sha1-DSaAIixFfhLeN86+FDjdScTgbhQ=
+  dependencies:
+    progress-bar-formatter "^2.0.1"
+
 stealthy-require@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
@@ -2162,6 +2184,14 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
+
+tftp@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/tftp/-/tftp-0.1.2.tgz#95674c0a7fcabb53755abef0bad3f9e54fe0b7b5"
+  integrity sha1-lWdMCn/Ku1N1Wr7wutP55U/gt7U=
+  dependencies:
+    argp "1.0.x"
+    status-bar "2.0.x"
 
 to-regex-range@^5.0.1:
   version "5.0.1"
