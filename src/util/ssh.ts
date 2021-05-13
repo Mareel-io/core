@@ -1,7 +1,7 @@
 import { NodeSSH } from 'node-ssh';
 import { ThisConverter } from 'typedoc/dist/lib/converter/types';
 
-export interface SSHCred {
+export interface SSHCredential {
     user: string,
     password?: string, // TODO: FIXME
 }
@@ -50,12 +50,12 @@ export class CiscoSSHClient {
     private sshclient: NodeSSH;
     private host: string;
     private port: number;
-    private credential: SSHCred;
+    private credential: SSHCredential;
     private sshopts: SSHOpts;
     private sshStream: NodeJS.ReadWriteStream | undefined;
     private sshStreamWrapper: CiscoSSHStreamWrapper | undefined;
 
-    constructor(host: string, port: number, credential: SSHCred, sshopts: SSHOpts) {
+    constructor(host: string, port: number, credential: SSHCredential, sshopts: SSHOpts) {
         this.sshclient = new NodeSSH();
         this.host = host;
         this.port = port;
@@ -78,6 +78,11 @@ export class CiscoSSHClient {
             this.sshStream = undefined;
             this.sshStreamWrapper = undefined;
         });
+    }
+
+    public async disconnect(): Promise<void> {
+        this.sshStream?.end();
+        this.sshStream = undefined;
     }
 
     public async runCiscoCommand(command: string): Promise<string> {
