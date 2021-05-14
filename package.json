@@ -22,13 +22,16 @@
   "scripts": {
     "build": "make -C src/grammar && node_modules/.bin/tsc",
     "lint": "eslint ./src/",
-    "test": "yarn lint && mocha -r node_modules/ts-node/register 'test/**/*.ts'",
+    "test": "./ciscocfg/prepare.sh && yarn lint && mocha -r node_modules/ts-node/register 'test/**/*.ts'",
     "clean": "rm -rf ./dist",
-    "doc": "typedoc"
+    "doc": "typedoc",
+    "postinstall": "./ciscocfg/prepare.sh"
   },
   "devDependencies": {
     "@microsoft/tsdoc": "^0.12.24",
     "@types/mocha": "^8.2.0",
+    "@types/msgpack": "^0.0.30",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "chai": "^4.2.0",
@@ -46,10 +49,17 @@
     "@types/qs": "^6.9.5",
     "axios": "^0.21.0",
     "form-data": "^3.0.0",
+    "hexy": "^0.3.1",
     "jsdom": "^16.4.0",
     "moment": "^2.29.1",
+    "msgpack": "^1.0.3",
     "nearley": "^2.20.1",
+    "net-snmp": "^3.5.2",
+    "node-ssh": "^11.1.1",
     "oui": "^11.0.46",
-    "qs": "^6.9.4"
+    "qs": "^6.9.4",
+    "ssh2": "^0.8.9",
+    "tftp": "^0.1.2",
+    "uuid": "^8.3.2"
   }
 }
