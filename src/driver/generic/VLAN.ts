@@ -2,12 +2,13 @@ import { UnsupportedFeatureError } from "../../error/MarilError";
 import { EthernetPort } from "./EthernetPort";
 
 export class VLAN {
-    protected members: Map<string, EthernetPort>;
+    protected members: {[key: string]: {port: EthernetPort, tag: 'U'|'T'|'PU'|'PT'}};
     protected _type: '802.1q' | 'port-based';
     protected _vid: number;
+    public alias: string = '';
 
     constructor(type: '802.1q' | 'port-based') {
-        this.members = new Map();
+        this.members = {};
         this._type = type;
         this._vid = -1;
     }
@@ -56,8 +57,8 @@ export class VLAN {
      * 
      * @param port - Ethernet port to add
      */
-    public addPortMember(port: EthernetPort): void {
-        this.members.set(port.portName, port);
+    public addPortMember(port: EthernetPort, tag: 'U'|'T'|'PU'|'PT' = 'U'): void {
+        this.members[port.portName] = {port, tag};
     }
 
     /**
@@ -66,7 +67,7 @@ export class VLAN {
      * @param port - Ethernet port to remove
      */
     public removePortMember(port: EthernetPort): void {
-        this.members.delete(port.portName);
+        delete this.members[port.portName];
     }
 
     /**
@@ -74,9 +75,9 @@ export class VLAN {
      * 
      * @returns Array of Ethernet ports belong to current VLAN
      */
-    public getPortList(): EthernetPort[] {
-        const ret: EthernetPort[] = [];
-        for (const port of this.members.values()) {
+    public getPortList(): {port: EthernetPort, tag: 'U'|'T'|'PU'|'PT'}[] {
+        const ret: {port: EthernetPort, tag: 'U'|'T'|'PU'|'PT'}[] = [];
+        for (const port of Object.values(this.members)) {
             ret.push(port);
         }
 
