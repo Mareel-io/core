@@ -1,8 +1,12 @@
 import { MsgpackRPC } from '../../../util/msgpack-rpc';
 
 export class CiscoConfigEditor extends MsgpackRPC {
-    constructor() {
-        super('./ciscocfg/launcher.sh');
+    constructor(port: number) {
+        super(port);
+    }
+
+    public async ping(): Promise<void> {
+        return await this.runRPCCommand('ping');
     }
 
     public async loadCfg(configfile: string): Promise<void> {

@@ -1,48 +1,50 @@
 import { spawn, ChildProcess } from 'child_process';
 import msgpack from 'msgpack';
+import hexy from 'hexy';
+import { Socket } from 'net';
 
 export class MsgpackRPC {
-    private command: string;
-    private args: string[] | undefined;
+    private port: number;
     private callId: number = 0;
-    private childProc: ChildProcess | undefined;
     private msgpackStream: any; // TODO: FIXME
     private rpcCbTable: {[key: number]: (msg: any, err: any) => void} = {};
+    private socket: Socket | undefined;
 
-    constructor(command: string, args?: string[]) {
-        this.command = command;
-        this.args = args;
+    constructor(port: number) {
+        this.port = port;
     }
 
-    public start() {
-        if (this.childProc != null) {
-            return;
-        }
-        this.childProc = spawn(this.command, this.args);
-        this.childProc.stderr?.pipe(process.stderr);
-        this.msgpackStream = new (msgpack as any).Stream(this.childProc.stdout);
-        this.msgpackStream.on('msg', (msg: any) => {
-            const msgArr: [number, number, any, any] = msg;
-            const type = msgArr[0];
-            const msgid = msgArr[1];
-            const error = msgArr[2];
-            const result = msgArr[3];
-
-            if (type == 2) {
-                if (this.rpcCbTable[msgid] != null) {
-                    const cb = this.rpcCbTable[msgid];
-                    delete this.rpcCbTable[msgid];
-                    cb(result, error);
-                }
-            }
+    public async connect() {
+        this.socket = new Socket();
+        await new Promise((ful, _rej) => {
+            this.socket?.connect(this.port, '127.0.0.1', () => {
+                ful(null);
+            });
         });
-    }
+        this.socket.setNoDelay();
+        this.msgpackStream = new (msgpack as any).Stream(this.socket);
+        return new Promise((ful, rej) => {
+            this.msgpackStream.on('msg', (msg: any) => {
+                const msgArr: [number, number|string, any, any] = msg;
+                const type = msgArr[0];
+                const msgid = msgArr[1];
+                const error = msgArr[2];
+                const result = msgArr[3];
 
-    public stop() {
-        if (this.childProc == null) {
-            return;
-        }
-        this.childProc.kill();
+                if (type === 1) {
+                    if (this.rpcCbTable[msgid as number] != null) {
+                        const cb = this.rpcCbTable[msgid as number];
+                        delete this.rpcCbTable[msgid as number];
+                        cb(result, error);
+                    }
+                } if (type === 2) {
+                    const msg = msgid as string;
+                    if (msg === 'init') {
+                        ful(null);
+                    }
+                }
+            });
+        })
     }
 
     protected getCallID(): number {
@@ -55,8 +57,8 @@ export class MsgpackRPC {
     }
 
     protected async runRPCCommand(method: string, ...params: any[]): Promise<any> {
-        if (this.childProc == null) {
-            throw new Error('Childprocess is not started!');
+        if (this.socket == null) {
+            throw new Error('RPC not connected!');
         }
 
         const callId = this.getCallID();
@@ -68,6 +70,7 @@ export class MsgpackRPC {
         ];
 
         const packedMsg = msgpack.pack(cmd);
+        console.log(hexy.hexy(packedMsg));
         const retprom = new Promise((ful, rej) => {
             this.rpcCbTable[callId] = (msg, err) => {
                 if (err != null) {
@@ -78,7 +81,7 @@ export class MsgpackRPC {
             }
         });
 
-        this.childProc.stdin?.write(packedMsg);
+        this.socket?.write(packedMsg);
         return retprom;
     }
 }

@@ -4,7 +4,7 @@ import { CiscoSSHClient, SSHCredential } from '../../util/ssh';
 import { CiscoTFTPServer } from '../../util/tftp';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
 import { SwitchConfigurator as CiscoSwitchConfigurator } from './SwitchConfigurator';
-
+import { SvcRunner } from '../../util/svcrunner';
 
 export class ControllerFactory extends GenericControllerFactory {
     private snmp: SNMPClient | null = null;
@@ -12,12 +12,14 @@ export class ControllerFactory extends GenericControllerFactory {
     private tftpServer: CiscoTFTPServer;
     private sshClient: CiscoSSHClient | undefined;
     private systemIPv4: string;
+    private svcRunner: SvcRunner;
 
     constructor(deviceaddress: string, mibFile: string, tftpServer: CiscoTFTPServer, systemIPv4: string) {
         super(deviceaddress);
         this.mibFile = mibFile; 
         this.tftpServer = tftpServer;
         this.systemIPv4 = systemIPv4;
+        this.svcRunner = new SvcRunner('./ciscocfg/launcher.sh');
     }
 
     public async authenticate(credential: {snmpCredential: SNMPClientConfig, sshCredential: SSHCredential}) {
@@ -30,6 +32,10 @@ export class ControllerFactory extends GenericControllerFactory {
                 kex: ['diffie-hellman-group-exchange-sha1']
             },
         });
+    }
+
+    public async init() {
+        await this.svcRunner.start();
     }
 
     public getSwitchConfigurator(): CiscoSwitchConfigurator {

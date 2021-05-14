@@ -4,10 +4,8 @@ import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/Swit
 import { VLAN } from '../generic/VLAN';
 import { CiscoSSHClient } from '../../util/ssh';
 import { CiscoConfigEditor } from './configedit/configeditor';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 import { CiscoTFTPServer } from '../../util/tftp';
 import { v4 as uuidv4 } from 'uuid';
-import { StringLiteralConverter } from 'typedoc/dist/lib/converter/types';
 
 // Possible OID table
 // iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) cisco(9) ciscoMgmt(9) ciscoCdpMIB(23)
@@ -43,8 +41,12 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         this.snmp = snmp;
         this.ssh = ssh;
         this.tftpServer = tftpServer;
-        this.configedit = new CiscoConfigEditor();
+        this.configedit = new CiscoConfigEditor(1337);
         this.systemIPv4 = systemIPv4;
+    }
+
+    public async init() {
+        await this.configedit.connect();
     }
    
     private async fetchConfigFile(): Promise<string> {
@@ -224,6 +226,18 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
 
         })
         return ret;
+    }
+
+    public async loadConfig() {
+        await this.configedit.ping();
+        console.log('It works');
+        return ;
+        const config = await this.fetchConfigFile();
+
+        console.log('config loaded.');
+        await this.configedit.loadCfg(config);
+        console.log('config.parsed')
+        console.log(await this.configedit.extractCfg());
     }
 
     public async getVLANEntries() {
