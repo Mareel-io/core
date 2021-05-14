@@ -5,7 +5,7 @@ export class VLAN {
     protected members: {[key: string]: {port: EthernetPort, tag: 'U'|'T'|'PU'|'PT'}};
     protected _type: '802.1q' | 'port-based';
     protected _vid: number;
-    public alias: string = '';
+    public alias = '';
 
     constructor(type: '802.1q' | 'port-based') {
         this.members = {};

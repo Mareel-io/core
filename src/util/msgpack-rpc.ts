@@ -5,7 +5,7 @@ import { Socket } from 'net';
 
 export class MsgpackRPC {
     private port: number;
-    private callId: number = 0;
+    private callId = 0;
     private msgpackStream: any; // TODO: FIXME
     private rpcCbTable: {[key: number]: (msg: any, err: any) => void} = {};
     private socket: Socket | undefined;
