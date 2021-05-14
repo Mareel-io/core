@@ -99,6 +99,11 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         this.ssh.disconnect();
     }
 
+    /**
+     * Convert SNMP mac address to canonical form.
+     * @param rawaddr MAC address in binary format, can be retrieved from SNMP
+     * @returns 
+     */
     private convertHWAddr(rawaddr: Buffer) {
         return rawaddr.reduce((acc: string, val): string => {
             let digit = val.toString(16).toLowerCase();
@@ -109,6 +114,10 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         }, '').substr(1);
     }
 
+    /**
+     * fetch interface names using SNMP, work in progress.
+     * @returns Interface number & name mapping table
+     */
     private async getIFNames(): Promise<{[key: number]: string}> {
         const resps = await this.snmp.subtree('1.3.6.1.2.1.31.1.1.1.1', 100);
         const ifs: {[key: number]: string} = {};
@@ -123,25 +132,10 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         return ifs;
     }
 
-    private async getIFVlanMembership(): Promise<{[tag: number]: string[]}> {
-        //const ret: {[key: string]: bitmasks} = [];
-        //// Walk through rldot1qVlanMaembershipTypeTable.rldot1qVlanMembershipTypeEntry
-        //const vlanMembershipType = await this.snmp.subtree('1.3.6.1.4.1.9.6.1.101.48.72.1', 100);
-        //vlanMembershipType.forEach((elem, idx) => {
-        //    console.log(elem);
-        //});
-        //const vlanStaticName = await this.snmp.subtree('1.3.6.1.4.1.9.6.1.101.48.72.1', 100);
-        //vlanStaticName.forEach((elem, idx) => {
-        //    console.log(elem);
-        //});
-        return {};
-    }
-
-    private async getVlanPortModeTable(): Promise<void> {
-        const portModes = await this.snmp.subtree('1.3.6.1.4.1.9.6.1.101.48.22.1.1', 100);
-        //
-    }
-
+    /**
+     * Fetch interface properties using SNMP, work in progress.
+     * @returns Interface properties
+     */
     private async getIFProperties(): Promise<{[key: number]: IFProperties}> {
         const resps = await this.snmp.subtree('1.3.6.1.2.1.2', 100);
         console.log(resps);
@@ -249,21 +243,35 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         return ret;
     }
 
+    /**
+     * Download & load config using TFTP & SSH
+     */
     public async loadConfig() {
         const config = await this.fetchConfigFile();
         await this.configedit.loadCfg(config);
         console.log('config loaded.');
     }
 
+    /**
+     * Upload config to device using TFTP & ssh.
+     */
     public async applyConfig() {
         this.putConfigFile(await this.configedit.extractCfg());
         console.log('Configuration uploaded to device.');
     }
-    
+   
+    /**
+     * Current config file in text format. For debugging/backup purpose
+     * @returns Config file
+     */
     public async extractCfg() {
         return await this.configedit.extractCfg();
     }
 
+    /**
+     * Fetch switch ports using SNMP. work in progress.
+     * @returns Ethernet ports
+     */
     public async getSwitchPorts(): Promise<EthernetPort[]> {
         const ret: EthernetPort[] = [];
         const ifnames = await this.getIFNames();
@@ -281,10 +289,19 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         return ret;
     }
 
+    /**
+     * Set Switch port configuration. Work in progress
+     * @param port Ethernet port object
+     * @param portIdx Port index
+     */
     public setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
         throw new Error('Method not implemented.');
     }
 
+    /**
+     * Parse and extract VLAN configuration from config file
+     * @returns All VLAN entry
+     */
     public async getAllVLAN(): Promise<VLAN[]> {
         const vlanRange = await this.configedit.getVLANRange();
         const vlanEntries = await this.configedit.getVLANs();
@@ -352,6 +369,11 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         return vlans;
     }
 
+    /**
+     * Fetch specific VLAN
+     * @param vid VLAN ID
+     * @returns VLAN, if VLAN is not found, return null
+     */
     public async getVLAN(vid: number): Promise<VLAN | null> {
         const vlans = await this.getAllVLAN();
         const validVlan = vlans.filter((vlan) => {
@@ -365,6 +387,11 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         }
     }
 
+    /**
+     * Apply VLAN configuration to config file, unlike ipTIME, this method
+     * does not commit configuration to device directly.
+     * @param vlan VLAN object
+     */
     public async setVLAN(vlan: VLAN): Promise<void> {
         const ports = vlan.getPortList();
         const configPorts = await this.configedit.getPorts();
