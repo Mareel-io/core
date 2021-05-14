@@ -17,6 +17,10 @@ export class CiscoConfigEditor extends MsgpackRPC {
         return await this.runRPCCommand('extractCfg');
     }
 
+    public async getVLANRange(): Promise<string[]> {
+        return await this.runRPCCommand('getVLANRange');
+    }
+
     // Need to add regex filter to it
     public async defineVLANRange(vlanList: (number|string)[]): Promise<void> {
         return await this.runRPCCommand('defineVLANRange', vlanList);
@@ -31,7 +35,7 @@ export class CiscoConfigEditor extends MsgpackRPC {
     }
 
     // TODO: Fix strings to number
-    public async getPorts(): Promise<{portNo: string, pvid: string, mode: string, allowedList: string[], taggedList: string[]}[]> {
+    public async getPorts(): Promise<{portNo: number, pvid?: number, mode?: string, allowedList?: string[], taggedList?: string[]}[]> {
         return await this.runRPCCommand('getPorts');
     }
 

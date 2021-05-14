@@ -2,7 +2,7 @@ import { UnsupportedFeatureError } from "../../error/MarilError";
 import { EthernetPort } from "./EthernetPort";
 
 export class VLAN {
-    protected members: Map<string, EthernetPort>;
+    protected members: Map<string, {port: EthernetPort, tagged: boolean}>;
     protected _type: '802.1q' | 'port-based';
     protected _vid: number;
 
@@ -56,8 +56,8 @@ export class VLAN {
      * 
      * @param port - Ethernet port to add
      */
-    public addPortMember(port: EthernetPort): void {
-        this.members.set(port.portName, port);
+    public addPortMember(port: EthernetPort, tagged: boolean = false): void {
+        this.members.set(port.portName, {port, tagged});
     }
 
     /**
@@ -74,8 +74,8 @@ export class VLAN {
      * 
      * @returns Array of Ethernet ports belong to current VLAN
      */
-    public getPortList(): EthernetPort[] {
-        const ret: EthernetPort[] = [];
+    public getPortList(): {port: EthernetPort, tagged: boolean}[] {
+        const ret: {port: EthernetPort, tagged: boolean}[] = [];
         for (const port of this.members.values()) {
             ret.push(port);
         }

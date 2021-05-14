@@ -6,6 +6,7 @@ import { CiscoSSHClient } from '../../util/ssh';
 import { CiscoConfigEditor } from './configedit/configeditor';
 import { CiscoTFTPServer } from '../../util/tftp';
 import { v4 as uuidv4 } from 'uuid';
+import { HighlightSpanKind, isConstructorDeclaration } from 'typescript';
 
 // Possible OID table
 // iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) cisco(9) ciscoMgmt(9) ciscoCdpMIB(23)
@@ -47,6 +48,22 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
 
     public async init() {
         await this.configedit.connect();
+    }
+
+    private convertCiscoList(list: string[]): number[] {
+        const ret: number[] = [];
+        for(const elem of list) {
+            if (elem.match(/[0-9]*-[0-9]*/)) {
+                const [start, end] = elem.split('-').map((elem) => parseInt(elem));
+                for (let i = start; i <= end; i++) {
+                    ret.push(i);
+                }
+            } else {
+                ret.push(parseInt(elem, 10));
+            }
+        }
+
+        return ret;
     }
    
     private async fetchConfigFile(): Promise<string> {
@@ -229,19 +246,63 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     }
 
     public async loadConfig() {
-        await this.configedit.ping();
-        console.log('It works');
-        return ;
         const config = await this.fetchConfigFile();
-
-        console.log('config loaded.');
         await this.configedit.loadCfg(config);
-        console.log('config.parsed')
-        console.log(await this.configedit.extractCfg());
+        console.log('config loaded.');
     }
 
-    public async getVLANEntries() {
-        // TODO: Run RPC
+    public async applyConfig() {
+        this.putConfigFile(await this.configedit.extractCfg());
+        console.log('Configuration uploaded to device.');
+    }
+
+    public async getVLANEntries(): Promise<VLAN[]> {
+        const vlanRange = this.convertCiscoList(await this.configedit.getVLANRange());
+        const vlanEntries = await this.configedit.getVLANs();
+        const ports = await this.configedit.getPorts();
+        const vlans: VLAN[] = [];
+        const vlanMap: {[key: number]: VLAN} = {};
+
+        for(const vid of vlanRange) {
+            console.log(vid)
+            const vlanEnt = new VLAN('802.1q');
+            vlanEnt.vid = vid;
+            vlans.push(vlanEnt);
+            vlanMap[vid] = vlanEnt;
+        }
+
+        for(const port of ports) {
+            let allowedList: number[] = [];
+            let taggedList: number[] = [];
+
+            if (port.allowedList != null) {
+                allowedList = this.convertCiscoList(port.allowedList);
+            }
+
+            if (port.taggedList != null) {
+                taggedList = this.convertCiscoList(port.taggedList);
+            }
+
+            const iface = new EthernetPort();
+            iface.portName = `GE${port.portNo}`;
+
+            for(const allowedEnt of allowedList) {
+                if (allowedEnt != port.pvid) {
+                    if(vlanMap[allowedEnt] != null) {
+                        vlanMap[allowedEnt].addPortMember(iface, true);
+                    }
+                } else {
+                    if(vlanMap[allowedEnt] != null) {
+                        vlanMap[allowedEnt].addPortMember(iface, false);
+                    }
+                }
+            }
+
+            for(const taggedEnt of taggedList) {
+                // TODO: ImplementMe
+            }
+        }
+        return vlans;
     }
 
     public async getSwitchPorts(): Promise<EthernetPort[]> {
@@ -266,7 +327,8 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     public async getAllVLAN(): Promise<VLAN[]> {
         return [];
     }
-    public getVLAN(vid: number): Promise<VLAN> {
+    public async getVLAN(vid: number): Promise<VLAN> {
+        await this.configedit.getVLANs();
         throw new Error('Method not implemented.');
     }
     public setVLAN(vlan: VLAN): Promise<void> {
