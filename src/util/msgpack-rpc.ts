@@ -70,7 +70,6 @@ export class MsgpackRPC {
         ];
 
         const packedMsg = msgpack.pack(cmd);
-        console.log(hexy.hexy(packedMsg));
         const retprom = new Promise((ful, rej) => {
             this.rpcCbTable[callId] = (msg, err) => {
                 if (err != null) {
