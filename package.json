@@ -31,6 +31,7 @@
     "@microsoft/tsdoc": "^0.12.24",
     "@types/mocha": "^8.2.0",
     "@types/msgpack": "^0.0.30",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "chai": "^4.2.0",
@@ -58,6 +59,7 @@
     "oui": "^11.0.46",
     "qs": "^6.9.4",
     "ssh2": "^0.8.9",
-    "tftp": "^0.1.2"
+    "tftp": "^0.1.2",
+    "uuid": "^8.3.2"
   }
 }
