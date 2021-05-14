@@ -7,14 +7,14 @@ export interface SNMPClientConfig {
     authKey: undefined | null | string,
     privacyProtocol: undefined | null | 'des' | 'aes',
     privacyKey: undefined | null | string,
-};
+}
 
 export interface SNMPResult {
     oid: string,
     oidIRI: string,
     type: string,
     value: number | string | Buffer,
-};
+}
 
 export class SNMPClient {
     private cfg: SNMPClientConfig;
