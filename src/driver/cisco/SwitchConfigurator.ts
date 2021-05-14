@@ -3,7 +3,7 @@ import { EthernetPort } from './EthernetPort';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { VLAN } from '../generic/VLAN';
 import { CiscoSSHClient } from '../../util/ssh';
-import { CiscoConfigEditor } from './configedit/configeditor';
+import { CiscoConfigEditor, CiscoPort } from './configedit/configeditor';
 import { CiscoTFTPServer } from '../../util/tftp';
 import { v4 as uuidv4 } from 'uuid';
 import { HighlightSpanKind, isConstructorDeclaration } from 'typescript';
@@ -36,6 +36,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     private configedit: CiscoConfigEditor;
     private tftpServer: CiscoTFTPServer;
     private systemIPv4: string;
+    private portList: number[] = [];
 
     constructor(snmp: SNMPClient, ssh: CiscoSSHClient, tftpServer: CiscoTFTPServer, systemIPv4: string) {
         super();
@@ -44,28 +45,17 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         this.tftpServer = tftpServer;
         this.configedit = new CiscoConfigEditor(1337);
         this.systemIPv4 = systemIPv4;
+
+        // FIXME: hardcoded 24-port switch
+        for(let i = 1; i <= 24; i++) {
+            this.portList.push(i);
+        }
     }
 
     public async init() {
         await this.configedit.connect();
     }
 
-    private convertCiscoList(list: string[]): number[] {
-        const ret: number[] = [];
-        for(const elem of list) {
-            if (elem.match(/[0-9]*-[0-9]*/)) {
-                const [start, end] = elem.split('-').map((elem) => parseInt(elem));
-                for (let i = start; i <= end; i++) {
-                    ret.push(i);
-                }
-            } else {
-                ret.push(parseInt(elem, 10));
-            }
-        }
-
-        return ret;
-    }
-   
     private async fetchConfigFile(): Promise<string> {
         await this.ssh.connect();
         const filename = `${uuidv4()}.cfg`;
@@ -255,54 +245,9 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         this.putConfigFile(await this.configedit.extractCfg());
         console.log('Configuration uploaded to device.');
     }
-
-    public async getVLANEntries(): Promise<VLAN[]> {
-        const vlanRange = this.convertCiscoList(await this.configedit.getVLANRange());
-        const vlanEntries = await this.configedit.getVLANs();
-        const ports = await this.configedit.getPorts();
-        const vlans: VLAN[] = [];
-        const vlanMap: {[key: number]: VLAN} = {};
-
-        for(const vid of vlanRange) {
-            console.log(vid)
-            const vlanEnt = new VLAN('802.1q');
-            vlanEnt.vid = vid;
-            vlans.push(vlanEnt);
-            vlanMap[vid] = vlanEnt;
-        }
-
-        for(const port of ports) {
-            let allowedList: number[] = [];
-            let taggedList: number[] = [];
-
-            if (port.allowedList != null) {
-                allowedList = this.convertCiscoList(port.allowedList);
-            }
-
-            if (port.taggedList != null) {
-                taggedList = this.convertCiscoList(port.taggedList);
-            }
-
-            const iface = new EthernetPort();
-            iface.portName = `GE${port.portNo}`;
-
-            for(const allowedEnt of allowedList) {
-                if (allowedEnt != port.pvid) {
-                    if(vlanMap[allowedEnt] != null) {
-                        vlanMap[allowedEnt].addPortMember(iface, true);
-                    }
-                } else {
-                    if(vlanMap[allowedEnt] != null) {
-                        vlanMap[allowedEnt].addPortMember(iface, false);
-                    }
-                }
-            }
-
-            for(const taggedEnt of taggedList) {
-                // TODO: ImplementMe
-            }
-        }
-        return vlans;
+    
+    public async extractCfg() {
+        return await this.configedit.extractCfg();
     }
 
     public async getSwitchPorts(): Promise<EthernetPort[]> {
@@ -321,17 +266,133 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         }
         return ret;
     }
+
     public setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
         throw new Error('Method not implemented.');
     }
+
     public async getAllVLAN(): Promise<VLAN[]> {
-        return [];
+        const vlanRange = await this.configedit.getVLANRange();
+        const vlanEntries = await this.configedit.getVLANs();
+        const ports = await this.configedit.getPorts();
+        const vlans: VLAN[] = [];
+        const vlanMap: {[key: number]: VLAN} = {};
+
+        const vlanAliasMap: {[key: number]: string | undefined} = {};
+
+        for(const vlanEnt of vlanEntries) {
+            vlanAliasMap[vlanEnt.tagNo] = vlanEnt.name;
+        }
+
+        for(const vid of vlanRange) {
+            console.log(vid)
+            const vlanEnt = new VLAN('802.1q');
+            vlanEnt.vid = vid;
+            if(vlanAliasMap[vid] != null) {
+                vlanEnt.alias = vlanAliasMap[vid] as string;
+            }
+            vlans.push(vlanEnt);
+            vlanMap[vid] = vlanEnt;
+        }
+
+        const portNumbers = [];
+
+        for(const port of ports) {
+            portNumbers.push(port.portNo);
+            const iface = new EthernetPort();
+            iface.portName = `GE${port.portNo}`;
+
+            if(port.pvid == null) {
+                // pvid = 1
+                vlanMap[1].addPortMember(iface, 'PU');
+            } else {
+                if (vlanMap[port.pvid] != null) {
+                    vlanMap[port.pvid].addPortMember(iface, 'PU');
+                }
+            }
+
+            for(const allowedEnt of (port.allowedList || [])) {
+                if (allowedEnt != port.pvid) {
+                    if(vlanMap[allowedEnt] != null) {
+                        vlanMap[allowedEnt].addPortMember(iface, 'T');
+                    }
+                } else {
+                    if(vlanMap[allowedEnt] != null) {
+                        vlanMap[allowedEnt].addPortMember(iface, 'U');
+                    }
+                }
+            }
+
+            for(const taggedEnt of (port.taggedList || [])) {
+                // TODO: ImplementMe
+            }
+        }
+
+        for(const port of this.portList) {
+            if (portNumbers.indexOf(port) == -1) {
+                const iface = new EthernetPort();
+                iface.portName = `GE${port}`;
+                vlanMap[1].addPortMember(iface, 'PU');
+            }
+        }
+        return vlans;
     }
-    public async getVLAN(vid: number): Promise<VLAN> {
-        await this.configedit.getVLANs();
-        throw new Error('Method not implemented.');
+
+    public async getVLAN(vid: number): Promise<VLAN | null> {
+        const vlans = await this.getAllVLAN();
+        const validVlan = vlans.filter((vlan) => {
+            return vlan.vid == vid
+        });
+
+        if (validVlan.length == 0) {
+            return null;
+        } else {
+            return validVlan[0];
+        }
     }
-    public setVLAN(vlan: VLAN): Promise<void> {
-        throw new Error('Method not implemented.');
+
+    public async setVLAN(vlan: VLAN): Promise<void> {
+        const ports = vlan.getPortList();
+        const configPorts = await this.configedit.getPorts();
+        const portMap: {[key: number]: CiscoPort} = {};
+
+        for(const cfgPort of configPorts){
+            portMap[cfgPort.portNo] = cfgPort;
+        }
+
+        for(const port of ports) {
+            const match = port.port.portName.match(/^[A-Z]*([0-9]+)$/);
+            if (match == null) {
+                throw new Error('Invalid portname: Not in GE[0-9]* format');
+            }
+
+            const portNo = parseInt(match[1], 10);
+
+            if(portMap[portNo] == null) {
+                portMap[portNo] = {
+                    portNo: portNo,
+                    pvid: 1,
+                };
+            }
+
+            const cfgPort = portMap[portNo];
+            if ((cfgPort.allowedList || []).indexOf(vlan.vid) == -1) {
+                if (cfgPort.allowedList == null) {
+                    cfgPort.allowedList = []
+                }
+
+                cfgPort.allowedList.push(vlan.vid)
+            }
+
+            if ((port.tag == 'T' || port.tag == 'PT') && (cfgPort.taggedList || []).indexOf(vlan.vid) == -1) {
+                if (cfgPort.taggedList == null) {
+                    cfgPort.taggedList = []
+                }
+
+                cfgPort.taggedList.push(vlan.vid)
+            }
+
+            this.configedit.setPortVLAN(cfgPort.portNo, cfgPort.pvid, cfgPort.taggedList, cfgPort.allowedList);
+        }
     }
 }

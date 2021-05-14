@@ -10,6 +10,6 @@ export abstract class SwitchConfigurator {
     public abstract setSwitchPort(port: EthernetPort, portIdx: number): Promise<void>;
 
     public abstract getAllVLAN(): Promise<VLAN[]>;
-    public abstract getVLAN(vid: number): Promise<VLAN>;
+    public abstract getVLAN(vid: number): Promise<VLAN | null>;
     public abstract setVLAN(vlan: VLAN): Promise<void>;
 }
