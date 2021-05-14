@@ -28,8 +28,11 @@ interface IFProperties {
     inError: number,
     outOctets: number,
     outError: number,
-};
+}
 
+/**
+ * Cisco switch configurator
+ */
 export class SwitchConfigurator extends GenericSwitchConfigurator {
     private snmp: SNMPClient;
     private ssh: CiscoSSHClient;
@@ -52,10 +55,17 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         }
     }
 
+    /**
+     * Initialize Cisco switch configurator.
+     */
     public async init() {
         await this.configedit.connect();
     }
 
+    /**
+     * Fetch running-config using SSH and TFTP
+     * @returns Config file
+     */
     private async fetchConfigFile(): Promise<string> {
         await this.ssh.connect();
         const filename = `${uuidv4()}.cfg`;
@@ -77,6 +87,10 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         return retprom;
     }
 
+    /**
+     * Upload Cisco config file to running-config using TFTP and SSH
+     * @param config Cisco config file in string
+     */
     private async putConfigFile(config: string): Promise<void> {
         await this.ssh.connect();
         const filename = `${uuidv4()}.cfg`;
