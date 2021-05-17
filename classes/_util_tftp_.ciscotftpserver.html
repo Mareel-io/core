@@ -103,6 +103,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_util_tftp_.ciscotftpserver.html#filerecvtable" class="tsd-kind-icon">file<wbr>Recv<wbr>Table</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_util_tftp_.ciscotftpserver.html#filesendtable" class="tsd-kind-icon">file<wbr>Send<wbr>Table</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_util_tftp_.ciscotftpserver.html#systemipv4address" class="tsd-kind-icon">systemIPv4<wbr>Address</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_util_tftp_.ciscotftpserver.html#tftpserver" class="tsd-kind-icon">tftp<wbr>Server</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_util_tftp_.ciscotftpserver.html#capturerejectionsymbol" class="tsd-kind-icon">capture<wbr>Rejection<wbr>Symbol</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_util_tftp_.ciscotftpserver.html#capturerejections" class="tsd-kind-icon">capture<wbr>Rejections</a></li>
@@ -116,8 +117,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_util_tftp_.ciscotftpserver.html#addfiletoserve" class="tsd-kind-icon">add<wbr>File<wbr>ToServe</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_util_tftp_.ciscotftpserver.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_util_tftp_.ciscotftpserver.html#close" class="tsd-kind-icon">close</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_util_tftp_.ciscotftpserver.html#combineurls" class="tsd-kind-icon">combineURLs</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_util_tftp_.ciscotftpserver.html#emit" class="tsd-kind-icon">emit</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_util_tftp_.ciscotftpserver.html#eventnames" class="tsd-kind-icon">event<wbr>Names</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_util_tftp_.ciscotftpserver.html#getciscotftpurl" class="tsd-kind-icon">get<wbr>CiscoTFTPURL</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_util_tftp_.ciscotftpserver.html#getmaxlisteners" class="tsd-kind-icon">get<wbr>Max<wbr>Listeners</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_util_tftp_.ciscotftpserver.html#listen" class="tsd-kind-icon">listen</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_util_tftp_.ciscotftpserver.html#listenercount" class="tsd-kind-icon">listener<wbr>Count</a></li>
@@ -155,16 +158,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>CiscoTFTPServer<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_util_tftp_.ciscotftpserver.html" class="tsd-signature-type">CiscoTFTPServer</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>CiscoTFTPServer<span class="tsd-signature-symbol">(</span>systemIPv4Address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_util_tftp_.ciscotftpserver.html" class="tsd-signature-type">CiscoTFTPServer</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/1503ccf/src/util/tftp.ts#L8">src/util/tftp.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L8">src/util/tftp.ts:8</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>systemIPv4Address: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_util_tftp_.ciscotftpserver.html" class="tsd-signature-type">CiscoTFTPServer</a></h4>
 						</li>
 					</ul>
@@ -178,7 +187,7 @@
 					<div class="tsd-signature tsd-kind-icon">file<wbr>Recv<wbr>Table<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/1503ccf/src/util/tftp.ts#L8">src/util/tftp.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L7">src/util/tftp.ts:7</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -214,7 +223,7 @@
 					<div class="tsd-signature tsd-kind-icon">file<wbr>Send<wbr>Table<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/1503ccf/src/util/tftp.ts#L7">src/util/tftp.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L6">src/util/tftp.ts:6</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -227,12 +236,22 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="systemipv4address" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> systemIPv4<wbr>Address</h3>
+					<div class="tsd-signature tsd-kind-icon">systemIPv4<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L8">src/util/tftp.ts:8</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="tftpserver" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> tftp<wbr>Server</h3>
 					<div class="tsd-signature tsd-kind-icon">tftp<wbr>Server<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TFTPServer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/1503ccf/src/util/tftp.ts#L6">src/util/tftp.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L5">src/util/tftp.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -308,7 +327,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/1503ccf/src/util/tftp.ts#L50">src/util/tftp.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L62">src/util/tftp.ts:62</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -379,10 +398,36 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/1503ccf/src/util/tftp.ts#L46">src/util/tftp.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L54">src/util/tftp.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="combineurls" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> combineURLs</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">combineURLs<span class="tsd-signature-symbol">(</span>baseURL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, relativeURL<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L22">src/util/tftp.ts:22</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>baseURL: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>relativeURL: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -431,6 +476,29 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getciscotftpurl" class="tsd-anchor"></a>
+					<h3>get<wbr>CiscoTFTPURL</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>CiscoTFTPURL<span class="tsd-signature-symbol">(</span>file<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L58">src/util/tftp.ts:58</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>file: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getmaxlisteners" class="tsd-anchor"></a>
 					<h3>get<wbr>Max<wbr>Listeners</h3>
@@ -459,7 +527,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/1503ccf/src/util/tftp.ts#L42">src/util/tftp.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L50">src/util/tftp.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -842,7 +910,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/1503ccf/src/util/tftp.ts#L20">src/util/tftp.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L28">src/util/tftp.ts:28</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -868,7 +936,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/1503ccf/src/util/tftp.ts#L54">src/util/tftp.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/3e26c71/src/util/tftp.ts#L66">src/util/tftp.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1054,6 +1122,9 @@
 								<a href="_util_tftp_.ciscotftpserver.html#filesendtable" class="tsd-kind-icon">file<wbr>Send<wbr>Table</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_util_tftp_.ciscotftpserver.html#systemipv4address" class="tsd-kind-icon">systemIPv4<wbr>Address</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_util_tftp_.ciscotftpserver.html#tftpserver" class="tsd-kind-icon">tftp<wbr>Server</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
@@ -1077,11 +1148,17 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_util_tftp_.ciscotftpserver.html#close" class="tsd-kind-icon">close</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_util_tftp_.ciscotftpserver.html#combineurls" class="tsd-kind-icon">combineURLs</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_util_tftp_.ciscotftpserver.html#emit" class="tsd-kind-icon">emit</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_util_tftp_.ciscotftpserver.html#eventnames" class="tsd-kind-icon">event<wbr>Names</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_util_tftp_.ciscotftpserver.html#getciscotftpurl" class="tsd-kind-icon">get<wbr>CiscoTFTPURL</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_util_tftp_.ciscotftpserver.html#getmaxlisteners" class="tsd-kind-icon">get<wbr>Max<wbr>Listeners</a>
