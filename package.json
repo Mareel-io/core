@@ -4,7 +4,9 @@
   "license": "MIT",
   "version": "0.1.0",
   "files": [
-    "dist"
+    "dist",
+    "ciscocfg",
+    "mibjson"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
