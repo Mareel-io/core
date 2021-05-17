@@ -5,6 +5,7 @@ import { CiscoTFTPServer } from '../../util/tftp';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
 import { SwitchConfigurator as CiscoSwitchConfigurator } from './SwitchConfigurator';
 import { SvcRunner } from '../../util/svcrunner';
+import path from 'path';
 
 export class ControllerFactory extends GenericControllerFactory {
     private snmp: SNMPClient | null = null;
@@ -19,7 +20,8 @@ export class ControllerFactory extends GenericControllerFactory {
         this.mibFile = mibFile; 
         this.tftpServer = tftpServer;
         this.systemIPv4 = systemIPv4;
-        this.svcRunner = new SvcRunner('./ciscocfg/launcher.sh');
+        const launcherPath = path.join(__dirname, '../../../ciscocfg/launcher.sh');
+        this.svcRunner = new SvcRunner(launcherPath);
     }
 
     public async authenticate(credential: {snmpCredential: SNMPClientConfig, sshCredential: SSHCredential}) {
