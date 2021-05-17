@@ -12,14 +12,12 @@ export class ControllerFactory extends GenericControllerFactory {
     private mibFile: string;
     private tftpServer: CiscoTFTPServer;
     private sshClient: CiscoSSHClient | undefined;
-    private systemIPv4: string;
     private svcRunner: SvcRunner;
 
-    constructor(deviceaddress: string, mibFile: string, tftpServer: CiscoTFTPServer, systemIPv4: string) {
+    constructor(deviceaddress: string, mibFile: string, tftpServer: CiscoTFTPServer) {
         super(deviceaddress);
         this.mibFile = mibFile; 
         this.tftpServer = tftpServer;
-        this.systemIPv4 = systemIPv4;
         const launcherPath = path.join(__dirname, '../../../ciscocfg/launcher.sh');
         this.svcRunner = new SvcRunner(launcherPath);
     }
@@ -45,6 +43,6 @@ export class ControllerFactory extends GenericControllerFactory {
             throw new Error('Not authenticated.');
         }
 
-        return new CiscoSwitchConfigurator(this.snmp, this.sshClient, this.tftpServer, this.systemIPv4);
+        return new CiscoSwitchConfigurator(this.snmp, this.sshClient, this.tftpServer);
     }
 }

@@ -9,9 +9,16 @@ async function main() {
         controller = new maril.EFMControllerFactory('http://192.168.0.1/');
         await controller.authenticate({id: 'admin', pass: 'admin'});
     } else if (mode === 'cisco') {
-        const tftp = new maril.CiscoTFTPServer();
+        const tftp = new maril.CiscoTFTPServer('10.64.0.243');
+        // Warning: this require node.js bind to UDP 69 - TFTP
+        // May require root priviledge.
         tftp.listen();
-        controller = new maril.CiscoControllerFactory('192.168.1.3', './mibjson/cisco.json', tftp, '10.64.48.11');
+        controller = new maril.CiscoControllerFactory(
+            '192.168.1.3',
+            './mibjson/cisco.json',
+            tftp,
+        );
+        await controller.init();
         await controller.authenticate({
             snmpCredential: {
                 id: 'admin',
@@ -26,15 +33,27 @@ async function main() {
             },
         });
     }
-    await controller.init();
     const switchConfigurator = controller.getSwitchConfigurator();
+    // Note: this may change in the future, service spawning will be
+    // removed from SwitchConfigurator.
     switchConfigurator.init();
+
+    // Load config using built-in TFTP server
     await switchConfigurator.loadConfig();
     console.log('Config loaded.');
+
+    // Get VLAN using stored configuration (in memory)
     const vlans = await switchConfigurator.getAllVLAN();
     console.log(vlans);
+
+    // Update current (maybe new) VLAN settings to configuration file
     await switchConfigurator.setVLAN(vlans[0]);
+
+    // Show the configuration file
     console.log(await switchConfigurator.extractCfg());
+
+    // Apply the configuration using TFTP, note that this will only
+    // affect running-config slot.
     await switchConfigurator.applyConfig();
     console.log('Done!');
 }

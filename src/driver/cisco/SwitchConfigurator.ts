@@ -38,16 +38,14 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     private ssh: CiscoSSHClient;
     private configedit: CiscoConfigEditor;
     private tftpServer: CiscoTFTPServer;
-    private systemIPv4: string;
     private portList: number[] = [];
 
-    constructor(snmp: SNMPClient, ssh: CiscoSSHClient, tftpServer: CiscoTFTPServer, systemIPv4: string) {
+    constructor(snmp: SNMPClient, ssh: CiscoSSHClient, tftpServer: CiscoTFTPServer) {
         super();
         this.snmp = snmp;
         this.ssh = ssh;
         this.tftpServer = tftpServer;
         this.configedit = new CiscoConfigEditor(1337);
-        this.systemIPv4 = systemIPv4;
 
         // FIXME: hardcoded 24-port switch
         for(let i = 1; i <= 24; i++) {
@@ -82,7 +80,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
                 });
             });
         });
-        const foo = await this.ssh.runCiscoCommand(`copy running-config tftp://${this.systemIPv4}/${filename}`);
+        const foo = await this.ssh.runCiscoCommand(`copy running-config ${this.tftpServer.getCiscoTFTPURL(filename)}`);
         this.ssh.disconnect();
         return retprom;
     }
