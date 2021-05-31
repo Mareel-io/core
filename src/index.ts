@@ -8,3 +8,14 @@ export { ControllerFactory as GenericControllerFactory} from './driver/generic/l
 // Test export
 export { MIBLoader } from './util/snmp/mibloader';
 export { CiscoTFTPServer } from './util/tftp';
+
+import {svcmain} from './connector/client';
+
+if(require.main === module) {
+    svcmain().catch((e: Error) => {
+        console.error(e);
+        // TODO: Implement error handler here
+    })
+} else {
+    // Do nothing.
+}
