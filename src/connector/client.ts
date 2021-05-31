@@ -1,7 +1,7 @@
 import { ControllerFactory as EFMControllerFactory } from '../driver/efm/lib';
 import { ControllerFactory as CiscoControllerFactory } from '../driver/cisco/lib';
 import { ControllerFactory as GenericControllerFactory } from '../driver/generic/lib';
-import { VLAN as GenericVLAN } from '../../driver/generic/';
+import { VLAN as GenericVLAN } from '../driver/generic/VLAN';
 
 import { MIBLoader } from '../util/snmp/mibloader';
 import { CiscoTFTPServer } from '../util/tftp';
