@@ -8,14 +8,14 @@ export interface RPCv2Request {
     method: string,
     params: any[] | {[key: string]: any},
     id?: number
-};
+}
 
 export interface RPCv2Response {
     jsonrpc: '2.0',
     result?: any,
     error?: any,
     id: number,
-};
+}
 
 export class MethodNotAvailableError extends Error {
 }
