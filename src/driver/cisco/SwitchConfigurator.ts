@@ -1,12 +1,11 @@
 import { SNMPClient } from '../../util/snmp/snmp';
 import { EthernetPort } from './EthernetPort';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
-import { VLAN } from '../generic/VLAN';
+import { VLAN } from './VLAN';
 import { CiscoSSHClient } from '../../util/ssh';
 import { CiscoConfigEditor, CiscoPort } from './configedit/configeditor';
 import { CiscoTFTPServer } from '../../util/tftp';
 import { v4 as uuidv4 } from 'uuid';
-import { HighlightSpanKind, isConstructorDeclaration } from 'typescript';
 
 // Possible OID table
 // iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) cisco(9) ciscoMgmt(9) ciscoCdpMIB(23)
