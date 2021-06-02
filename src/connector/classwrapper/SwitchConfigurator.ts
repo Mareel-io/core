@@ -19,7 +19,6 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     }
 
     public async getSwitchPorts(): Promise<GenericEthernetPort[]> {
-        // TODO: Unwrap EthernetPort from serialized something
         const ret: {[key: string]: any}[] = await this.rpc.remoteCall({
             jsonrpc: '2.0',
             target: this.targetId,
@@ -38,19 +37,16 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     }
 
     public async setSwitchPort(port: GenericEthernetPort, portIdx: number): Promise<void> {
-        // TODO: Wrap port into serializable
-        const serializedPort = port.serialize()
         return await this.rpc.remoteCall({
             jsonrpc: '2.0',
             target: this.targetId,
             class: 'SwitchConfigurator',
             method: 'setSwitchPort',
-            params: [serializedPort, portIdx],
+            params: [port.serialize(), portIdx],
         });
     }
 
     public async getAllVLAN(): Promise<GenericVLAN[]> {
-        // TODO: Unwrap VLAN[] from serialized result
         const ret: {[key: string]: any}[] = await this.rpc.remoteCall({
             jsonrpc: '2.0',
             target: this.targetId,
