@@ -29,9 +29,9 @@ export abstract class UserDevice {
      * @param restoreData state from serialize()
      */
     public restore(restoreData: {[key: string]: any}) {
-        this._macaddr = restoreData._macaddr,
-        this._vendor = restoreData._vendor,
-        this.uptime = restoreData.uptime,
+        this._macaddr = restoreData._macaddr;
+        this._vendor = restoreData._vendor;
+        this.uptime = restoreData.uptime;
     }
 
     public get macaddr(): string {
