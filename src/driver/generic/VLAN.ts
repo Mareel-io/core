@@ -14,6 +14,32 @@ export class VLAN {
     }
 
     /**
+     * Convert its state into normal k-v pair form.
+     * Do not fiddle with this. Not guaranteed to be stable
+     * @returns Current state. Do not fiddle with this
+     */
+    public serialize(): {[key: string]: any} {
+        return {
+            members: this.members,
+            _type: this._type,
+            _vid: this._vid,
+            alias: this.alias,
+        };
+    }
+
+    /**
+     * Restores its state into object.
+     * Do not fiddle with this. Not guaranteed to be stable
+     * @param restoreData state from serialize()
+     */
+    public restore(restoreData: {[key: string]: any}) {
+        this.members = restoreData.members;
+        this._type = restoreData._type;
+        this._vid = restoreData._vid;
+        this.alias = restoreData.alias;
+    }
+
+    /**
      * Sets 802.1q VLAN vid
      * 
      * @param vid - 802.1q VLAN ID

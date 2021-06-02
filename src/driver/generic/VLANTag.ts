@@ -7,6 +7,23 @@ export class VLANTag {
         this.alias = alias;
     }
 
+    /**
+     * Convert its state into normal k-v pair form.
+     * Do not fiddle with this. Not guaranteed to be stable
+     * @returns Current state. Do not fiddle with this
+     */
+    public serialize(): {[key: string]: any} {
+        return {
+            tag: this.tag,
+            alias: this.alias,
+        }
+    }
+
+    public restore(restoreData: {[key: string]: any}) {
+        this.tag = restoreData.tag;
+        this.alias = restoreData.alias;
+    }
+
     getTag() {
         return this.tag;
     }

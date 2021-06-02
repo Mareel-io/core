@@ -16,6 +16,36 @@ export abstract class EthernetPort {
     public duplex: 'Full' | 'Half' | 'None' = 'None';
 
     /**
+     * Convert its state into normal k-v pair form.
+     * Do not fiddle with this. Not guaranteed to be stable
+     * @returns Current state. Do not fiddle with this
+     */
+    public serialize(): {[key: string]: any} {
+        return {
+            portName: this.portName,
+            tag: this.tag,
+            isActive: this.isActive,
+            _linkSpeed: this._linkSpeed,
+            autoneg: this.autoneg,
+            duplex: this.duplex,
+        };
+    }
+
+    /**
+     * Restores its state into object.
+     * Do not fiddle with this. Not guaranteed to be stable
+     * @param restoreData state from serialize()
+     */
+    public restore(restoreData: {[key: string]: any}) {
+        this.portName = restoreData.portName;
+        this.tag = restoreData.tag;
+        this.isActive = restoreData.isActive;
+        this._linkSpeed = restoreData._linkSpeed;
+        this.autoneg = restoreData.autoneg;
+        this.duplex = restoreData.duplex;
+    }
+
+    /**
      * Human readable label for 802.1Q tag
      */
     public abstract get tagLabel(): string;
