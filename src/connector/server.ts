@@ -1,28 +1,10 @@
-import {Router} from 'express';
-import { Duplex } from 'stream';
-import {Parser, parser} from 'stream-json';
-
-interface RPCv2Request {
-    jsonrpc: '2.0',
-    method: string,
-    params: any[] | {[key: string]: any},
-    id: number | undefined,
-};
-
-interface RPCv2Response {
-    jsonrpc: '2.0',
-    result: any | undefined,
-    error: any | undefined,
-    id: number,
-};
-
+import Parser, { Duplex, parser } from 'stream-json/Parser';
+import { RPCProvider, RPCv2Request, RPCv2Response } from '../util/jsonrpcv2';
 export class ConnectorServer {
-    private router: Router;
     private stream: Duplex;
     private streamingParser: Parser;
 
     constructor(stream: Duplex) {
-        this.router = Router();
         this.stream = stream;
         this.streamingParser = parser();
         stream.pipe(this.streamingParser);
@@ -48,5 +30,4 @@ export class ConnectorServer {
     private responseHandler(chunk: RPCv2Response) {
         //
     }
-
 }

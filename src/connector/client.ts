@@ -2,6 +2,7 @@ import { ControllerFactory as EFMControllerFactory } from '../driver/efm/lib';
 import { ControllerFactory as CiscoControllerFactory } from '../driver/cisco/lib';
 import { ControllerFactory as GenericControllerFactory } from '../driver/generic/lib';
 import { VLAN as GenericVLAN } from '../driver/generic/VLAN';
+import WebSocket from 'ws';
 
 import { MIBLoader } from '../util/snmp/mibloader';
 import { CiscoTFTPServer } from '../util/tftp';
@@ -11,6 +12,7 @@ import path from 'path';
 import fs from 'fs';
 
 import YAML from 'yaml';
+import { RPCProvider } from '../util/jsonrpcv2';
 
 const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
 
@@ -65,6 +67,8 @@ export class ConnectorClient {
     private tftp: CiscoTFTPServer;
     private ciscoCfgSvcRunner: SvcRunner;
     private controllerFactoryTable: {[key: string]: {device: ConnectorDevice, controllerFactory: GenericControllerFactory}} = {};
+    private rpc: RPCProvider | null = null;
+    private client: WebSocket | null = null;
 
     constructor(config: ConnectorClientConfig) {
         this.config = config;
@@ -82,6 +86,26 @@ export class ConnectorClient {
     async endSvcs() {
         this.tftp.close();
         await this.ciscoCfgSvcRunner.stop();
+    }
+
+    async connect() {
+        if (this.client != null) return;
+        this.client = new WebSocket(this.config.remote.url, {
+            headers: {
+                // TODO: FIXME: Follow server-side auth
+                Authorization: ` Token ${this.config.remote.token}`
+            }
+        });
+        const stream = WebSocket.createWebSocketStream(this.client, {encoding: 'utf-8'});
+        this.rpc = new RPCProvider(stream);
+    }
+
+    async disconnect() {
+        if (this.client == null) return;
+        this.client.close();
+        this.client = null;
+        this.rpc = null;
+        // TODO: Remove all handler from RPC
     }
 
     initializeConfigurator() {
@@ -106,6 +130,10 @@ export class ConnectorClient {
                 controllerFactory: controllerfactory as GenericControllerFactory,
             };
         }
+    }
+
+    private async handleRpcCall(): Promise<void> {
+        //
     }
 
     getControllerFactory(id: string): GenericControllerFactory {
