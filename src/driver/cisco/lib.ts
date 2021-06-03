@@ -7,6 +7,10 @@ import { SwitchConfigurator as CiscoSwitchConfigurator } from './SwitchConfigura
 import { SvcRunner } from '../../util/svcrunner';
 import path from 'path';
 
+export interface CiscoCredential {
+    snmpCredential: SNMPClientConfig,
+    sshCredential: SSHCredential,
+}
 export class ControllerFactory extends GenericControllerFactory {
     private snmp: SNMPClient | null = null;
     private mibFile: string;
@@ -23,7 +27,7 @@ export class ControllerFactory extends GenericControllerFactory {
         this.svcRunner = new SvcRunner(launcherPath);
     }
 
-    public async authenticate(credential: {snmpCredential: SNMPClientConfig, sshCredential: SSHCredential}) {
+    public async authenticate(credential: CiscoCredential) {
         const mibLoader = new MIBLoader(this.mibFile);
         await mibLoader.init();
         this.snmp = new SNMPClient(this.deviceaddress, credential.snmpCredential, mibLoader);

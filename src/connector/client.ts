@@ -1,5 +1,5 @@
 import { ControllerFactory as EFMControllerFactory } from '../driver/efm/lib';
-import { ControllerFactory as CiscoControllerFactory } from '../driver/cisco/lib';
+import { CiscoCredential, ControllerFactory as CiscoControllerFactory } from '../driver/cisco/lib';
 import { ControllerFactory as GenericControllerFactory } from '../driver/generic/lib';
 import { VLAN as GenericVLAN } from '../driver/generic/VLAN';
 import WebSocket from 'ws';
@@ -13,26 +13,13 @@ import fs from 'fs';
 
 import YAML from 'yaml';
 import { RPCProvider } from '../util/jsonrpcv2';
+import { SwitchConfiguratorReqHandler as CiscoSwitchConfiguratorReqHandler } from './requesthandler/cisco/SwitchConfigurator';
 
 const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
 
 interface EFMCredential {
     id: string,
     pass: string,
-}
-
-interface CiscoCredential {
-    snmpCredential: {
-        id: string,
-        authProtocol: string,
-        authKey: string,
-        privacyProtocol: string,
-        privacyKey: string,
-    },
-    sshCredential: {
-        user: string,
-        password: string,
-    }
 }
 
 interface ConnectorDevice {
@@ -98,6 +85,25 @@ export class ConnectorClient {
         });
         const stream = WebSocket.createWebSocketStream(this.client, {encoding: 'utf-8'});
         this.rpc = new RPCProvider(stream);
+        this.registerRPCHandlers();
+    }
+
+    public registerRPCHandlers() {
+        if (this.rpc == null) {
+            throw new Error('You have to connect to RPC first!');
+        }
+
+        for(const id of Object.keys(this.controllerFactoryTable)) {
+            const controllerFactoryEnt = this.controllerFactoryTable[id];
+
+            if (controllerFactoryEnt.controllerFactory instanceof CiscoControllerFactory) {
+                const ciscoControllerFactory: CiscoControllerFactory = controllerFactoryEnt.controllerFactory;
+                ciscoControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
+                const reqHandlerObj = new CiscoSwitchConfiguratorReqHandler(id, ciscoControllerFactory.getSwitchConfigurator());
+
+                this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
+            }
+        }
     }
 
     async disconnect() {
@@ -130,10 +136,7 @@ export class ConnectorClient {
                 controllerFactory: controllerfactory as GenericControllerFactory,
             };
         }
-    }
 
-    private async handleRpcCall(): Promise<void> {
-        //
     }
 
     getControllerFactory(id: string): GenericControllerFactory {
