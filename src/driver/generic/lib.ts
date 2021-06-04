@@ -13,4 +13,11 @@ export abstract class ControllerFactory {
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     abstract authenticate(credential: any): Promise<void>;
+
+    /**
+     * Dummy function (placeholder for children)
+     */
+    public async init(): Promise<void> {
+        // Do nothing
+    }
 }

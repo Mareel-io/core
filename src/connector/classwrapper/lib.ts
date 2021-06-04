@@ -7,6 +7,7 @@ import { RPCSwitchConfigurator } from "./SwitchConfigurator";
 export class RPCControllerFactory extends GenericControllerFactory {
     private ws: WebSocket;
     private rpc: RPCProvider;
+    private devices: {id: string, type: string}[] | null = null;
 
     constructor(ws: WebSocket) {
         super('');
@@ -15,13 +16,34 @@ export class RPCControllerFactory extends GenericControllerFactory {
         this.rpc = new RPCProvider(stream);
     }
 
+    /**
+     * Dummy function. it is okay to call this (for API similarity)
+     * but not necessary
+     */
     public async authenticate(): Promise<void> {
-        console.warn("You do not have to authenticate here");
+        // Do nothing
     }
 
-    getSwitchConfigurator(): RPCSwitchConfigurator {
-        // TODO: FIXME: Implement target getter system rpc method
-        const targetId = 'f265a9b2-13cd-43a7-85d2-2f6ac24d0963';
+    /**
+     * Initialize the RPCControllerFactory
+     */
+    public async init(): Promise<void> {
+        this.devices = await this.rpc.remoteCall({
+            jsonrpc: '2.0',
+            method: 'getRegisteredDevices',
+            params: [],
+        });
+    }
+
+    public getDevices(): {id: string, type: string}[] {
+        if (this.devices == null) {
+            throw new Error('You have to initialize first!');
+        }
+
+        return this.devices;
+    }
+
+    public getSwitchConfigurator(targetId: string): RPCSwitchConfigurator {
         const switchConfigurator = new RPCSwitchConfigurator(this.rpc, targetId);
         return switchConfigurator;
     }
