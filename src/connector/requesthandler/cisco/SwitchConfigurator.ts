@@ -1,6 +1,6 @@
 import { SwitchConfigurator as CiscoSwitchConfigurator } from '../../../driver/cisco/SwitchConfigurator';
 import { EthernetPort } from '../../../driver/cisco/EthernetPort';
-import { MethodNotAvailableError, RPCv2Request, RPCv2Response } from '../../jsonrpcv2';
+import { MethodNotAvailableError, RPCReturnType, RPCv2Request, RPCv2Response } from '../../jsonrpcv2';
 import { VLAN } from '../../../driver/cisco/VLAN';
 
 export class SwitchConfiguratorReqHandler {
@@ -45,26 +45,28 @@ export class SwitchConfiguratorReqHandler {
      * Get RPC handler callback for RPC
      * @returns RPC Handler callback function
      */
-    public getRPCHandler(): (req: RPCv2Request) => Promise<any> {
+    public getRPCHandler(): (req: RPCv2Request) => Promise<{handled: boolean, result: any}> {
         return async (req: RPCv2Request) => {
             if (req.target != this.deviceId) {
-                throw new MethodNotAvailableError('Different DeviceID');
+                return {handled: false, result: null};
             }
 
-            return this.handleRPCRequest(req);
+            return {handled: true, result: this.handleRPCRequest(req)};
         };
     }
 
-    private async handleRPCRequest(req: RPCv2Request): Promise<any> {
+    private async handleRPCRequest(req: RPCv2Request): Promise<RPCReturnType<any>> {
         const cb = this.rpcMethodTable[req.method];
         if (cb == null) {
-            throw new MethodNotAvailableError('Method not exist');
+            return {handled: false, result: null};
         }
 
         if (!(req.params instanceof Array)) {
             throw new Error('K-V pair method calling is not supported yet');
         }
 
-        return cb(req.params);
+        const ret = cb(...req.params);
+        console.log(ret);
+        return {handled: true, result: ret};
     }
 }
