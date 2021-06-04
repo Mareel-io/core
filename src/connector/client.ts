@@ -46,7 +46,7 @@ async function svcmain() {
     const connectorClient = new ConnectorClient(configFile);
     await connectorClient.startSvcs();
     console.log('Service started.');
-    connectorClient.initializeConfigurator();
+    await connectorClient.initializeConfigurator();
     console.log('Configurator initialized');
     await connectorClient.connect();
     console.log('Connected.');
