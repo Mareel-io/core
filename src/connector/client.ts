@@ -12,7 +12,7 @@ import path from 'path';
 import fs from 'fs';
 
 import YAML from 'yaml';
-import { RPCProvider } from './jsonrpcv2';
+import { MethodNotAvailableError, RPCProvider, RPCv2Request } from './jsonrpcv2';
 import { SwitchConfiguratorReqHandler as CiscoSwitchConfiguratorReqHandler } from './requesthandler/cisco/SwitchConfigurator';
 
 const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
@@ -94,6 +94,8 @@ export class ConnectorClient {
             throw new Error('You have to connect to RPC first!');
         }
 
+        this.rpc.addRequestHandler(this.deviceInfoRPCRequestHandler.bind(this));
+
         for(const id of Object.keys(this.controllerFactoryTable)) {
             const controllerFactoryEnt = this.controllerFactoryTable[id];
 
@@ -104,6 +106,24 @@ export class ConnectorClient {
 
                 this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
             }
+        }
+    }
+
+    private async deviceInfoRPCRequestHandler(req: RPCv2Request): Promise<{id: string, type: string}[]> {
+        if (req.class != null || req.target != null) {
+            throw new MethodNotAvailableError('Method not available in this handler');
+        }
+
+        switch (req.method) {
+            case 'getRegisteredDevices':
+                return this.config.devices.map((elem) => {
+                    return {
+                        id: elem.id,
+                        type: elem.type,
+                    };
+                });
+            default:
+                throw new MethodNotAvailableError('Method not available in this handler')
         }
     }
 
@@ -137,7 +157,6 @@ export class ConnectorClient {
                 controllerFactory: controllerfactory as GenericControllerFactory,
             };
         }
-
     }
 
     getControllerFactory(id: string): GenericControllerFactory {
