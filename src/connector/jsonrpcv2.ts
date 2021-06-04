@@ -18,6 +18,11 @@ export interface RPCv2Response {
     id: number,
 }
 
+export interface RPCReturnType<T> {
+    handled: boolean,
+    result: T | null,
+}
+
 export class MethodNotAvailableError extends Error {
 }
 
@@ -25,7 +30,7 @@ const debug = true;
 
 export class RPCProvider {
     private stream: WebSocket;
-    private requestHandlers: ((req: RPCv2Request) => Promise<any>)[] = [];
+    private requestHandlers: ((req: RPCv2Request) => Promise<RPCReturnType<any>>)[] = [];
     private notifyHandlers: ((req: RPCv2Request) => Promise<void>)[] = [];
     private callHandlerTable: {[key: number]: (res: any | null | undefined, err?: Error) => void} = {};
     private callId = 0;
@@ -123,11 +128,16 @@ export class RPCProvider {
         try {
             for(const handler of this.requestHandlers) {
                 try {
-                    const res = await handler(chunk);
-                    this.sendResponse(chunk, res);
-                    return;
+                    const res = await (handler(chunk));
+                    console.log('handler result');
+                    console.log(res);
+                    if (res.handled) {
+                        this.sendResponse(chunk, res.result);
+                        return;
+                    }
                 } catch(e) {
                     if (e instanceof MethodNotAvailableError) {
+                        console.log(e);
                         // Eat up
                     } else {
                         throw e;
@@ -152,11 +162,11 @@ export class RPCProvider {
         }
     }
 
-    public async addRequestHandler(cb: (req: RPCv2Request) => Promise<any>) {
+    public async addRequestHandler(cb: (req: RPCv2Request) => Promise<RPCReturnType<any>>) {
         this.requestHandlers.push(cb);
     }
 
-    public async removeRequestHandler(cb: (req: RPCv2Request) => Promise<any>) {
+    public async removeRequestHandler(cb: (req: RPCv2Request) => Promise<RPCReturnType<any>>) {
         const idx = this.requestHandlers.indexOf(cb);
         if (idx < 0) {
             return;
