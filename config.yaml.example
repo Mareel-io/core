@@ -1,0 +1,19 @@
+remote:
+  token: 'Authentication token here'
+  url: 'http://localhost:3000'
+tftpserver:
+  hostip: '10.64.48.11'
+devices:
+  - id:
+    addr: '192.168.1.3'
+    type: 'cisco'
+    crednetial:
+      snmpCredential:
+        id: 'admin'
+        authProtocol: 'sha512'
+        authKey: '4f5ACmTA9aT3rQ7!'
+        privacyProtocol: 'aes',
+        privacyKey: '4f5ACmTA9aT3rQ7!'
+      sshCredential:
+        user: 'admin'
+        password: '4f5ACmTA9aT3rQ7!'
