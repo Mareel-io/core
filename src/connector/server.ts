@@ -1,16 +1,18 @@
 import Parser, { Duplex, parser } from 'stream-json/Parser';
+import WebSocket from 'ws';
 import { RPCProvider, RPCv2Request, RPCv2Response } from './jsonrpcv2';
 
 export class ConnectorServer {
-    private stream: Duplex;
-    private streamingParser: Parser;
+    private stream: WebSocket;
 
-    constructor(stream: Duplex) {
+    constructor(stream: WebSocket) {
         this.stream = stream;
-        this.streamingParser = parser();
-        stream.pipe(this.streamingParser);
+        stream.on('data', console.log);
 
-        this.streamingParser.on('data', (chunk: any) => {
+        this.stream.on('message', (msg: Buffer) => {
+            const json = msg.toString('utf-8');
+            const chunk = JSON.parse(json);
+            console.log(chunk);
             if (chunk.jsonrpc != '2.0') {
                 // Not a JSON-RPC v2 packet
                 return;

@@ -1,5 +1,6 @@
 import { Duplex } from 'stream';
 import {Parser, parser} from 'stream-json';
+import WebSocket from 'ws';
 
 export interface RPCv2Request {
     jsonrpc: '2.0',
@@ -21,24 +22,28 @@ export class MethodNotAvailableError extends Error {
 }
 
 export class RPCProvider {
-    private stream: Duplex;
-    private streamingParser: Parser;
+    private stream: WebSocket;
     private requestHandlers: ((req: RPCv2Request) => Promise<any>)[] = [];
+    private notifyHandlers: ((req: RPCv2Request) => Promise<void>)[] = [];
     private callHandlerTable: {[key: number]: (res: any | null | undefined, err?: Error) => void} = {};
     private callId = 0;
 
-    constructor(stream: Duplex) {
+    constructor(stream: WebSocket) {
         this.stream = stream;
-        this.streamingParser = parser();
-        stream.pipe(this.streamingParser);
 
-        this.streamingParser.on('data', (chunk: any) => {
+        this.stream.on('message', (msg: Buffer) => {
+            const json = msg.toString('utf-8');
+            const chunk = JSON.parse(json);
+            console.log(chunk);
+
             if (chunk.jsonrpc != '2.0') {
                 // Not a JSON-RPC v2 packet
                 return;
             }
 
-            if (chunk.method != null) {
+            if (chunk.id == null) {
+                this.notifyHandler(chunk);
+            } else if (chunk.method != null) {
                 this.requestHandler(chunk);
             } else if (chunk.result != null) {
                 this.responseHandler(chunk);
@@ -64,13 +69,13 @@ export class RPCProvider {
         });
 
         payload.id = curCallId;
-        this.stream.write(JSON.stringify(payload));
+        this.stream.send(JSON.stringify(payload));
         return ret;
     }
 
-    protected remoteNotify(payload: RPCv2Request): void {
+    public remoteNotify(payload: RPCv2Request): void {
         delete payload.id;
-        this.stream.write(JSON.stringify(payload));
+        this.stream.send(JSON.stringify(payload));
     }
 
     private sendResponse(request: RPCv2Request, result: any, error?: Error) {
@@ -81,7 +86,7 @@ export class RPCProvider {
                 id: request.id!,
             };
 
-            this.stream.write(JSON.stringify(response));
+            this.stream.send(JSON.stringify(response));
         } else {
             const response: RPCv2Response = {
                 jsonrpc: '2.0',
@@ -89,7 +94,13 @@ export class RPCProvider {
                 id: request.id!,
             };
 
-            this.stream.write(JSON.stringify(response));
+            this.stream.send(JSON.stringify(response));
+        }
+    }
+
+    private async notifyHandler(chunk: RPCv2Request) {
+        for (const handler of this.notifyHandlers) {
+            await handler(chunk);
         }
     }
 
@@ -144,5 +155,17 @@ export class RPCProvider {
             return;
         }
         this.requestHandlers.splice(idx, 1);
+    }
+
+    public async addNotifyHandler(cb: (req: RPCv2Request) => Promise<void>) {
+        this.notifyHandlers.push(cb);
+    }
+
+    public async removeNotifyHandler(cb: (req: RPCv2Request) => Promise<void>) {
+        const idx = this.notifyHandlers.indexOf(cb);
+        if (idx < 0) {
+            return;
+        }
+        this.notifyHandlers.splice(idx, 1);
     }
 }

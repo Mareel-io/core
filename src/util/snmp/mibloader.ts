@@ -1,5 +1,7 @@
 import {promises as fs} from 'fs';
 
+const verbose = false;
+
 interface oidtreeElement {
     trace: number[],
     module: string | null,
@@ -52,16 +54,18 @@ export class MIBLoader {
 
         for (const ent of entries) {
             for (const sym of ent.symbols) {
-                if (this.oidmap[sym.oid] != null) {
+                if (this.oidmap[sym.oid] != null && verbose) {
                     console.warn(`OID COLLISION! ${sym.oid} ${ent.name}:${sym.symbol} with ${this.oidmap[sym.oid].fullSymbol}`);
                 }
     
-                if (this.symmap[`${ent.name}:${sym.symbol}`] != null) {
+                if (this.symmap[`${ent.name}:${sym.symbol}`] != null && verbose) {
                     console.warn(`SYMBOL COLLISION! ${ent.name}:${sym.symbol}`);
                 }
 
                 if (sym.oid == null) {
-                    console.warn(`WARN: Symbol ${ent.name}:${sym} does not have OID`)
+                    if (verbose) {
+                        console.warn(`WARN: Symbol ${ent.name}:${sym} does not have OID`)
+                    }
                     continue;
                 }
 

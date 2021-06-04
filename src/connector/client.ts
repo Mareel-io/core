@@ -42,10 +42,14 @@ interface ConnectorClientConfig {
 
 async function svcmain() {
     // Initialize essential services
+    console.log('Main process started');
     const connectorClient = new ConnectorClient(configFile);
     await connectorClient.startSvcs();
+    console.log('Service started.');
     connectorClient.initializeConfigurator();
+    console.log('Configurator initialized');
     await connectorClient.connect();
+    console.log('Connected.');
 }
 
 export {svcmain};
@@ -84,12 +88,23 @@ export class ConnectorClient {
                 Authorization: ` Token ${this.config.remote.token}`
             }
         });
-        const stream = WebSocket.createWebSocketStream(this.client, {encoding: 'utf-8'});
-        this.rpc = new RPCProvider(stream);
-        this.registerRPCHandlers();
+
+        await new Promise((ful) => {
+            this.client?.on('open', () => {
+                this.client?.removeAllListeners('open');
+                ful(null);
+            });
+        });
+        this.rpc = new RPCProvider(this.client);
+        await this.registerRPCHandlers();
+        this.rpc.remoteNotify({
+            jsonrpc: '2.0',
+            method: 'init',
+            params: [],
+        });
     }
 
-    public registerRPCHandlers() {
+    public async registerRPCHandlers() {
         if (this.rpc == null) {
             throw new Error('You have to connect to RPC first!');
         }
@@ -101,7 +116,7 @@ export class ConnectorClient {
 
             if (controllerFactoryEnt.controllerFactory instanceof CiscoControllerFactory) {
                 const ciscoControllerFactory: CiscoControllerFactory = controllerFactoryEnt.controllerFactory;
-                ciscoControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
+                await ciscoControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
                 const reqHandlerObj = new CiscoSwitchConfiguratorReqHandler(id, ciscoControllerFactory.getSwitchConfigurator());
 
                 this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
@@ -116,10 +131,13 @@ export class ConnectorClient {
 
         switch (req.method) {
             case 'getRegisteredDevices':
-                return this.config.devices.map((elem) => {
+                return Object.keys(this.controllerFactoryTable).filter((elem) => {
+                    return this.controllerFactoryTable[elem].controllerFactory != null;
+                }).map((k) => {
+                    const dev = this.controllerFactoryTable[k].device;
                     return {
-                        id: elem.id,
-                        type: elem.type,
+                        id: dev.id,
+                        type: dev.type,
                     };
                 });
             default:
@@ -127,7 +145,7 @@ export class ConnectorClient {
         }
     }
 
-    async disconnect() {
+    public async disconnect() {
         if (this.client == null) return;
         this.client.close();
         this.client = null;
@@ -135,21 +153,29 @@ export class ConnectorClient {
         // TODO: Remove all handler from RPC
     }
 
-    initializeConfigurator() {
+    public async initializeConfigurator(): Promise<void> {
         for (const device of this.config.devices) {
             let controllerfactory: GenericControllerFactory | null = null;
 
-            switch (device.type) {
-                case 'efm':
-                    controllerfactory = new EFMControllerFactory(device.addr);
-                    break;
-                case 'cisco':
-                    controllerfactory = new CiscoControllerFactory(
-                        device.addr,
-                        './mibjson/cisco.json',
-                        this.tftp,
-                    );
-                    break;
+            try {
+                switch (device.type) {
+                    case 'efm':
+                        controllerfactory = new EFMControllerFactory(device.addr);
+                        break;
+                    case 'cisco':
+                        controllerfactory = new CiscoControllerFactory(
+                            device.addr,
+                            './mibjson/cisco.json',
+                            this.tftp,
+                        );
+                        break;
+                }
+
+                // Let's test-authenticate it
+                await controllerfactory.authenticate(device.credential);
+            } catch (e) {
+                console.warn(`Failed to initialize device ${device.id}`);
+                console.warn(e);
             }
 
             this.controllerFactoryTable[device.id] = {
@@ -159,13 +185,13 @@ export class ConnectorClient {
         }
     }
 
-    getControllerFactory(id: string): GenericControllerFactory {
+    public async getControllerFactory(id: string): Promise<GenericControllerFactory> {
         const controllerFactoryTableEnt = this.controllerFactoryTable[id];
         if (controllerFactoryTableEnt == null) {
             throw new Error('Entity not available');
         }
 
-        controllerFactoryTableEnt.controllerFactory.authenticate(controllerFactoryTableEnt.device.credential);
+        await controllerFactoryTableEnt.controllerFactory.authenticate(controllerFactoryTableEnt.device.credential);
         return controllerFactoryTableEnt.controllerFactory;
     }
 }

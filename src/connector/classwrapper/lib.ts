@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 
 import { GenericControllerFactory } from "../..";
-import { RPCProvider } from '../jsonrpcv2';
+import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
 
 export class RPCControllerFactory extends GenericControllerFactory {
@@ -12,8 +12,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
     constructor(ws: WebSocket) {
         super('');
         this.ws = ws;
-        const stream = WebSocket.createWebSocketStream(this.ws, {encoding: 'utf-8'});
-        this.rpc = new RPCProvider(stream);
+        this.rpc = new RPCProvider(this.ws);
     }
 
     /**
@@ -28,6 +27,16 @@ export class RPCControllerFactory extends GenericControllerFactory {
      * Initialize the RPCControllerFactory
      */
     public async init(): Promise<void> {
+        await new Promise((ful, _rej) => {
+            const cb = async (notify: RPCv2Request): Promise<void> => {
+                if (notify.method == 'init') {
+                    ful(null);
+                    this.rpc.removeNotifyHandler(cb);
+                }
+            }
+            this.rpc.addNotifyHandler(cb);
+        });
+        console.log('Pong received.');
         this.devices = await this.rpc.remoteCall({
             jsonrpc: '2.0',
             method: 'getRegisteredDevices',
