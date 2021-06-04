@@ -180,6 +180,7 @@ export class ConnectorClient {
                         break;
                     }
                     
+                    await controllerfactory.init();
                     // Let's test-authenticate it
                     await controllerfactory.authenticate(device.credential);
                 } catch (e) {
