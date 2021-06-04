@@ -5,7 +5,7 @@ import { VLAN as GenericVLAN } from '../../driver/generic/VLAN';
 import { VLAN as CiscoVLAN } from '../../driver/cisco/VLAN';
 import { VLAN as EFMVLAN } from '../../driver/efm/VLAN';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../../driver/generic/SwitchConfigurator';
-import { RPCProvider } from '../../util/jsonrpcv2';
+import { RPCProvider } from '../jsonrpcv2';
 
 export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     private rpc: RPCProvider;

@@ -12,7 +12,7 @@ import path from 'path';
 import fs from 'fs';
 
 import YAML from 'yaml';
-import { RPCProvider } from '../util/jsonrpcv2';
+import { RPCProvider } from './jsonrpcv2';
 import { SwitchConfiguratorReqHandler as CiscoSwitchConfiguratorReqHandler } from './requesthandler/cisco/SwitchConfigurator';
 
 const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
@@ -45,6 +45,7 @@ async function svcmain() {
     const connectorClient = new ConnectorClient(configFile);
     await connectorClient.startSvcs();
     connectorClient.initializeConfigurator();
+    await connectorClient.connect();
 }
 
 export {svcmain};

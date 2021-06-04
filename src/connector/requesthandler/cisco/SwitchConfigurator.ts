@@ -1,6 +1,6 @@
 import { SwitchConfigurator as CiscoSwitchConfigurator } from '../../../driver/cisco/SwitchConfigurator';
 import { EthernetPort } from '../../../driver/cisco/EthernetPort';
-import { MethodNotAvailableError, RPCv2Request, RPCv2Response } from '../../../util/jsonrpcv2';
+import { MethodNotAvailableError, RPCv2Request, RPCv2Response } from '../../jsonrpcv2';
 import { VLAN } from '../../../driver/cisco/VLAN';
 
 export class SwitchConfiguratorReqHandler {

@@ -1,5 +1,6 @@
 import Parser, { Duplex, parser } from 'stream-json/Parser';
-import { RPCProvider, RPCv2Request, RPCv2Response } from '../util/jsonrpcv2';
+import { RPCProvider, RPCv2Request, RPCv2Response } from './jsonrpcv2';
+
 export class ConnectorServer {
     private stream: Duplex;
     private streamingParser: Parser;

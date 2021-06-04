@@ -1,9 +1,18 @@
+import WebSocket from 'ws';
+
 import { GenericControllerFactory } from "../..";
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
 
 export class RPCControllerFactory extends GenericControllerFactory {
-    authenticate(credential: any): Promise<void> {
-        throw new Error("You do not have to authenticate here");
+    private ws: WebSocket;
+
+    constructor(ws: WebSocket) {
+        super('');
+        this.ws = ws;
+    }
+
+    public async authenticate(): Promise<void> {
+        console.warn("You do not have to authenticate here");
     }
 
     getSwitchConfigurator() {
