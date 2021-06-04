@@ -21,6 +21,8 @@ export interface RPCv2Response {
 export class MethodNotAvailableError extends Error {
 }
 
+const debug = true;
+
 export class RPCProvider {
     private stream: WebSocket;
     private requestHandlers: ((req: RPCv2Request) => Promise<any>)[] = [];
@@ -34,7 +36,7 @@ export class RPCProvider {
         this.stream.on('message', (msg: Buffer) => {
             const json = msg.toString('utf-8');
             const chunk = JSON.parse(json);
-            console.log(chunk);
+            if (debug) { console.log('RECV'); console.log(chunk); }
 
             if (chunk.jsonrpc != '2.0') {
                 // Not a JSON-RPC v2 packet
@@ -69,12 +71,14 @@ export class RPCProvider {
         });
 
         payload.id = curCallId;
+        if (debug) { console.log('SEND'); console.log(payload); }
         this.stream.send(JSON.stringify(payload));
         return ret;
     }
 
     public remoteNotify(payload: RPCv2Request): void {
         delete payload.id;
+        if (debug) { console.log('SEND'); console.log(payload); }
         this.stream.send(JSON.stringify(payload));
     }
 
@@ -86,6 +90,7 @@ export class RPCProvider {
                 id: request.id!,
             };
 
+            if (debug) { console.log('SEND'); console.log(response); }
             this.stream.send(JSON.stringify(response));
         } else {
             const response: RPCv2Response = {
@@ -94,6 +99,7 @@ export class RPCProvider {
                 id: request.id!,
             };
 
+            if (debug) { console.log('SEND'); console.log(response); }
             this.stream.send(JSON.stringify(response));
         }
     }
@@ -119,6 +125,7 @@ export class RPCProvider {
                 try {
                     const res = await handler(chunk);
                     this.sendResponse(chunk, res);
+                    return;
                 } catch(e) {
                     if (e instanceof MethodNotAvailableError) {
                         // Eat up
