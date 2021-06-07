@@ -7,6 +7,9 @@ export class SwitchConfiguratorReqHandler {
     private deviceId: string;
     private switchConfigurator: CiscoSwitchConfigurator;
     private rpcMethodTable: {[key: string]: (...args: any) => Promise<any> } = {
+        loadConfig: async (): Promise<void> => {
+            await this.switchConfigurator.loadConfig();
+        },
         getSwitchPorts: async () => {
             const switchPorts = await this.switchConfigurator.getSwitchPorts();
             return switchPorts.map((elem) => {
@@ -41,17 +44,21 @@ export class SwitchConfiguratorReqHandler {
         this.switchConfigurator = switchConfigurator;
     }
 
+    async init(): Promise<void> {
+        await this.switchConfigurator.init();
+    }
+
     /**
      * Get RPC handler callback for RPC
      * @returns RPC Handler callback function
      */
-    public getRPCHandler(): (req: RPCv2Request) => Promise<{handled: boolean, result: any}> {
+    public getRPCHandler(): (req: RPCv2Request) => Promise<RPCReturnType<any>> {
         return async (req: RPCv2Request) => {
             if (req.target != this.deviceId) {
                 return {handled: false, result: null};
             }
 
-            return {handled: true, result: this.handleRPCRequest(req)};
+            return await this.handleRPCRequest(req);
         };
     }
 
@@ -65,7 +72,7 @@ export class SwitchConfiguratorReqHandler {
             throw new Error('K-V pair method calling is not supported yet');
         }
 
-        const ret = cb(...req.params);
+        const ret = await cb(...req.params);
         console.log(ret);
         return {handled: true, result: ret};
     }
