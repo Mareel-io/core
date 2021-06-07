@@ -50,9 +50,9 @@ export class RPCProvider {
 
             if (chunk.id == null) {
                 this.notifyHandler(chunk);
-            } else if (chunk.method != null) {
+            } else if (chunk.method !== undefined) {
                 this.requestHandler(chunk);
-            } else if (chunk.result != null) {
+            } else if (chunk.result !== undefined) {
                 this.responseHandler(chunk);
             }
         });
@@ -61,7 +61,7 @@ export class RPCProvider {
     public async remoteCall(payload: RPCv2Request): Promise<any> {
         const curCallId = this.callId;
         this.callId += 1;
-        if (this.callId < 0xFFFFFFFF) {
+        if (this.callId > 0xFFFFFFFF) {
             this.callId = 0;
         }
 
@@ -88,6 +88,10 @@ export class RPCProvider {
     }
 
     private sendResponse(request: RPCv2Request, result: any, error?: Error) {
+        if (result === undefined) {
+            result = null;
+        }
+
         if (error == null) {
             const response: RPCv2Response = {
                 jsonrpc: '2.0',
