@@ -63,7 +63,7 @@ export class CiscoTFTPServer extends EventEmitter {
         this.fileSendTable[filename] = data;
     }
 
-    public reserveFileToRecv(filename: string, listener: (stream: TFTPReq) => void) {
+    public reserveFileToRecv(filename: string, listener: (stream: NodeJS.ReadableStream) => void) {
         this.fileRecvTable[filename] = listener;
     }
 }
