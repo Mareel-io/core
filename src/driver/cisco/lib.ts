@@ -40,7 +40,7 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public async init() {
-        await this.svcRunner.start();
+        //await this.svcRunner.start();
     }
 
     public getSwitchConfigurator(): CiscoSwitchConfigurator {
