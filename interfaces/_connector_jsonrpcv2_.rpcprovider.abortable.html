@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SSHCredential | @mareel/core</title>
+	<title>Abortable | @mareel/core</title>
 	<meta name="description" content="Documentation for @mareel/core">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,16 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_util_ssh_.html">&quot;util/ssh&quot;</a>
+					<a href="../modules/_connector_jsonrpcv2_.html">&quot;connector/jsonrpcv2&quot;</a>
 				</li>
 				<li>
-					<a href="_util_ssh_.sshcredential.html">SSHCredential</a>
+					<a href="../classes/_connector_jsonrpcv2_.rpcprovider.html">RPCProvider</a>
+				</li>
+				<li>
+					<a href="_connector_jsonrpcv2_.rpcprovider.abortable.html">Abortable</a>
 				</li>
 			</ul>
-			<h1>Interface SSHCredential</h1>
+			<h1>Interface Abortable</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +76,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">SSHCredential</span>
+						<span class="target">Abortable</span>
 					</li>
 				</ul>
 			</section>
@@ -84,8 +87,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_util_ssh_.sshcredential.html#password" class="tsd-kind-icon">password</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_util_ssh_.sshcredential.html#user" class="tsd-kind-icon">user</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_connector_jsonrpcv2_.rpcprovider.abortable.html#signal" class="tsd-kind-icon">signal</a></li>
 							</ul>
 						</section>
 					</div>
@@ -94,24 +96,19 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="password" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> password</h3>
-					<div class="tsd-signature tsd-kind-icon">password<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="signal" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> signal</h3>
+					<div class="tsd-signature tsd-kind-icon">signal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AbortSignal</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/273a1e3/src/util/ssh.ts#L6">src/util/ssh.ts:6</a></li>
+							<li>Defined in node_modules/@types/node/events.d.ts:65</li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="user" class="tsd-anchor"></a>
-					<h3>user</h3>
-					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/273a1e3/src/util/ssh.ts#L5">src/util/ssh.ts:5</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>When provided the corresponding <code>AbortController</code> can be used to cancel an asynchronous action.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -122,35 +119,43 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/_util_ssh_.html">&quot;util/ssh&quot;</a>
+						<a href="../modules/_connector_jsonrpcv2_.html">&quot;connector/jsonrpcv2&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/_util_ssh_.ciscosshclient.html" class="tsd-kind-icon">CiscoSSHClient</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-is-not-exported">
-						<a href="../classes/_util_ssh_.ciscosshstreamwrapper.html" class="tsd-kind-icon">CiscoSSHStream<wbr>Wrapper</a>
+						<a href="../classes/_connector_jsonrpcv2_.methodnotavailableerror.html" class="tsd-kind-icon">Method<wbr>Not<wbr>Available<wbr>Error</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="_util_ssh_.sshcredential.html" class="tsd-kind-icon">SSHCredential</a>
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_connector_jsonrpcv2_.rpcprovider.html" class="tsd-kind-icon">RPCProvider</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_util_ssh_.sshcredential.html#password" class="tsd-kind-icon">password</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_util_ssh_.sshcredential.html#user" class="tsd-kind-icon">user</a>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="_connector_jsonrpcv2_.rpcprovider.abortable.html" class="tsd-kind-icon">Abortable</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="_connector_jsonrpcv2_.rpcprovider.abortable.html#signal" class="tsd-kind-icon">signal</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="_connector_jsonrpcv2_.rpcreturntype.html" class="tsd-kind-icon">RPCReturn<wbr>Type</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="_util_ssh_.sshopts.html" class="tsd-kind-icon">SSHOpts</a>
+						<a href="_connector_jsonrpcv2_.rpcv2request.html" class="tsd-kind-icon">RPCv2<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="_connector_jsonrpcv2_.rpcv2response.html" class="tsd-kind-icon">RPCv2<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/_connector_jsonrpcv2_.html#debug" class="tsd-kind-icon">debug</a>
 					</li>
 				</ul>
 			</nav>
