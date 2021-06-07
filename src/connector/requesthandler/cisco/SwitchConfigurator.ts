@@ -7,6 +7,9 @@ export class SwitchConfiguratorReqHandler {
     private deviceId: string;
     private switchConfigurator: CiscoSwitchConfigurator;
     private rpcMethodTable: {[key: string]: (...args: any) => Promise<any> } = {
+        loadConfig: async (): Promise<void> => {
+            await this.switchConfigurator.loadConfig();
+        },
         getSwitchPorts: async () => {
             const switchPorts = await this.switchConfigurator.getSwitchPorts();
             return switchPorts.map((elem) => {
@@ -39,6 +42,10 @@ export class SwitchConfiguratorReqHandler {
     constructor(deviceId: string, switchConfigurator: CiscoSwitchConfigurator) {
         this.deviceId = deviceId;
         this.switchConfigurator = switchConfigurator;
+    }
+
+    async init(): Promise<void> {
+        await this.switchConfigurator.init();
     }
 
     /**

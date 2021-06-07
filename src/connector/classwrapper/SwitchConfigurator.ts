@@ -18,6 +18,16 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
         this.targetId = targetId;
     }
 
+    public async loadConfig(): Promise<void> {
+        await this.rpc.remoteCall({
+            jsonrpc: '2.0',
+            target: this.targetId,
+            class: 'SwitchConfigurator',
+            method: 'loadConfig',
+            params: [],
+        });
+    }
+
     public async getSwitchPorts(): Promise<GenericEthernetPort[]> {
         const ret: {[key: string]: any}[] = await this.rpc.remoteCall({
             jsonrpc: '2.0',
