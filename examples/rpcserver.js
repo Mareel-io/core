@@ -17,6 +17,9 @@ wss.on('connection', async function connection(ws) {
     console.log(devices);  
 
     const switchConfigurator = rpcControllerFactory.getSwitchConfigurator(devices[0].id);
+    console.log('foobar');
+    await switchConfigurator.loadConfig();
+    console.log('foo');
     const vlans = await switchConfigurator.getAllVLAN();
     console.log(vlans);
 });
