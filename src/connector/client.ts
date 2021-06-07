@@ -15,8 +15,6 @@ import YAML from 'yaml';
 import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from './jsonrpcv2';
 import { SwitchConfiguratorReqHandler as CiscoSwitchConfiguratorReqHandler } from './requesthandler/cisco/SwitchConfigurator';
 
-const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
-
 interface EFMCredential {
     id: string,
     pass: string,
@@ -41,6 +39,7 @@ interface ConnectorClientConfig {
 }
 
 async function svcmain() {
+    const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
     // Initialize essential services
     console.log('Main process started');
     const connectorClient = new ConnectorClient(configFile);

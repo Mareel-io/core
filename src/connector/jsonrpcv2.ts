@@ -1,4 +1,4 @@
-import { Duplex } from 'stream';
+import { Duplex, EventEmitter } from 'stream';
 import {Parser, parser} from 'stream-json';
 import WebSocket from 'ws';
 
@@ -28,7 +28,7 @@ export class MethodNotAvailableError extends Error {
 
 const debug = true;
 
-export class RPCProvider {
+export class RPCProvider extends EventEmitter {
     private stream: WebSocket;
     private requestHandlers: ((req: RPCv2Request) => Promise<RPCReturnType<any>>)[] = [];
     private notifyHandlers: ((req: RPCv2Request) => Promise<void>)[] = [];
@@ -36,6 +36,7 @@ export class RPCProvider {
     private callId = 0;
 
     constructor(stream: WebSocket) {
+        super();
         this.stream = stream;
 
         this.stream.on('message', (msg: Buffer) => {
@@ -87,7 +88,7 @@ export class RPCProvider {
         this.stream.send(JSON.stringify(payload));
     }
 
-    private sendResponse(request: RPCv2Request, result: any, error?: Error) {
+    private sendResponse(request: RPCv2Request, result: any, error?: Error): void {
         if (result === undefined) {
             result = null;
         }
@@ -113,13 +114,13 @@ export class RPCProvider {
         }
     }
 
-    private async notifyHandler(chunk: RPCv2Request) {
+    private async notifyHandler(chunk: RPCv2Request): Promise<void> {
         for (const handler of this.notifyHandlers) {
             await handler(chunk);
         }
     }
 
-    private async requestHandler(chunk: RPCv2Request) {
+    private async requestHandler(chunk: RPCv2Request): Promise<void> {
         if (chunk.class === 'base') {
             // Some hardcoded essential methods
             switch (chunk.method) {
@@ -155,7 +156,7 @@ export class RPCProvider {
         }
     }
 
-    private responseHandler(chunk: RPCv2Response) {
+    private responseHandler(chunk: RPCv2Response): void {
         const handler = this.callHandlerTable[chunk.id];
         if (handler != null) {
             if (chunk.error != null) {
