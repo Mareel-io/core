@@ -118,6 +118,7 @@ export class ConnectorClient {
                 const ciscoControllerFactory: CiscoControllerFactory = controllerFactoryEnt.controllerFactory;
                 await ciscoControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
                 const reqHandlerObj = new CiscoSwitchConfiguratorReqHandler(id, ciscoControllerFactory.getSwitchConfigurator());
+                await reqHandlerObj.init();
                 
                 this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
             }
@@ -167,6 +168,7 @@ export class ConnectorClient {
             let controllerfactory: GenericControllerFactory | null = null;
             
             try {
+                console.log(`Initializing device ${device.type} - ${device.id}`);
                 switch (device.type) {
                     case 'efm':
                     controllerfactory = new EFMControllerFactory(device.addr);
@@ -183,6 +185,7 @@ export class ConnectorClient {
                     await controllerfactory.init();
                     // Let's test-authenticate it
                     await controllerfactory.authenticate(device.credential);
+                    console.log('Device successfully initialized');
                 } catch (e) {
                     console.warn(`Failed to initialize device ${device.id}`);
                     console.warn(e);
