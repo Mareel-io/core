@@ -1,8 +1,8 @@
 import { ControllerFactory as EFMControllerFactory } from '../driver/efm/lib';
 import { CiscoCredential, ControllerFactory as CiscoControllerFactory } from '../driver/cisco/lib';
 import { ControllerFactory as GenericControllerFactory } from '../driver/generic/lib';
-import { VLAN as GenericVLAN } from '../driver/generic/VLAN';
-import WebSocket from 'ws';
+import WebSocket from 'ws'
+
 
 import { MIBLoader } from '../util/snmp/mibloader';
 import { CiscoTFTPServer } from '../util/tftp';
@@ -60,7 +60,7 @@ export class ConnectorClient {
     private controllerFactoryTable: {[key: string]: {device: ConnectorDevice, controllerFactory: GenericControllerFactory}} = {};
     private rpc: RPCProvider | null = null;
     private client: WebSocket | null = null;
-    
+
     constructor(config: ConnectorClientConfig) {
         this.config = config;
         // Essential services
@@ -68,17 +68,17 @@ export class ConnectorClient {
         const launcherPath = path.join(__dirname, '../../ciscocfg/launcher.sh');
         this.ciscoCfgSvcRunner = new SvcRunner(launcherPath);
     }
-    
+
     async startSvcs() {
         this.tftp.listen();
         await this.ciscoCfgSvcRunner.start();
     }
-    
+
     async endSvcs() {
         this.tftp.close();
         await this.ciscoCfgSvcRunner.stop();
     }
-    
+
     async connect() {
         if (this.client != null) return;
         this.client = new WebSocket(this.config.remote.url, {
@@ -87,7 +87,7 @@ export class ConnectorClient {
                 Authorization: ` Token ${this.config.remote.token}`
             }
         });
-        
+
         await new Promise((ful) => {
             this.client?.on('open', () => {
                 this.client?.removeAllListeners('open');
@@ -102,28 +102,28 @@ export class ConnectorClient {
             params: [],
         });
     }
-    
+
     public async registerRPCHandlers() {
         if (this.rpc == null) {
             throw new Error('You have to connect to RPC first!');
         }
-        
+
         this.rpc.addRequestHandler(this.deviceInfoRPCRequestHandler.bind(this));
-        
+
         for(const id of Object.keys(this.controllerFactoryTable)) {
             const controllerFactoryEnt = this.controllerFactoryTable[id];
-            
+
             if (controllerFactoryEnt.controllerFactory instanceof CiscoControllerFactory) {
                 const ciscoControllerFactory: CiscoControllerFactory = controllerFactoryEnt.controllerFactory;
                 await ciscoControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
                 const reqHandlerObj = new CiscoSwitchConfiguratorReqHandler(id, ciscoControllerFactory.getSwitchConfigurator());
                 await reqHandlerObj.init();
-                
+
                 this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
             }
         }
     }
-    
+
     private async deviceInfoRPCRequestHandler(req: RPCv2Request): Promise<RPCReturnType<{id: string, type: string}[]>> {
         if (req.class != null || req.target != null) {
             return {
@@ -131,7 +131,7 @@ export class ConnectorClient {
                 result: null,
             };
         }
-        
+
         switch (req.method) {
             case 'getRegisteredDevices':
             return {
@@ -165,7 +165,7 @@ export class ConnectorClient {
     public async initializeConfigurator(): Promise<void> {
         for (const device of this.config.devices) {
             let controllerfactory: GenericControllerFactory | null = null;
-            
+
             try {
                 console.log(`Initializing device ${device.type} - ${device.id}`);
                 switch (device.type) {
@@ -177,33 +177,33 @@ export class ConnectorClient {
                         device.addr,
                         './mibjson/cisco.json',
                         this.tftp,
-                        );
-                        break;
-                    }
-                    
-                    await controllerfactory.init();
-                    // Let's test-authenticate it
-                    await controllerfactory.authenticate(device.credential);
-                    console.log('Device successfully initialized');
-                } catch (e) {
-                    console.warn(`Failed to initialize device ${device.id}`);
-                    console.warn(e);
+                    );
+                    break;
                 }
-                
-                this.controllerFactoryTable[device.id] = {
-                    device: device,
-                    controllerFactory: controllerfactory as GenericControllerFactory,
-                };
+
+                await controllerfactory.init();
+                // Let's test-authenticate it
+                await controllerfactory.authenticate(device.credential);
+                console.log('Device successfully initialized');
+            } catch (e) {
+                console.warn(`Failed to initialize device ${device.id}`);
+                console.warn(e);
             }
-        }
-        
-        public async getControllerFactory(id: string): Promise<GenericControllerFactory> {
-            const controllerFactoryTableEnt = this.controllerFactoryTable[id];
-            if (controllerFactoryTableEnt == null) {
-                throw new Error('Entity not available');
-            }
-            
-            await controllerFactoryTableEnt.controllerFactory.authenticate(controllerFactoryTableEnt.device.credential);
-            return controllerFactoryTableEnt.controllerFactory;
+
+            this.controllerFactoryTable[device.id] = {
+                device: device,
+                controllerFactory: controllerfactory as GenericControllerFactory,
+            };
         }
     }
+
+    public async getControllerFactory(id: string): Promise<GenericControllerFactory> {
+        const controllerFactoryTableEnt = this.controllerFactoryTable[id];
+        if (controllerFactoryTableEnt == null) {
+            throw new Error('Entity not available');
+        }
+
+        await controllerFactoryTableEnt.controllerFactory.authenticate(controllerFactoryTableEnt.device.credential);
+        return controllerFactoryTableEnt.controllerFactory;
+    }
+}
