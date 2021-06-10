@@ -6,7 +6,7 @@ export class ControllerFactory extends GenericControllerFactory {
         super(deviceaddress);
     }
 
-    async authenticate(credential: any): Promise<void> {
+    public async authenticate(credential: any): Promise<void> {
         console.log('DummyControllerFactory: Auth OK');
     }
 

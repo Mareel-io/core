@@ -19,7 +19,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
             this.ethports[i] = new DummyEthernetPort();
             this.ethports[i].duplex = 'Full';
             this.ethports[i].autoneg = true;
-            this.ethports[i].linkSpeed = '1000M';
+            this.ethports[i].linkSpeed = '1000Mbps';
             this.ethports[i].isActive = true;
         }
     }
