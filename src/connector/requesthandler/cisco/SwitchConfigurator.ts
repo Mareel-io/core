@@ -1,14 +1,20 @@
+import { SwitchConfigurator as GenericSwitchConfigurator } from '../../../driver/generic/SwitchConfigurator';
 import { SwitchConfigurator as CiscoSwitchConfigurator } from '../../../driver/cisco/SwitchConfigurator';
+import { SwitchConfigurator as DummySwitchConfigurator } from '../../../driver/dummy/SwitchConfigurator';
 import { EthernetPort } from '../../../driver/cisco/EthernetPort';
 import { MethodNotAvailableError, RPCReturnType, RPCv2Request, RPCv2Response } from '../../jsonrpcv2';
 import { VLAN } from '../../../driver/cisco/VLAN';
 
 export class SwitchConfiguratorReqHandler {
     private deviceId: string;
-    private switchConfigurator: CiscoSwitchConfigurator;
+    private switchConfigurator: GenericSwitchConfigurator | CiscoSwitchConfigurator | DummySwitchConfigurator;
     private rpcMethodTable: {[key: string]: (...args: any) => Promise<any> } = {
         loadConfig: async (): Promise<void> => {
-            await this.switchConfigurator.loadConfig();
+            if (this.switchConfigurator instanceof CiscoSwitchConfigurator) {
+                await this.switchConfigurator.loadConfig();
+            } else {
+                return;
+            }
         },
         getSwitchPorts: async () => {
             const switchPorts = await this.switchConfigurator.getSwitchPorts();
@@ -39,7 +45,7 @@ export class SwitchConfiguratorReqHandler {
         },
     };
 
-    constructor(deviceId: string, switchConfigurator: CiscoSwitchConfigurator) {
+    constructor(deviceId: string, switchConfigurator: GenericSwitchConfigurator | CiscoSwitchConfigurator | DummySwitchConfigurator) {
         this.deviceId = deviceId;
         this.switchConfigurator = switchConfigurator;
     }
@@ -64,6 +70,7 @@ export class SwitchConfiguratorReqHandler {
 
     private async handleRPCRequest(req: RPCv2Request): Promise<RPCReturnType<any>> {
         const cb = this.rpcMethodTable[req.method];
+        console.log(cb);
         if (cb == null) {
             return {handled: false, result: null};
         }

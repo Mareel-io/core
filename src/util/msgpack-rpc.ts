@@ -1,12 +1,12 @@
 import { spawn, ChildProcess } from 'child_process';
-import msgpack from 'msgpack';
+import msgpack, { DecodeStream } from 'msgpack-lite';
 import hexy from 'hexy';
 import { Socket } from 'net';
 
 export class MsgpackRPC {
     private port: number;
     private callId = 0;
-    private msgpackStream: any; // TODO: FIXME
+    private msgpackDecodeStream: DecodeStream | null = null;
     private rpcCbTable: {[key: number]: (msg: any, err: any) => void} = {};
     private socket: Socket | undefined;
 
@@ -22,9 +22,11 @@ export class MsgpackRPC {
             });
         });
         this.socket.setNoDelay();
-        this.msgpackStream = new (msgpack as any).Stream(this.socket);
+        this.msgpackDecodeStream = msgpack.createDecodeStream();
+        this.socket.pipe(this.msgpackDecodeStream);
+
         return new Promise((ful, rej) => {
-            this.msgpackStream.on('msg', (msg: any) => {
+            this.msgpackDecodeStream?.on('data', (msg: any) => {
                 const msgArr: [number, number|string, any, any] = msg;
                 const type = msgArr[0];
                 const msgid = msgArr[1];
@@ -69,7 +71,6 @@ export class MsgpackRPC {
             params,
         ];
 
-        const packedMsg = msgpack.pack(cmd);
         const retprom = new Promise((ful, rej) => {
             this.rpcCbTable[callId] = (msg, err) => {
                 if (err != null) {
@@ -80,7 +81,7 @@ export class MsgpackRPC {
             }
         });
 
-        this.socket?.write(packedMsg);
+        this.socket.write(msgpack.encode(cmd));
         return retprom;
     }
 }
