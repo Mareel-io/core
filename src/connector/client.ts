@@ -79,7 +79,6 @@ async function svcmain() {
     await connectorClient.startSvcs();
     console.log('Service started.');
 
-    throw new Error('fuck');
     await connectorClient.initializeConfigurator();
     console.log('Configurator initialized');
     await connectorClient.connect();
