@@ -94,3 +94,17 @@ WLAN device
 * Diversity configuration (partially working)
 * Regdom configuration (field value rework pending)
 * Beacon interval configuration
+
+## RPC support
+Documentation in progress
+
+### Test client spinup
+This library has simple dummy implementation to reduce real device interaction while integrating this into system
+
+To spin up test client, do this
+
+1. Clone this repository
+2. Copy `config.yaml.example` to `config.yaml`
+3. Modify `config.yaml`'s `remote` section
+4. Build this project using `yarn && yarn build`
+5. Run client using `yarn start`
