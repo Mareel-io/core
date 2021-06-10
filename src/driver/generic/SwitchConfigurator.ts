@@ -6,6 +6,10 @@ export abstract class SwitchConfigurator {
         //
     }
 
+    public async init(): Promise<void> {
+        // Dummy API. Eat up.
+    }
+
     public abstract getSwitchPorts(): Promise<EthernetPort[]>;
     public abstract setSwitchPort(port: EthernetPort, portIdx: number): Promise<void>;
 
