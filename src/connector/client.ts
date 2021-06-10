@@ -1,6 +1,7 @@
 import { ControllerFactory as EFMControllerFactory } from '../driver/efm/lib';
 import { CiscoCredential, ControllerFactory as CiscoControllerFactory } from '../driver/cisco/lib';
 import { ControllerFactory as GenericControllerFactory } from '../driver/generic/lib';
+import { ControllerFactory as DummyControllerFactory } from '../driver/dummy/lib';
 import WebSocket from 'ws'
 
 
@@ -13,7 +14,7 @@ import fs from 'fs';
 
 import YAML from 'yaml';
 import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from './jsonrpcv2';
-import { SwitchConfiguratorReqHandler as CiscoSwitchConfiguratorReqHandler } from './requesthandler/cisco/SwitchConfigurator';
+import { SwitchConfiguratorReqHandler } from './requesthandler/cisco/SwitchConfigurator';
 
 interface EFMCredential {
     id: string,
@@ -23,7 +24,7 @@ interface EFMCredential {
 interface ConnectorDevice {
     id: string,
     addr: string,
-    type: 'efm' | 'cisco',
+    type: 'efm' | 'cisco' | 'dummy',
     credential: EFMCredential | CiscoCredential,
 }
 
@@ -113,14 +114,12 @@ export class ConnectorClient {
         for(const id of Object.keys(this.controllerFactoryTable)) {
             const controllerFactoryEnt = this.controllerFactoryTable[id];
 
-            if (controllerFactoryEnt.controllerFactory instanceof CiscoControllerFactory) {
-                const ciscoControllerFactory: CiscoControllerFactory = controllerFactoryEnt.controllerFactory;
-                await ciscoControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
-                const reqHandlerObj = new CiscoSwitchConfiguratorReqHandler(id, ciscoControllerFactory.getSwitchConfigurator());
-                await reqHandlerObj.init();
+            const genericControllerFactory: GenericControllerFactory = controllerFactoryEnt.controllerFactory;
+            await genericControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
+            const reqHandlerObj = new SwitchConfiguratorReqHandler(id, genericControllerFactory.getSwitchConfigurator());
+            await reqHandlerObj.init();
 
-                this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
-            }
+            this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
         }
     }
 
@@ -179,6 +178,9 @@ export class ConnectorClient {
                         this.tftp,
                     );
                     break;
+                    case 'dummy':
+                        controllerfactory = new DummyControllerFactory(device.addr);
+                        break;
                 }
 
                 await controllerfactory.init();
