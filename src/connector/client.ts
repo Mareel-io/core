@@ -29,6 +29,10 @@ interface ConnectorDevice {
 }
 
 interface ConnectorClientConfig {
+    client: {
+        disableCiscoConfigDaemon?: boolean,
+        disableTFTPDaemon?: boolean,
+    },
     remote: {
         token: string,
         url: string,
@@ -71,13 +75,21 @@ export class ConnectorClient {
     }
 
     async startSvcs() {
-        this.tftp.listen();
-        await this.ciscoCfgSvcRunner.start();
+        if (!this.config.client.disableTFTPDaemon) {
+            this.tftp.listen();
+        }
+        if (!this.config.client.disableCiscoConfigDaemon) {
+            await this.ciscoCfgSvcRunner.start();
+        }
     }
 
     async endSvcs() {
-        this.tftp.close();
-        await this.ciscoCfgSvcRunner.stop();
+        if (!this.config.client.disableTFTPDaemon) {
+            this.tftp.close();
+        }
+        if (!this.config.client.disableCiscoConfigDaemon) {
+            await this.ciscoCfgSvcRunner.stop();
+        }
     }
 
     async connect() {
