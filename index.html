@@ -166,6 +166,22 @@ main();
 					<li>Regdom configuration (field value rework pending)</li>
 					<li>Beacon interval configuration</li>
 				</ul>
+				<a href="#rpc-support" id="rpc-support" style="color: inherit; text-decoration: none;">
+					<h2>RPC support</h2>
+				</a>
+				<p>Documentation in progress</p>
+				<a href="#test-client-spinup" id="test-client-spinup" style="color: inherit; text-decoration: none;">
+					<h3>Test client spinup</h3>
+				</a>
+				<p>This library has simple dummy implementation to reduce real device interaction while integrating this into system</p>
+				<p>To spin up test client, do this</p>
+				<ol>
+					<li>Clone this repository</li>
+					<li>Copy <code>config.yaml.example</code> to <code>config.yaml</code></li>
+					<li>Modify <code>config.yaml</code>&#39;s <code>remote</code> section</li>
+					<li>Build this project using <code>yarn &amp;&amp; yarn build</code></li>
+					<li>Run client using <code>yarn start</code></li>
+				</ol>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

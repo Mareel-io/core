@@ -84,6 +84,7 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_connector_client_.connectorclientconfig.html#client" class="tsd-kind-icon">client</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_connector_client_.connectorclientconfig.html#devices" class="tsd-kind-icon">devices</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_connector_client_.connectorclientconfig.html#remote" class="tsd-kind-icon">remote</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_connector_client_.connectorclientconfig.html#tftpserver" class="tsd-kind-icon">tftpserver</a></li>
@@ -95,12 +96,33 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="client" class="tsd-anchor"></a>
+					<h3>client</h3>
+					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>disableCiscoConfigDaemon<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">; </span>disableTFTPDaemon<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/44fb06a/src/connector/client.ts#L32">src/connector/client.ts:32</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> disable<wbr>Cisco<wbr>Config<wbr>Daemon<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> disableTFTPDaemon<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
 					<a name="devices" class="tsd-anchor"></a>
 					<h3>devices</h3>
 					<div class="tsd-signature tsd-kind-icon">devices<span class="tsd-signature-symbol">:</span> <a href="_connector_client_.connectordevice.html" class="tsd-signature-type">ConnectorDevice</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/e7e283a/src/connector/client.ts#L39">src/connector/client.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/44fb06a/src/connector/client.ts#L43">src/connector/client.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -110,7 +132,7 @@
 					<div class="tsd-signature tsd-kind-icon">remote<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/e7e283a/src/connector/client.ts#L32">src/connector/client.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/44fb06a/src/connector/client.ts#L36">src/connector/client.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -131,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">tftpserver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>hostip<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/e7e283a/src/connector/client.ts#L36">src/connector/client.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/44fb06a/src/connector/client.ts#L40">src/connector/client.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -166,6 +188,9 @@
 					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
 						<a href="_connector_client_.connectorclientconfig.html" class="tsd-kind-icon">Connector<wbr>Client<wbr>Config</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="_connector_client_.connectorclientconfig.html#client" class="tsd-kind-icon">client</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
 								<a href="_connector_client_.connectorclientconfig.html#devices" class="tsd-kind-icon">devices</a>
 							</li>
