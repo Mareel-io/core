@@ -14,10 +14,7 @@ export { RPCControllerFactory } from './connector/classwrapper/lib';
 import {svcmain} from './connector/client';
 
 if(require.main === module) {
-    svcmain().catch((e: Error) => {
-        console.error(e);
-        // TODO: Implement error handler here
-    })
+    svcmain();
 } else {
     // Do nothing.
 }

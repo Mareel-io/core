@@ -43,13 +43,43 @@ interface ConnectorClientConfig {
     devices: ConnectorDevice[],
 }
 
+function setupCleanup() {
+    //
+}
+
 async function svcmain() {
     const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
     // Initialize essential services
+
     console.log('Main process started');
     const connectorClient = new ConnectorClient(configFile);
+
+    process.on('uncaughtException', (e) => {
+        console.error('Uncaught exception occured');
+        console.error(e);
+
+        connectorClient.stopSvcs();
+        // TODO: Handle error and use proper exit code
+        process.exit(-1);
+    });
+
+    process.on('unhandledRejection', (e) => {
+        console.error('Unhandled rejection occured');
+        console.error(e);
+
+        connectorClient.stopSvcs();
+        // TODO: Handle error and use proper exit code
+        process.exit(-1);
+    });
+
+    process.on('exit', (e) => {
+        connectorClient.stopSvcs();
+    });
+
     await connectorClient.startSvcs();
     console.log('Service started.');
+
+    throw new Error('fuck');
     await connectorClient.initializeConfigurator();
     console.log('Configurator initialized');
     await connectorClient.connect();
@@ -83,7 +113,7 @@ export class ConnectorClient {
         }
     }
 
-    async endSvcs() {
+    async stopSvcs() {
         if (!this.config.client.disableTFTPDaemon) {
             this.tftp.close();
         }
