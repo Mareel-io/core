@@ -1,6 +1,11 @@
 import WebSocket from 'ws';
 
 import { GenericControllerFactory } from "../..";
+import { NetTester } from '../../driver/efm/monitor/NetTester';
+import { FirewallConfigurator } from '../../driver/generic/FirewallConfigurator';
+import { Logman } from '../../driver/generic/Logman';
+import { WLANConfigurator } from '../../driver/generic/wlan';
+import { WLANUserDeviceStat } from '../../driver/generic/WLANUserDeviceStat';
 import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
 
@@ -55,5 +60,25 @@ export class RPCControllerFactory extends GenericControllerFactory {
     public getSwitchConfigurator(targetId: string): RPCSwitchConfigurator {
         const switchConfigurator = new RPCSwitchConfigurator(this.rpc, targetId);
         return switchConfigurator;
+    }
+
+    public getWLANConfigurator(...params: any): WLANConfigurator {
+        throw new Error('Method not implemented.');
+    }
+
+    public getWLANUserDeviceStat(...params: any): WLANUserDeviceStat {
+        throw new Error('Method not implemented.');
+    }
+
+    public getLogman(...params: any): Logman {
+        throw new Error('Method not implemented.');
+    }
+
+    public getFirewallConfigurator(...params: any): FirewallConfigurator {
+        throw new Error('Method not implemented.');
+    }
+
+    public getNetTester(...params: any): NetTester {
+        throw new Error('Method not implemented.');
     }
 }
