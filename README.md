@@ -20,6 +20,7 @@ yarn doc
 
 ## (EFM) CAPTCHA access flow
 ![flow diagram](./flow.png)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMareel-io%2Fcore.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FMareel-io%2Fcore?ref=badge_shield)
 
 ## Access flow example
 ```
@@ -108,3 +109,6 @@ To spin up test client, do this
 3. Modify `config.yaml`'s `remote` section
 4. Build this project using `yarn && yarn build`
 5. Run client using `yarn start`
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMareel-io%2Fcore.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FMareel-io%2Fcore?ref=badge_large)
