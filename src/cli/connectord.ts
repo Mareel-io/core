@@ -4,7 +4,6 @@ import { ControllerFactory as GenericControllerFactory } from '../driver/generic
 import { ControllerFactory as DummyControllerFactory } from '../driver/dummy/lib';
 import WebSocket from 'ws'
 
-
 import { MIBLoader } from '../util/snmp/mibloader';
 import { CiscoTFTPServer } from '../util/tftp';
 import { SvcRunner } from '../util/svcrunner';
@@ -13,8 +12,9 @@ import path from 'path';
 import fs from 'fs';
 
 import YAML from 'yaml';
-import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from './jsonrpcv2';
-import { SwitchConfiguratorReqHandler } from './requesthandler/cisco/SwitchConfigurator';
+import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from '../connector/jsonrpcv2';
+import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/cisco/SwitchConfigurator';
+import { parseJsonConfigFileContent } from 'typescript';
 
 interface EFMCredential {
     id: string,
@@ -47,7 +47,7 @@ function setupCleanup() {
     //
 }
 
-async function svcmain() {
+export async function svcmain() {
     const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
     // Initialize essential services
 
@@ -85,8 +85,6 @@ async function svcmain() {
     console.log('Connected.');
 }
 
-export {svcmain};
-
 export class ConnectorClient {
     private config: ConnectorClientConfig;
     private tftp: CiscoTFTPServer;
@@ -97,6 +95,7 @@ export class ConnectorClient {
 
     constructor(config: ConnectorClientConfig) {
         this.config = config;
+        if (config.client == null) config.client = {};
         // Essential services
         this.tftp = new CiscoTFTPServer(config.tftpserver.hostip);
         const launcherPath = path.join(__dirname, '../../ciscocfg/launcher.sh');

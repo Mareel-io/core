@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { Grammar, Parser } from 'nearley';
 import { MarilError, UnsupportedFeatureError } from '../../error/MarilError';
+import { DNATRule, FirewallConfigurator as GenericFirewallConfigurator } from '../generic/FirewallConfigurator';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
@@ -46,9 +47,10 @@ interface Section {
 /**
  * Firewall configurator class
  */
-export class FirewallConfigurator {
+export class FirewallConfigurator extends GenericFirewallConfigurator {
     private api: AxiosInstance;
     constructor(api: AxiosInstance) {
+        super();
         this.api = api;
     }
 
@@ -307,5 +309,13 @@ schedule = 0000000 0000 0000
         if (chkFail != null) {
             throw new MarilError('Unknown error occured while applying firewall rules.');
         }
+    }
+
+    public async getDNATRules(): Promise<[DNATRule]> {
+        throw new Error('Method not implemented.');
+    }
+
+    public async setDNATRules(rules: [DNATRule]): Promise<void> {
+        throw new Error('Method not implemented.');
     }
 }
