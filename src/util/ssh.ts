@@ -1,5 +1,4 @@
 import { NodeSSH } from 'node-ssh';
-import { ThisConverter } from 'typedoc/dist/lib/converter/types';
 
 export interface SSHCredential {
     user: string,

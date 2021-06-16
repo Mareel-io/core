@@ -1,4 +1,3 @@
-import { ConstructorConverter } from 'typedoc/dist/lib/converter/nodes';
 import { EthernetPort as DummyEthernetPort } from './EthernetPort';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { VLAN as DummyVLAN } from './VLAN';
