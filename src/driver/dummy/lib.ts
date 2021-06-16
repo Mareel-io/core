@@ -7,7 +7,7 @@ import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { SwitchConfigurator as DummySwitchConfigurator } from './SwitchConfigurator';
 
 export class ControllerFactory extends GenericControllerFactory {
-    constructor(deviceaddress: string = 'nowhere') {
+    constructor(deviceaddress = 'nowhere') {
         super(deviceaddress);
     }
 
