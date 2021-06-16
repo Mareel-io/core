@@ -1,5 +1,4 @@
 module.exports = {
-    inputFiles: ["./src"],
-    mode: "modules",
+    entryPoints: ["./src"],
     out: "docs"
 }
