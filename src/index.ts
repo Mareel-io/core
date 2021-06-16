@@ -10,11 +10,3 @@ export { MIBLoader } from './util/snmp/mibloader';
 export { CiscoTFTPServer } from './util/tftp';
 
 export { RPCControllerFactory } from './connector/classwrapper/lib';
-
-import {svcmain} from './connector/client';
-
-if(require.main === module) {
-    svcmain();
-} else {
-    // Do nothing.
-}
