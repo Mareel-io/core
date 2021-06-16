@@ -1,8 +1,8 @@
 {
   "name": "@mareel/core",
   "description": "Zero-dependent network management solution.",
-  "license": "MIT",
-  "version": "0.2.11",
+  "license": "GPL-3.0",
+  "version": "0.2.12",
   "files": [
     "dist",
     "ciscocfg",
@@ -29,6 +29,9 @@
     "doc": "typedoc",
     "postinstall": "./ciscocfg/prepare.sh || true",
     "start": "node ./dist/index.js"
+  },
+  "bin": {
+    "connectord": "./cli/connectord.js"
   },
   "devDependencies": {
     "@microsoft/tsdoc": "^0.12.24",
