@@ -5,6 +5,12 @@ import { RPCMethodTable, RPCRequestHandler } from './RPCRequestHandler';
 export class LogmanReqHandler extends RPCRequestHandler {
     private logman: GenericLogman | EFMLogman;
     protected rpcMethodTable: RPCMethodTable = {
+        syslog: async() => {
+            //
+        },
+        queryLog: async() => {
+            //
+        },
     };
 
     constructor(deviceId: string, logman: GenericLogman | EFMLogman) {

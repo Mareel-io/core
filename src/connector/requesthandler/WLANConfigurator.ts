@@ -1,7 +1,7 @@
-import { WLANConfigurator as EFMWlanConfigurator} from "../../../driver/efm/wlan";
-import { WLANConfigurator as GenericWLANConfigurator } from "../../../driver/generic/wlan";
-import { RPCReturnType, RPCv2Request } from "../../jsonrpcv2";
-import { RPCMethodTable, RPCRequestHandler } from "../RPCRequestHandler";
+import { WLANConfigurator as EFMWlanConfigurator} from "../../driver/efm/wlan";
+import { WLANConfigurator as GenericWLANConfigurator } from "../../driver/generic/wlan";
+import { RPCReturnType, RPCv2Request } from "../jsonrpcv2";
+import { RPCMethodTable, RPCRequestHandler } from "./RPCRequestHandler";
 
 export class WLANConfiguratorReqHandler extends RPCRequestHandler {
     private wlanConfigurator: GenericWLANConfigurator | EFMWlanConfigurator; // TODO: Add Dummy
