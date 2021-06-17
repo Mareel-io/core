@@ -5,11 +5,14 @@ import { RPCMethodTable, RPCRequestHandler } from './RPCRequestHandler';
 export class LogmanReqHandler extends RPCRequestHandler {
     private logman: GenericLogman | EFMLogman;
     protected rpcMethodTable: RPCMethodTable = {
-        syslog: async() => {
-            //
-        },
-        queryLog: async() => {
-            //
+        queryLog: async(source: string, from: string | null, to: string | null) => {
+            const fromTS = from ? new Date(from) : undefined;
+            const toTS = to ? new Date(to) : undefined;
+            const logEntries = await this.logman.queryLog(source, fromTS, toTS);
+
+            return logEntries.map((elem) => {
+                return elem.serialize();
+            });
         },
     };
 
