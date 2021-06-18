@@ -42,11 +42,11 @@ export class RPCControllerFactory extends GenericControllerFactory {
             this.rpc.addNotifyHandler(cb);
         });
         console.log('Pong received.');
-        this.devices = await this.rpc.remoteCall({
+        this.devices = (await this.rpc.remoteCall({
             jsonrpc: '2.0',
             method: 'getRegisteredDevices',
             params: [],
-        });
+        })) as {id: string, type: string}[];
     }
 
     public getDevices(): {id: string, type: string}[] {
