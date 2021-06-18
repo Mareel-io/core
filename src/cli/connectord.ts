@@ -13,8 +13,10 @@ import fs from 'fs';
 
 import YAML from 'yaml';
 import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from '../connector/jsonrpcv2';
-import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/cisco/SwitchConfigurator';
+import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/SwitchConfigurator';
+import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
 import { parseJsonConfigFileContent } from 'typescript';
+import { SwitchConfigurator } from '../driver/generic/SwitchConfigurator';
 
 interface EFMCredential {
     id: string,
@@ -156,10 +158,14 @@ export class ConnectorClient {
 
             const genericControllerFactory: GenericControllerFactory = controllerFactoryEnt.controllerFactory;
             await genericControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
+
+            // Switch
             const reqHandlerObj = new SwitchConfiguratorReqHandler(id, genericControllerFactory.getSwitchConfigurator());
             await reqHandlerObj.init();
 
             this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
+
+            // WLAN
         }
     }
 
