@@ -7,14 +7,14 @@ export interface RPCv2Request {
     target?: string,
     class?: string,
     method: string,
-    params: any[] | {[key: string]: any},
+    params: unknown[] | {[key: string]: unknown},
     id?: number
 }
 
 export interface RPCv2Response {
     jsonrpc: '2.0',
-    result?: any,
-    error?: any,
+    result?: unknown,
+    error?: unknown,
     id: number,
 }
 
@@ -30,9 +30,9 @@ const debug = true;
 
 export class RPCProvider extends EventEmitter {
     private stream: WebSocket;
-    private requestHandlers: ((req: RPCv2Request) => Promise<RPCReturnType<any>>)[] = [];
+    private requestHandlers: ((req: RPCv2Request) => Promise<RPCReturnType<unknown>>)[] = [];
     private notifyHandlers: ((req: RPCv2Request) => Promise<void>)[] = [];
-    private callHandlerTable: {[key: number]: (res: any | null | undefined, err?: Error) => void} = {};
+    private callHandlerTable: {[key: number]: (res: unknown | null | undefined, err?: Error) => void} = {};
     private callId = 0;
 
     constructor(stream: WebSocket) {
@@ -59,14 +59,14 @@ export class RPCProvider extends EventEmitter {
         });
     }
 
-    public async remoteCall(payload: RPCv2Request): Promise<any> {
+    public async remoteCall(payload: RPCv2Request): Promise<unknown> {
         const curCallId = this.callId;
         this.callId += 1;
         if (this.callId > 0xFFFFFFFF) {
             this.callId = 0;
         }
 
-        const ret: Promise<any> = new Promise((ful, rej) => {
+        const ret: Promise<unknown> = new Promise((ful, rej) => {
             this.callHandlerTable[curCallId] = (res, err) => {
                 if (err) {
                     rej(err);
@@ -88,7 +88,7 @@ export class RPCProvider extends EventEmitter {
         this.stream.send(JSON.stringify(payload));
     }
 
-    private sendResponse(request: RPCv2Request, result: any, error?: Error): void {
+    private sendResponse(request: RPCv2Request, result: unknown, error?: Error): void {
         if (result === undefined) {
             result = null;
         }
@@ -167,11 +167,11 @@ export class RPCProvider extends EventEmitter {
         }
     }
 
-    public async addRequestHandler(cb: (req: RPCv2Request) => Promise<RPCReturnType<any>>) {
+    public async addRequestHandler(cb: (req: RPCv2Request) => Promise<RPCReturnType<unknown>>) {
         this.requestHandlers.push(cb);
     }
 
-    public async removeRequestHandler(cb: (req: RPCv2Request) => Promise<RPCReturnType<any>>) {
+    public async removeRequestHandler(cb: (req: RPCv2Request) => Promise<RPCReturnType<unknown>>) {
         const idx = this.requestHandlers.indexOf(cb);
         if (idx < 0) {
             return;

@@ -72,18 +72,26 @@ export class CiscoSSHClient {
         });
 
         this.sshStream = await this.sshclient.requestShell()
-        this.sshStreamWrapper = new CiscoSSHStreamWrapper(this.sshStream!);
-        this.sshStream?.on('close', () => {
+        if (this.sshStream == null) {
+            throw new Error('Failed to connect SSHStream');
+        }
+        this.sshStreamWrapper = new CiscoSSHStreamWrapper(this.sshStream);
+        this.sshStream.on('close', () => {
             this.sshStream = undefined;
             this.sshStreamWrapper = undefined;
         });
     }
 
     public async disconnect(): Promise<void> {
-        this.sshStream?.removeAllListeners('error');
-        this.sshStream?.on('error', e => {
+        if (this.sshStream == null) {
+            return ;
+        }
+        this.sshStream.removeAllListeners('error');
+        this.sshStream.on('error', e => {
             console.error(e);
         }); // Eat up the error. Bad bad cisco
+        // TODO: FIXME
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (this.sshStream as any).close();
         this.sshStream = undefined;
     }
@@ -93,6 +101,10 @@ export class CiscoSSHClient {
             await this.connect();
         }
 
-        return await this.sshStreamWrapper!.runCommand(command);
+        if (this.sshStreamWrapper == undefined) {
+            throw new Error('Huh?');
+        }
+
+        return await this.sshStreamWrapper.runCommand(command);
     }
 }

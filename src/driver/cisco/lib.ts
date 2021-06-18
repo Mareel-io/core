@@ -56,19 +56,19 @@ export class ControllerFactory extends GenericControllerFactory {
         return new CiscoSwitchConfigurator(this.snmp, this.sshClient, this.tftpServer);
     }
 
-    public getWLANConfigurator(...params: any): WLANConfigurator {
+    public getWLANConfigurator(): WLANConfigurator {
         throw new Error('Method not implemented.');
     }
-    public getWLANUserDeviceStat(...params: any): WLANUserDeviceStat {
+    public getWLANUserDeviceStat(): WLANUserDeviceStat {
         throw new Error('Method not implemented.');
     }
-    public getLogman(...params: any): Logman {
+    public getLogman(): Logman {
         throw new Error('Method not implemented.');
     }
-    public getFirewallConfigurator(...params: any): FirewallConfigurator {
+    public getFirewallConfigurator(): FirewallConfigurator {
         throw new Error('Method not implemented.');
     }
-    public getNetTester(...params: any): NetTester {
+    public getNetTester(): NetTester {
         throw new Error('Method not implemented.');
     }
 }
