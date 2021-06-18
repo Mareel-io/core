@@ -8,8 +8,8 @@ export class FirewallConfiguratorReqHandler extends RPCRequestHandler {
     };
 
     constructor(deviceId: string, firewallConfigurator: GenericFirewallConfigurator | EFMFirewallConfigurator) {
-        super(deviceId);
-	this.firewallConfigurator = firewallConfigurator;
+        super(deviceId, 'FirewallConfigurator');
+        this.firewallConfigurator = firewallConfigurator;
     }
 
     async init(): Promise<void> {

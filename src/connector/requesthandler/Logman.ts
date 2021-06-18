@@ -17,7 +17,7 @@ export class LogmanReqHandler extends RPCRequestHandler {
     };
 
     constructor(deviceId: string, logman: GenericLogman | EFMLogman) {
-        super(deviceId);
+        super(deviceId, 'Logman');
         this.logman = logman;
     }
 
