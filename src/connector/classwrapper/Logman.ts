@@ -1,7 +1,7 @@
 import { LogEntry, Logman as GenericLogman } from '../../driver/generic/Logman';
 import { RPCProvider } from '../jsonrpcv2';
 
-export class RPCSwitchConfigurator extends GenericLogman {
+export class RPCLogman extends GenericLogman {
     private rpc: RPCProvider;
     private targetId: string;
 
