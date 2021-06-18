@@ -27,7 +27,7 @@ export class SvcRunner {
         }) as Promise<void>;
     }
 
-    public async stop() {
+    public async stop(): Promise<void> {
         if (this.childProc == null) {
             return
         }

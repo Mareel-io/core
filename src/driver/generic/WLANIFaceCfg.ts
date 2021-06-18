@@ -1,3 +1,17 @@
+export interface WLANIFaceCfgState {
+    mode: 'ap' | 'sta' | 'adhoc' | 'wds' | 'monitor' | 'mesh',
+    disabled: boolean,
+    ssid: string,
+    bssid: string,
+    mesh_id: string,
+    hidden: boolean,
+    isolate: boolean,
+    doth: boolean,
+    wmm: boolean,
+    encryption: string,
+    key: string,
+}
+
 export class WLANIFaceCfg {
     public mode: 'ap' | 'sta' | 'adhoc' | 'wds' | 'monitor' | 'mesh' = 'ap';
     public disabled = false;
@@ -13,5 +27,35 @@ export class WLANIFaceCfg {
 
     constructor() {
         //
+    }
+
+    public serialize(): WLANIFaceCfgState {
+        return {
+            mode: this.mode,
+            disabled: this.disabled,
+            ssid: this.ssid,
+            bssid: this.bssid,
+            mesh_id: this.mesh_id,
+            hidden: this.hidden,
+            isolate: this.isolate,
+            doth: this.doth,
+            wmm: this.wmm,
+            encryption: this.encryption,
+            key: this.key,
+        };
+    }
+
+    public restore(state: WLANIFaceCfgState): void {
+        this.mode = state.mode;
+        this.disabled = state.disabled;
+        this.ssid = state.ssid;
+        this.bssid = state.bssid;
+        this.mesh_id = state.mesh_id;
+        this.hidden = state.hidden;
+        this.isolate = state.isolate;
+        this.doth = state.doth;
+        this.wmm = state.wmm;
+        this.encryption = state.encryption;
+        this.key = state.key;
     }
 }

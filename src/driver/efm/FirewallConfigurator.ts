@@ -1,37 +1,11 @@
 import { AxiosInstance } from 'axios';
 import { Grammar, Parser } from 'nearley';
 import { MarilError, UnsupportedFeatureError } from '../../error/MarilError';
-import { DNATRule, FirewallConfigurator as GenericFirewallConfigurator } from '../generic/FirewallConfigurator';
+import { DNATRule, FirewallEntry, FirewallConfigurator as GenericFirewallConfigurator } from '../generic/FirewallConfigurator';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
 import FormData from 'form-data';
-
-export interface FirewallEntry {
-    /** rule name (human readable) */
-    name: string,
-    /** source zone */
-    src: string | undefined | null,
-    /** Source IP address. */
-    src_ip: string | undefined | null,
-    /** Source MAC address. */
-    src_mac: string | undefined | null,
-    /** Source port */
-    src_port: number | string | undefined | null,
-    /** Protocol */
-    proto: 'all' | 'tcp' | 'udp' | 'igmp', // Or whatever. Need to research more
-    icmp_type: string | undefined | null,
-    dest: string | undefined | null,
-    dest_ip: string | undefined | null,
-    dest_port: number | string | undefined | null,
-    ipset: string | undefined | null,
-    mark: number | undefined | null,
-    target: string | undefined | null,
-    set_mark: number | undefined | null,
-    set_xmark: number | undefined | null,
-    family: 'any' | 'ipv4' | 'ipv6',
-    enabled: boolean,
-}
 
 interface ParserEntry {
     type: string,
@@ -207,7 +181,7 @@ export class FirewallConfigurator extends GenericFirewallConfigurator {
      * 
      * @param cfgs - Firewall entries
      */
-    public async setFirewallConfiguration(cfgs: [FirewallEntry]):Promise<void> {
+    public async setFirewallConfiguration(cfgs: FirewallEntry[]): Promise<void> {
         let firewallCfg = `Type=firewall # Do not modify
 Version=1.0.0 # Do not modify
 lang=utf-8 # Do not modify
@@ -311,11 +285,11 @@ schedule = 0000000 0000 0000
         }
     }
 
-    public async getDNATRules(): Promise<[DNATRule]> {
+    public async getDNATRules(): Promise<DNATRule[]> {
         throw new Error('Method not implemented.');
     }
 
-    public async setDNATRules(rules: [DNATRule]): Promise<void> {
+    public async setDNATRules(rules: DNATRule[]): Promise<void> {
         throw new Error('Method not implemented.');
     }
 }

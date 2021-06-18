@@ -1,14 +1,14 @@
-import { SwitchConfigurator as GenericSwitchConfigurator } from '../../../driver/generic/SwitchConfigurator';
-import { SwitchConfigurator as CiscoSwitchConfigurator } from '../../../driver/cisco/SwitchConfigurator';
-import { SwitchConfigurator as DummySwitchConfigurator } from '../../../driver/dummy/SwitchConfigurator';
-import { EthernetPort } from '../../../driver/cisco/EthernetPort';
-import { MethodNotAvailableError, RPCReturnType, RPCv2Request, RPCv2Response } from '../../jsonrpcv2';
-import { VLAN } from '../../../driver/cisco/VLAN';
+import { SwitchConfigurator as GenericSwitchConfigurator } from '../../driver/generic/SwitchConfigurator';
+import { SwitchConfigurator as CiscoSwitchConfigurator } from '../../driver/cisco/SwitchConfigurator';
+import { SwitchConfigurator as DummySwitchConfigurator } from '../../driver/dummy/SwitchConfigurator';
+import { EthernetPort } from '../../driver/cisco/EthernetPort';
+import { MethodNotAvailableError, RPCReturnType, RPCv2Request, RPCv2Response } from '../jsonrpcv2';
+import { VLAN } from '../../driver/cisco/VLAN';
+import { RPCMethodTable, RPCRequestHandler } from './RPCRequestHandler';
 
-export class SwitchConfiguratorReqHandler {
-    private deviceId: string;
+export class SwitchConfiguratorReqHandler extends RPCRequestHandler {
     private switchConfigurator: GenericSwitchConfigurator | CiscoSwitchConfigurator | DummySwitchConfigurator;
-    private rpcMethodTable: {[key: string]: (...args: any) => Promise<any> } = {
+    protected rpcMethodTable: RPCMethodTable = {
         loadConfig: async (): Promise<void> => {
             if (this.switchConfigurator instanceof CiscoSwitchConfigurator) {
                 await this.switchConfigurator.loadConfig();
@@ -46,41 +46,11 @@ export class SwitchConfiguratorReqHandler {
     };
 
     constructor(deviceId: string, switchConfigurator: GenericSwitchConfigurator | CiscoSwitchConfigurator | DummySwitchConfigurator) {
-        this.deviceId = deviceId;
+        super(deviceId, 'SwitchConfigurator');
         this.switchConfigurator = switchConfigurator;
     }
 
     async init(): Promise<void> {
         await this.switchConfigurator.init();
-    }
-
-    /**
-     * Get RPC handler callback for RPC
-     * @returns RPC Handler callback function
-     */
-    public getRPCHandler(): (req: RPCv2Request) => Promise<RPCReturnType<any>> {
-        return async (req: RPCv2Request) => {
-            if (req.target != this.deviceId) {
-                return {handled: false, result: null};
-            }
-
-            return await this.handleRPCRequest(req);
-        };
-    }
-
-    private async handleRPCRequest(req: RPCv2Request): Promise<RPCReturnType<any>> {
-        const cb = this.rpcMethodTable[req.method];
-        console.log(cb);
-        if (cb == null) {
-            return {handled: false, result: null};
-        }
-
-        if (!(req.params instanceof Array)) {
-            throw new Error('K-V pair method calling is not supported yet');
-        }
-
-        const ret = await cb(...req.params);
-        console.log(ret);
-        return {handled: true, result: ret};
     }
 }

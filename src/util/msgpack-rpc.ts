@@ -1,20 +1,18 @@
-import { spawn, ChildProcess } from 'child_process';
 import msgpack, { DecodeStream } from 'msgpack-lite';
-import hexy from 'hexy';
 import { Socket } from 'net';
 
 export class MsgpackRPC {
     private port: number;
     private callId = 0;
     private msgpackDecodeStream: DecodeStream | null = null;
-    private rpcCbTable: {[key: number]: (msg: any, err: any) => void} = {};
+    private rpcCbTable: {[key: number]: (msg: unknown, err: any) => void} = {};
     private socket: Socket | undefined;
 
     constructor(port: number) {
         this.port = port;
     }
 
-    public async connect() {
+    public async connect(): Promise<void> {
         this.socket = new Socket();
         await new Promise((ful, _rej) => {
             this.socket?.connect(this.port, '127.0.0.1', () => {
@@ -26,8 +24,8 @@ export class MsgpackRPC {
         this.socket.pipe(this.msgpackDecodeStream);
 
         return new Promise((ful, rej) => {
-            this.msgpackDecodeStream?.on('data', (msg: any) => {
-                const msgArr: [number, number|string, any, any] = msg;
+            this.msgpackDecodeStream?.on('data', (msg: [number, number|string, unknown, unknown]) => {
+                const msgArr: [number, number|string, unknown, unknown] = msg;
                 const type = msgArr[0];
                 const msgid = msgArr[1];
                 const error = msgArr[2];
@@ -42,7 +40,7 @@ export class MsgpackRPC {
                 } if (type === 2) {
                     const msg = msgid as string;
                     if (msg === 'init') {
-                        ful(null);
+                        ful();
                     }
                 }
             });
@@ -58,13 +56,13 @@ export class MsgpackRPC {
         return this.callId;
     }
 
-    protected async runRPCCommand(method: string, ...params: any[]): Promise<any> {
+    protected async runRPCCommand(method: string, ...params: unknown[]): Promise<any> {
         if (this.socket == null) {
             throw new Error('RPC not connected!');
         }
 
         const callId = this.getCallID();
-        const cmd: [number, number, string, any[]] = [
+        const cmd: [number, number, string, unknown[]] = [
             0,
             callId,
             method,

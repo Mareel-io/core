@@ -29,13 +29,13 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     }
 
     public async getSwitchPorts(): Promise<GenericEthernetPort[]> {
-        const ret: {[key: string]: any}[] = await this.rpc.remoteCall({
+        const ret = (await this.rpc.remoteCall({
             jsonrpc: '2.0',
             target: this.targetId,
             class: 'SwitchConfigurator',
             method: 'getSwitchPorts',
             params: [],
-        });
+        })) as {[key: string]: string | number}[];
 
         return ret.map((stat) => {
             // TODO: FIXME: Depends on the platform, instantiate different EthernetPort obj
@@ -47,23 +47,23 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     }
 
     public async setSwitchPort(port: GenericEthernetPort, portIdx: number): Promise<void> {
-        return await this.rpc.remoteCall({
+        return (await this.rpc.remoteCall({
             jsonrpc: '2.0',
             target: this.targetId,
             class: 'SwitchConfigurator',
             method: 'setSwitchPort',
             params: [port.serialize(), portIdx],
-        });
+        })) as void;
     }
 
     public async getAllVLAN(): Promise<GenericVLAN[]> {
-        const ret: {[key: string]: any}[] = await this.rpc.remoteCall({
+        const ret = await this.rpc.remoteCall({
             jsonrpc: '2.0',
             target: this.targetId,
             class: 'SwitchConfigurator',
             method: 'getAllVLAN',
             params: [],
-        });
+        }) as {[key: string]: string | number}[];
 
         return ret.map((stat) => {
             // TODO: FIXME: Depends on the platform, instantiate different VLAN obj
@@ -75,13 +75,13 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     }
 
     public async getVLAN(vid: number): Promise<GenericVLAN | null> {
-        const ret: {[key: string]: any} | null = await this.rpc.remoteCall({
+        const ret = (await this.rpc.remoteCall({
             jsonrpc: '2.0',
             target: this.targetId,
             class: 'SwitchConfigurator',
             method: 'getVLAN',
             params: [vid],
-        });
+        })) as {[key: string]: any} | null;
 
         if (ret != null) {
             const vlan = new CiscoVLAN('802.1q');
@@ -93,12 +93,12 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     }
 
     public async setVLAN(vlan: GenericVLAN): Promise<void> {
-        return await this.rpc.remoteCall({
+        return (await this.rpc.remoteCall({
             jsonrpc: '2.0',
             target: this.targetId,
             class: 'SwitchConfigurator',
             method: 'getVLAN',
             params: [vlan.serialize()],
-        });
+        })) as void;
     }
 }
