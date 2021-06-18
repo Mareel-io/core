@@ -22,5 +22,6 @@ export class LogmanReqHandler extends RPCRequestHandler {
     }
 
     async init(): Promise<void> {
+        // TODO: Implement me
     }
 }

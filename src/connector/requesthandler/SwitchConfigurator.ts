@@ -1,10 +1,10 @@
-import { SwitchConfigurator as GenericSwitchConfigurator } from '../../../driver/generic/SwitchConfigurator';
-import { SwitchConfigurator as CiscoSwitchConfigurator } from '../../../driver/cisco/SwitchConfigurator';
-import { SwitchConfigurator as DummySwitchConfigurator } from '../../../driver/dummy/SwitchConfigurator';
-import { EthernetPort } from '../../../driver/cisco/EthernetPort';
-import { MethodNotAvailableError, RPCReturnType, RPCv2Request, RPCv2Response } from '../../jsonrpcv2';
-import { VLAN } from '../../../driver/cisco/VLAN';
-import { RPCMethodTable, RPCRequestHandler } from '../RPCRequestHandler';
+import { SwitchConfigurator as GenericSwitchConfigurator } from '../../driver/generic/SwitchConfigurator';
+import { SwitchConfigurator as CiscoSwitchConfigurator } from '../../driver/cisco/SwitchConfigurator';
+import { SwitchConfigurator as DummySwitchConfigurator } from '../../driver/dummy/SwitchConfigurator';
+import { EthernetPort } from '../../driver/cisco/EthernetPort';
+import { MethodNotAvailableError, RPCReturnType, RPCv2Request, RPCv2Response } from '../jsonrpcv2';
+import { VLAN } from '../../driver/cisco/VLAN';
+import { RPCMethodTable, RPCRequestHandler } from './RPCRequestHandler';
 
 export class SwitchConfiguratorReqHandler extends RPCRequestHandler {
     private switchConfigurator: GenericSwitchConfigurator | CiscoSwitchConfigurator | DummySwitchConfigurator;

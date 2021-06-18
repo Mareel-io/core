@@ -13,5 +13,6 @@ export class FirewallConfiguratorReqHandler extends RPCRequestHandler {
     }
 
     async init(): Promise<void> {
+        // TODO: Implement me
     }
 }
