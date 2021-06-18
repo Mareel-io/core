@@ -11,6 +11,7 @@ import { RPCFirewallConfigurator } from './FireallConfigurator';
 import { RPCLogman } from './Logman';
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
 import { RPCWLANConfigurator } from './WLANConfigurator';
+import { RPCWLANUserDeviceStat } from './WLANUserDeviceStat';
 
 export class RPCControllerFactory extends GenericControllerFactory {
     private ws: WebSocket;
@@ -70,7 +71,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
     }
 
     public getWLANUserDeviceStat(targetId: string): WLANUserDeviceStat {
-        throw new Error('Method not implemented.');
+        return new RPCWLANUserDeviceStat(this.rpc, targetId);
     }
 
     public getLogman(targetId: string): Logman {
