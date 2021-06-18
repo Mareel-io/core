@@ -12,6 +12,7 @@ export class VLANTag {
      * Do not fiddle with this. Not guaranteed to be stable
      * @returns Current state. Do not fiddle with this
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public serialize(): {[key: string]: any} {
         return {
             tag: this.tag,
@@ -19,16 +20,17 @@ export class VLANTag {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public restore(restoreData: {[key: string]: any}) {
         this.tag = restoreData.tag;
         this.alias = restoreData.alias;
     }
 
-    getTag() {
+    public getTag(): number {
         return this.tag;
     }
 
-    getAlias() {
+    public getAlias(): string {
         return this.alias;
     }
 
