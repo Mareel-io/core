@@ -6,10 +6,12 @@ export interface RPCMethodTable {
 
 export abstract class RPCRequestHandler {
     protected deviceId: string;
+    protected className: string;
     protected rpcMethodTable: RPCMethodTable = {};
 
-    constructor(deviceId: string) {
+    constructor(deviceId: string, className: string) {
         this.deviceId = deviceId;
+        this.className = className;
     }
 
     public abstract init(): Promise<void>;
@@ -29,8 +31,11 @@ export abstract class RPCRequestHandler {
     }
 
     private async handleRPCRequest(req: RPCv2Request): Promise<RPCReturnType<any>> {
+        if (req.class != this.className) {
+            return {handled: false, result: null};
+        }
+
         const cb = this.rpcMethodTable[req.method];
-        console.log(cb);
         if (cb == null) {
             return {handled: false, result: null};
         }
@@ -40,7 +45,6 @@ export abstract class RPCRequestHandler {
         }
 
         const ret = await cb(...req.params);
-        console.log(ret);
         return {handled: true, result: ret};
     }
 }

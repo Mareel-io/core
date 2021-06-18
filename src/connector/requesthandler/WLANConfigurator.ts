@@ -74,7 +74,7 @@ export class WLANConfiguratorReqHandler extends RPCRequestHandler {
     }
     
     constructor(deviceId: string, wlanConfigurator: GenericWLANConfigurator | EFMWlanConfigurator) {
-        super(deviceId);
+        super(deviceId, 'WLANConfigurator');
         this.wlanConfigurator = wlanConfigurator;
     }
 

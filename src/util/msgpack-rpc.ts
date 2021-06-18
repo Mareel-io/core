@@ -5,7 +5,6 @@ export class MsgpackRPC {
     private port: number;
     private callId = 0;
     private msgpackDecodeStream: DecodeStream | null = null;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private rpcCbTable: {[key: number]: (msg: unknown, err: any) => void} = {};
     private socket: Socket | undefined;
 
@@ -25,7 +24,7 @@ export class MsgpackRPC {
         this.socket.pipe(this.msgpackDecodeStream);
 
         return new Promise((ful, rej) => {
-            this.msgpackDecodeStream?.on('data', (msg: unknown) => {
+            this.msgpackDecodeStream?.on('data', (msg: [number, number|string, unknown, unknown]) => {
                 const msgArr: [number, number|string, unknown, unknown] = msg;
                 const type = msgArr[0];
                 const msgid = msgArr[1];

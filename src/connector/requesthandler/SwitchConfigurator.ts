@@ -46,7 +46,7 @@ export class SwitchConfiguratorReqHandler extends RPCRequestHandler {
     };
 
     constructor(deviceId: string, switchConfigurator: GenericSwitchConfigurator | CiscoSwitchConfigurator | DummySwitchConfigurator) {
-        super(deviceId);
+        super(deviceId, 'SwitchConfigurator');
         this.switchConfigurator = switchConfigurator;
     }
 

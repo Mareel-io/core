@@ -160,7 +160,7 @@ export class RPCProvider extends EventEmitter {
         const handler = this.callHandlerTable[chunk.id];
         if (handler != null) {
             if (chunk.error != null) {
-                handler(null, new Error(chunk.error));
+                handler(null, new Error(chunk.error as string));
             } else {
                 handler(chunk.result);
             }
