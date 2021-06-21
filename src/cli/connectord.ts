@@ -3,6 +3,7 @@ import { CiscoCredential, ControllerFactory as CiscoControllerFactory } from '..
 import { ControllerFactory as GenericControllerFactory } from '../driver/generic/lib';
 import { ControllerFactory as DummyControllerFactory } from '../driver/dummy/lib';
 import WebSocket from 'ws'
+import arg from 'arg';
 
 import { MIBLoader } from '../util/snmp/mibloader';
 import { CiscoTFTPServer } from '../util/tftp';
@@ -50,9 +51,14 @@ function setupCleanup() {
 }
 
 export async function svcmain() {
-    const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
-    // Initialize essential services
+    const args = arg({
+        '--config': String,
+    });
 
+    const config = args['--config'] ? args['--config'] : '/etc/mareel/connectord.yaml';
+    const configFile = YAML.parse(fs.readFileSync(config).toString('utf-8'));
+
+    // Initialize essential services
     console.log('Main process started');
     const connectorClient = new ConnectorClient(configFile);
 
