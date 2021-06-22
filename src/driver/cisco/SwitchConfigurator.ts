@@ -6,6 +6,7 @@ import { CiscoSSHClient } from '../../util/ssh';
 import { CiscoConfigEditor, CiscoPort } from './configedit/configeditor';
 import { CiscoTFTPServer } from '../../util/tftp';
 import { v4 as uuidv4 } from 'uuid';
+import { CiscoTFTPUtil } from './util/TFTPUtil';
 
 // Possible OID table
 // iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) cisco(9) ciscoMgmt(9) ciscoCdpMIB(23)
@@ -37,6 +38,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     private ssh: CiscoSSHClient;
     private configedit: CiscoConfigEditor;
     private tftpServer: CiscoTFTPServer;
+    private tftpUtil: CiscoTFTPUtil;
     private portList: number[] = [];
 
     constructor(snmp: SNMPClient, ssh: CiscoSSHClient, tftpServer: CiscoTFTPServer) {
@@ -45,6 +47,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         this.ssh = ssh;
         this.tftpServer = tftpServer;
         this.configedit = new CiscoConfigEditor(1337);
+        this.tftpUtil = new CiscoTFTPUtil(this.ssh, this.tftpServer);
 
         // FIXME: hardcoded 24-port switch
         for(let i = 1; i <= 24; i++) {
@@ -55,45 +58,8 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     /**
      * Initialize Cisco switch configurator.
      */
-    public async init() {
+    public async init(): Promise<void> {
         await this.configedit.connect();
-    }
-
-    /**
-     * Fetch running-config using SSH and TFTP
-     * @returns Config file
-     */
-    private async fetchConfigFile(): Promise<string> {
-        await this.ssh.connect();
-        const filename = `${uuidv4()}.cfg`;
-        const retprom: Promise<string> = new Promise((ful, rej) => {
-            let buf = Buffer.from([]);
-            this.tftpServer.reserveFileToRecv(filename, (stream) => {
-                stream.on('abort', (e) => rej(e));
-                stream.on('error', (e) => rej(e));
-                stream.on('data', (data) => {
-                    buf = Buffer.concat([buf, data]);
-                });
-                stream.on('end', () => {
-                    ful(buf.toString('utf-8'));
-                });
-            });
-        });
-        const foo = await this.ssh.runCiscoCommand(`copy running-config ${this.tftpServer.getCiscoTFTPURL(filename)}`);
-        this.ssh.disconnect();
-        return retprom;
-    }
-
-    /**
-     * Upload Cisco config file to running-config using TFTP and SSH
-     * @param config Cisco config file in string
-     */
-    private async putConfigFile(config: string): Promise<void> {
-        await this.ssh.connect();
-        const filename = `${uuidv4()}.cfg`;
-        this.tftpServer.addFileToServe(filename, Buffer.from(config));
-        await this.ssh.runCiscoCommand(`copy ${this.tftpServer.getCiscoTFTPURL(filename)} running-config`);
-        this.ssh.disconnect();
     }
 
     /**
@@ -101,7 +67,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      * @param rawaddr MAC address in binary format, can be retrieved from SNMP
      * @returns 
      */
-    private convertHWAddr(rawaddr: Buffer) {
+    private convertHWAddr(rawaddr: Buffer): string {
         return rawaddr.reduce((acc: string, val): string => {
             let digit = val.toString(16).toLowerCase();
             if (digit.length === 1) {
@@ -243,8 +209,9 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     /**
      * Download & load config using TFTP & SSH
      */
-    public async loadConfig() {
-        const config = await this.fetchConfigFile();
+    public async loadConfig(): Promise<void> {
+        const configFile = await this.tftpUtil.fetchFile('running-config')
+        const config = configFile.toString('utf-8');
         await this.configedit.loadCfg(config);
         console.log('config loaded.');
     }
@@ -252,8 +219,9 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     /**
      * Upload config to device using TFTP & ssh.
      */
-    public async applyConfig() {
-        this.putConfigFile(await this.configedit.extractCfg());
+    public async applyConfig(): Promise<void> {
+        const configFile = Buffer.from(await this.configedit.extractCfg());
+        await this.tftpUtil.putFile('running-config', configFile);
         console.log('Configuration uploaded to device.');
     }
    
@@ -261,7 +229,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      * Current config file in text format. For debugging/backup purpose
      * @returns Config file
      */
-    public async extractCfg() {
+    public async extractCfg(): Promise<string> {
         return await this.configedit.extractCfg();
     }
 
