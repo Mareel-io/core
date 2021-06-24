@@ -1,9 +1,10 @@
 import { Logman as EFMLogman } from '../../driver/efm/Logman';
 import { Logman as GenericLogman } from '../../driver/generic/Logman';
+import { Logman as CiscoLogman } from '../../driver/cisco/Logman';
 import { RPCMethodTable, RPCRequestHandler } from './RPCRequestHandler';
 
 export class LogmanReqHandler extends RPCRequestHandler {
-    private logman: GenericLogman | EFMLogman;
+    private logman: GenericLogman | EFMLogman | CiscoLogman;
     protected rpcMethodTable: RPCMethodTable = {
         queryLog: async(source: string, from: string | null, to: string | null) => {
             const fromTS = from ? new Date(from) : undefined;
@@ -16,7 +17,7 @@ export class LogmanReqHandler extends RPCRequestHandler {
         },
     };
 
-    constructor(deviceId: string, logman: GenericLogman | EFMLogman) {
+    constructor(deviceId: string, logman: GenericLogman | EFMLogman | CiscoLogman) {
         super(deviceId, 'Logman');
         this.logman = logman;
     }
