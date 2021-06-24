@@ -27,22 +27,10 @@ export abstract class ControllerFactory {
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     public abstract authenticate(credential: any): Promise<void>;
-
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    public abstract getWLANConfigurator(...params: any): WLANConfigurator;
-
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    public abstract getWLANUserDeviceStat(...params: any): WLANUserDeviceStat;
-
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    public abstract getSwitchConfigurator(...params: any): SwitchConfigurator;
-
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    public abstract getLogman(...params: any): Logman;
-
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    public abstract getFirewallConfigurator(...params: any): FirewallConfigurator;
-
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    public abstract getNetTester(...params: any): NetTester;
+    public abstract getWLANConfigurator(deviceId?: string): WLANConfigurator;
+    public abstract getWLANUserDeviceStat(deviceId?: string): WLANUserDeviceStat;
+    public abstract getSwitchConfigurator(deviceId?: string): SwitchConfigurator;
+    public abstract getLogman(deviceId?: string): Logman;
+    public abstract getFirewallConfigurator(deviceId?: string): FirewallConfigurator;
+    public abstract getNetTester(deviceId?: string): NetTester;
 }

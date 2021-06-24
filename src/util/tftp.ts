@@ -19,13 +19,13 @@ export class CiscoTFTPServer extends EventEmitter {
     }
 
     // Helper function from Axios.JS
-    private combineURLs(baseURL: string, relativeURL: string) {
+    private combineURLs(baseURL: string, relativeURL: string): string {
         return relativeURL
           ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
           : baseURL;
     }
 
-    private reqHandler(req: TFTPReq, res: TFTPRes) {
+    private reqHandler(req: TFTPReq, res: TFTPRes): void {
         if (req.method === 'PUT') {
             const ent = this.fileRecvTable[req.file];
             if (ent == null) {
@@ -47,23 +47,23 @@ export class CiscoTFTPServer extends EventEmitter {
         }
     }
 
-    public listen() {
+    public listen(): void {
         this.tftpServer.listen();
     }
 
-    public close() {
+    public close(): void {
         this.tftpServer.close();
     }
 
-    public getCiscoTFTPURL(file: string) {
+    public getCiscoTFTPURL(file: string): string {
         return this.combineURLs(`tftp://${this.systemIPv4Address}/`, file);
     }
 
-    public addFileToServe(filename: string, data: Buffer) {
+    public addFileToServe(filename: string, data: Buffer): void {
         this.fileSendTable[filename] = data;
     }
 
-    public reserveFileToRecv(filename: string, listener: (stream: NodeJS.ReadableStream) => void) {
+    public reserveFileToRecv(filename: string, listener: (stream: NodeJS.ReadableStream) => void): void {
         this.fileRecvTable[filename] = listener;
     }
 }

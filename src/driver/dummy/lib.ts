@@ -1,3 +1,4 @@
+import { MethodNotImplementedError } from '../../error/MarilError';
 import { NetTester } from '../efm/monitor/NetTester';
 import { FirewallConfigurator } from '../generic/FirewallConfigurator';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
@@ -11,6 +12,7 @@ export class ControllerFactory extends GenericControllerFactory {
         super(deviceaddress);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public async authenticate(credential: any): Promise<void> {
         console.log('DummyControllerFactory: Auth OK');
     }
@@ -19,19 +21,19 @@ export class ControllerFactory extends GenericControllerFactory {
         return new DummySwitchConfigurator();
     }
 
-    public getWLANConfigurator(...params: any): WLANConfigurator {
-        throw new Error('Method not implemented.');
+    public getWLANConfigurator(): WLANConfigurator {
+        throw new MethodNotImplementedError();
     }
-    public getWLANUserDeviceStat(...params: any): WLANUserDeviceStat {
-        throw new Error('Method not implemented.');
+    public getWLANUserDeviceStat(): WLANUserDeviceStat {
+        throw new MethodNotImplementedError();
     }
-    public getLogman(...params: any): Logman {
-        throw new Error('Method not implemented.');
+    public getLogman(): Logman {
+        throw new MethodNotImplementedError();
     }
-    public getFirewallConfigurator(...params: any): FirewallConfigurator {
-        throw new Error('Method not implemented.');
+    public getFirewallConfigurator(): FirewallConfigurator {
+        throw new MethodNotImplementedError();
     }
-    public getNetTester(...params: any): NetTester {
-        throw new Error('Method not implemented.');
+    public getNetTester(): NetTester {
+        throw new MethodNotImplementedError();
     }
 }

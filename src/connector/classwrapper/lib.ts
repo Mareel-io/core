@@ -7,7 +7,11 @@ import { Logman } from '../../driver/generic/Logman';
 import { WLANConfigurator } from '../../driver/generic/wlan';
 import { WLANUserDeviceStat } from '../../driver/generic/WLANUserDeviceStat';
 import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
+import { RPCFirewallConfigurator } from './FireallConfigurator';
+import { RPCLogman } from './Logman';
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
+import { RPCWLANConfigurator } from './WLANConfigurator';
+import { RPCWLANUserDeviceStat } from './WLANUserDeviceStat';
 
 export class RPCControllerFactory extends GenericControllerFactory {
     private ws: WebSocket;
@@ -42,11 +46,11 @@ export class RPCControllerFactory extends GenericControllerFactory {
             this.rpc.addNotifyHandler(cb);
         });
         console.log('Pong received.');
-        this.devices = await this.rpc.remoteCall({
+        this.devices = (await this.rpc.remoteCall({
             jsonrpc: '2.0',
             method: 'getRegisteredDevices',
             params: [],
-        });
+        })) as {id: string, type: string}[];
     }
 
     public getDevices(): {id: string, type: string}[] {
@@ -62,23 +66,23 @@ export class RPCControllerFactory extends GenericControllerFactory {
         return switchConfigurator;
     }
 
-    public getWLANConfigurator(...params: any): WLANConfigurator {
-        throw new Error('Method not implemented.');
+    public getWLANConfigurator(targetId: string): WLANConfigurator {
+        return new RPCWLANConfigurator(this.rpc, targetId);
     }
 
-    public getWLANUserDeviceStat(...params: any): WLANUserDeviceStat {
-        throw new Error('Method not implemented.');
+    public getWLANUserDeviceStat(targetId: string): WLANUserDeviceStat {
+        return new RPCWLANUserDeviceStat(this.rpc, targetId);
     }
 
-    public getLogman(...params: any): Logman {
-        throw new Error('Method not implemented.');
+    public getLogman(targetId: string): Logman {
+        return new RPCLogman(this.rpc, targetId);
     }
 
-    public getFirewallConfigurator(...params: any): FirewallConfigurator {
-        throw new Error('Method not implemented.');
+    public getFirewallConfigurator(targetId: string): FirewallConfigurator {
+        return new RPCFirewallConfigurator(this.rpc, targetId);
     }
 
-    public getNetTester(...params: any): NetTester {
+    public getNetTester(targetId: string): NetTester {
         throw new Error('Method not implemented.');
     }
 }

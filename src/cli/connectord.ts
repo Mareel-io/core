@@ -3,6 +3,7 @@ import { CiscoCredential, ControllerFactory as CiscoControllerFactory } from '..
 import { ControllerFactory as GenericControllerFactory } from '../driver/generic/lib';
 import { ControllerFactory as DummyControllerFactory } from '../driver/dummy/lib';
 import WebSocket from 'ws'
+import arg from 'arg';
 
 import { MIBLoader } from '../util/snmp/mibloader';
 import { CiscoTFTPServer } from '../util/tftp';
@@ -13,8 +14,13 @@ import fs from 'fs';
 
 import YAML from 'yaml';
 import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from '../connector/jsonrpcv2';
-import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/cisco/SwitchConfigurator';
-import { parseJsonConfigFileContent } from 'typescript';
+import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/SwitchConfigurator';
+import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
+import { collapseTextChangeRangesAcrossMultipleVersions, parseJsonConfigFileContent } from 'typescript';
+import { SwitchConfigurator } from '../driver/generic/SwitchConfigurator';
+import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
+import { LogmanReqHandler } from '../connector/requesthandler/Logman';
+import { MethodNotImplementedError } from '../error/MarilError';
 
 interface EFMCredential {
     id: string,
@@ -48,9 +54,14 @@ function setupCleanup() {
 }
 
 export async function svcmain() {
-    const configFile = YAML.parse(fs.readFileSync('./config.yaml').toString('utf-8'));
-    // Initialize essential services
+    const args = arg({
+        '--config': String,
+    });
 
+    const config = args['--config'] ? args['--config'] : '/etc/mareel/connectord.yaml';
+    const configFile = YAML.parse(fs.readFileSync(config).toString('utf-8'));
+
+    // Initialize essential services
     console.log('Main process started');
     const connectorClient = new ConnectorClient(configFile);
 
@@ -102,7 +113,15 @@ export class ConnectorClient {
         this.ciscoCfgSvcRunner = new SvcRunner(launcherPath);
     }
 
-    async startSvcs() {
+    private handleDriverInitError(device: string, feature: string, e: MethodNotImplementedError | Error): void {
+        if (e instanceof MethodNotImplementedError) {
+            console.log(`Device ${device} does not support feature: ${feature}`);
+        } else {
+            throw e;
+        }
+    }
+
+    public async startSvcs(): Promise<void> {
         if (!this.config.client.disableTFTPDaemon) {
             this.tftp.listen();
         }
@@ -111,7 +130,7 @@ export class ConnectorClient {
         }
     }
 
-    async stopSvcs() {
+    public async stopSvcs(): Promise<void> {
         if (!this.config.client.disableTFTPDaemon) {
             this.tftp.close();
         }
@@ -120,7 +139,7 @@ export class ConnectorClient {
         }
     }
 
-    async connect() {
+    public async connect(): Promise<void> {
         if (this.client != null) return;
         this.client = new WebSocket(this.config.remote.url, {
             headers: {
@@ -144,7 +163,7 @@ export class ConnectorClient {
         });
     }
 
-    public async registerRPCHandlers() {
+    public async registerRPCHandlers(): Promise<void> {
         if (this.rpc == null) {
             throw new Error('You have to connect to RPC first!');
         }
@@ -156,10 +175,42 @@ export class ConnectorClient {
 
             const genericControllerFactory: GenericControllerFactory = controllerFactoryEnt.controllerFactory;
             await genericControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
-            const reqHandlerObj = new SwitchConfiguratorReqHandler(id, genericControllerFactory.getSwitchConfigurator());
-            await reqHandlerObj.init();
 
-            this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
+            // Switch
+            try {
+                const switchReqHandler = new SwitchConfiguratorReqHandler(id, genericControllerFactory.getSwitchConfigurator());
+                await switchReqHandler.init();
+                this.rpc.addRequestHandler(switchReqHandler.getRPCHandler());
+            } catch(e) {
+                this.handleDriverInitError(id, 'switch', e);
+            }
+
+            // WLAN
+            try {
+                const wlanReqHandler = new WLANConfiguratorReqHandler(id, genericControllerFactory.getWLANConfigurator());
+                await wlanReqHandler.init();
+                this.rpc.addRequestHandler(wlanReqHandler.getRPCHandler());
+            } catch(e) {
+                this.handleDriverInitError(id, 'WLAN', e);
+            }
+
+            // Firewall
+            try {
+                const firewallReqHandler = new FirewallConfiguratorReqHandler(id, genericControllerFactory.getFirewallConfigurator());
+                await firewallReqHandler.init();
+                this.rpc.addRequestHandler(firewallReqHandler.getRPCHandler());
+            } catch(e) {
+                this.handleDriverInitError(id, 'firewall', e);
+            }
+
+            // Logman
+            try {
+                const logmanReqHandler = new LogmanReqHandler(id, genericControllerFactory.getLogman());
+                await logmanReqHandler.init();
+                this.rpc.addRequestHandler(logmanReqHandler.getRPCHandler());
+            } catch(e) {
+                this.handleDriverInitError(id, 'logman', e);
+            }
         }
     }
 
@@ -193,7 +244,7 @@ export class ConnectorClient {
         }
     }
     
-    public async disconnect() {
+    public async disconnect(): Promise<void> {
         if (this.client == null) return;
         this.client.close();
         this.client = null;

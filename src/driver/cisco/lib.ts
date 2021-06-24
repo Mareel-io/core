@@ -8,9 +8,10 @@ import { SvcRunner } from '../../util/svcrunner';
 import path from 'path';
 import { NetTester } from '../efm/monitor/NetTester';
 import { FirewallConfigurator } from '../generic/FirewallConfigurator';
-import { Logman } from '../generic/Logman';
+import { Logman } from './Logman';
 import { WLANConfigurator } from '../generic/wlan';
 import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
+import { AuthError, MethodNotImplementedError } from '../../error/MarilError';
 
 export interface CiscoCredential {
     snmpCredential: SNMPClientConfig,
@@ -50,25 +51,33 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getSwitchConfigurator(): CiscoSwitchConfigurator {
         if (this.snmp == null || this.sshClient == null) {
-            throw new Error('Not authenticated.');
+            throw new AuthError('Not authenticated.');
         }
 
         return new CiscoSwitchConfigurator(this.snmp, this.sshClient, this.tftpServer);
     }
 
-    public getWLANConfigurator(...params: any): WLANConfigurator {
-        throw new Error('Method not implemented.');
+    public getWLANConfigurator(): WLANConfigurator {
+        throw new MethodNotImplementedError();
     }
-    public getWLANUserDeviceStat(...params: any): WLANUserDeviceStat {
-        throw new Error('Method not implemented.');
+
+    public getWLANUserDeviceStat(): WLANUserDeviceStat {
+        throw new MethodNotImplementedError();
     }
-    public getLogman(...params: any): Logman {
-        throw new Error('Method not implemented.');
+
+    public getLogman(): Logman {
+        if (this.snmp == null || this.sshClient == null) {
+            throw new AuthError('Not authenticated.');
+        }
+
+        return new Logman(this.snmp, this.sshClient, this.tftpServer);
     }
-    public getFirewallConfigurator(...params: any): FirewallConfigurator {
-        throw new Error('Method not implemented.');
+
+    public getFirewallConfigurator(): FirewallConfigurator {
+        throw new MethodNotImplementedError();
     }
-    public getNetTester(...params: any): NetTester {
-        throw new Error('Method not implemented.');
+
+    public getNetTester(): NetTester {
+        throw new MethodNotImplementedError();
     }
 }
