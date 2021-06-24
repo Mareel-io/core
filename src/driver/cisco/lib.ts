@@ -11,6 +11,7 @@ import { FirewallConfigurator } from '../generic/FirewallConfigurator';
 import { Logman } from './Logman';
 import { WLANConfigurator } from '../generic/wlan';
 import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
+import { AuthError, MethodNotImplementedError } from '../../error/MarilError';
 
 export interface CiscoCredential {
     snmpCredential: SNMPClientConfig,
@@ -50,33 +51,33 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getSwitchConfigurator(): CiscoSwitchConfigurator {
         if (this.snmp == null || this.sshClient == null) {
-            throw new Error('Not authenticated.');
+            throw new AuthError('Not authenticated.');
         }
 
         return new CiscoSwitchConfigurator(this.snmp, this.sshClient, this.tftpServer);
     }
 
     public getWLANConfigurator(): WLANConfigurator {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
 
     public getWLANUserDeviceStat(): WLANUserDeviceStat {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
 
     public getLogman(): Logman {
         if (this.snmp == null || this.sshClient == null) {
-            throw new Error('Not authenticated.');
+            throw new AuthError('Not authenticated.');
         }
 
         return new Logman(this.snmp, this.sshClient, this.tftpServer);
     }
 
     public getFirewallConfigurator(): FirewallConfigurator {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
 
     public getNetTester(): NetTester {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
 }

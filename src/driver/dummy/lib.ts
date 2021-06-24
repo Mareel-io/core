@@ -1,3 +1,4 @@
+import { MethodNotImplementedError } from '../../error/MarilError';
 import { NetTester } from '../efm/monitor/NetTester';
 import { FirewallConfigurator } from '../generic/FirewallConfigurator';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
@@ -21,18 +22,18 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getWLANConfigurator(): WLANConfigurator {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
     public getWLANUserDeviceStat(): WLANUserDeviceStat {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
     public getLogman(): Logman {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
     public getFirewallConfigurator(): FirewallConfigurator {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
     public getNetTester(): NetTester {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
 }
