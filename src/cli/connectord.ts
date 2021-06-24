@@ -18,6 +18,8 @@ import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/Switch
 import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
 import { parseJsonConfigFileContent } from 'typescript';
 import { SwitchConfigurator } from '../driver/generic/SwitchConfigurator';
+import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
+import { LogmanReqHandler } from '../connector/requesthandler/Logman';
 
 interface EFMCredential {
     id: string,
@@ -166,12 +168,24 @@ export class ConnectorClient {
             await genericControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
 
             // Switch
-            const reqHandlerObj = new SwitchConfiguratorReqHandler(id, genericControllerFactory.getSwitchConfigurator());
-            await reqHandlerObj.init();
-
-            this.rpc.addRequestHandler(reqHandlerObj.getRPCHandler());
+            const switchReqHandler = new SwitchConfiguratorReqHandler(id, genericControllerFactory.getSwitchConfigurator());
+            await switchReqHandler.init();
+            this.rpc.addRequestHandler(switchReqHandler.getRPCHandler());
 
             // WLAN
+            const wlanReqHandler = new WLANConfiguratorReqHandler(id, genericControllerFactory.getWLANConfigurator());
+            await wlanReqHandler.init();
+            this.rpc.addRequestHandler(wlanReqHandler.getRPCHandler());
+
+            // Firewall
+            const firewallReqHandler = new FirewallConfiguratorReqHandler(id, genericControllerFactory.getFirewallConfigurator());
+            await firewallReqHandler.init();
+            this.rpc.addRequestHandler(firewallReqHandler.getRPCHandler());
+
+            // Logman
+            const logmanReqHandler = new LogmanReqHandler(id, genericControllerFactory.getLogman());
+            await logmanReqHandler.init();
+            this.rpc.addRequestHandler(logmanReqHandler.getRPCHandler());
         }
     }
 
