@@ -8,7 +8,7 @@ import { SvcRunner } from '../../util/svcrunner';
 import path from 'path';
 import { NetTester } from '../efm/monitor/NetTester';
 import { FirewallConfigurator } from '../generic/FirewallConfigurator';
-import { Logman } from '../generic/Logman';
+import { Logman } from './Logman';
 import { WLANConfigurator } from '../generic/wlan';
 import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 
@@ -59,15 +59,23 @@ export class ControllerFactory extends GenericControllerFactory {
     public getWLANConfigurator(): WLANConfigurator {
         throw new Error('Method not implemented.');
     }
+
     public getWLANUserDeviceStat(): WLANUserDeviceStat {
         throw new Error('Method not implemented.');
     }
+
     public getLogman(): Logman {
-        throw new Error('Method not implemented.');
+        if (this.snmp == null || this.sshClient == null) {
+            throw new Error('Not authenticated.');
+        }
+
+        return new Logman(this.snmp, this.sshClient, this.tftpServer);
     }
+
     public getFirewallConfigurator(): FirewallConfigurator {
         throw new Error('Method not implemented.');
     }
+
     public getNetTester(): NetTester {
         throw new Error('Method not implemented.');
     }
