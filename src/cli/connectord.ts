@@ -168,24 +168,44 @@ export class ConnectorClient {
             await genericControllerFactory.authenticate(controllerFactoryEnt.device.credential as CiscoCredential);
 
             // Switch
-            const switchReqHandler = new SwitchConfiguratorReqHandler(id, genericControllerFactory.getSwitchConfigurator());
-            await switchReqHandler.init();
-            this.rpc.addRequestHandler(switchReqHandler.getRPCHandler());
+            try {
+                const switchReqHandler = new SwitchConfiguratorReqHandler(id, genericControllerFactory.getSwitchConfigurator());
+                await switchReqHandler.init();
+                this.rpc.addRequestHandler(switchReqHandler.getRPCHandler());
+            } catch(e) {
+                console.warn(`WARN: Failed to initialize Switch of device ${id}`);
+                console.warn(e);
+            }
 
             // WLAN
-            const wlanReqHandler = new WLANConfiguratorReqHandler(id, genericControllerFactory.getWLANConfigurator());
-            await wlanReqHandler.init();
-            this.rpc.addRequestHandler(wlanReqHandler.getRPCHandler());
+            try {
+                const wlanReqHandler = new WLANConfiguratorReqHandler(id, genericControllerFactory.getWLANConfigurator());
+                await wlanReqHandler.init();
+                this.rpc.addRequestHandler(wlanReqHandler.getRPCHandler());
+            } catch(e) {
+                console.warn(`WARN: Failed to initialize WLAN of device ${id}`);
+                console.warn(e);
+            }
 
             // Firewall
-            const firewallReqHandler = new FirewallConfiguratorReqHandler(id, genericControllerFactory.getFirewallConfigurator());
-            await firewallReqHandler.init();
-            this.rpc.addRequestHandler(firewallReqHandler.getRPCHandler());
+            try {
+                const firewallReqHandler = new FirewallConfiguratorReqHandler(id, genericControllerFactory.getFirewallConfigurator());
+                await firewallReqHandler.init();
+                this.rpc.addRequestHandler(firewallReqHandler.getRPCHandler());
+            } catch(e) {
+                console.warn(`WARN: Failed to initialize Firewall of device ${id}`);
+                console.warn(e);
+            }
 
             // Logman
-            const logmanReqHandler = new LogmanReqHandler(id, genericControllerFactory.getLogman());
-            await logmanReqHandler.init();
-            this.rpc.addRequestHandler(logmanReqHandler.getRPCHandler());
+            try {
+                const logmanReqHandler = new LogmanReqHandler(id, genericControllerFactory.getLogman());
+                await logmanReqHandler.init();
+                this.rpc.addRequestHandler(logmanReqHandler.getRPCHandler());
+            } catch(e) {
+                console.warn(`WARN: Failed to initialize Logman of device ${id}`);
+                console.warn(e);
+            }
         }
     }
 
