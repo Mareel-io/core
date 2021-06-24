@@ -1,4 +1,6 @@
-export class MarilError extends Error {}
+import { CustomError } from "ts-custom-error";
+
+export class MarilError extends CustomError {}
 export class AuthError extends MarilError {}
 export class UnsupportedFeatureError extends MarilError {}
 export class ResourceNotAvailableError extends MarilError {}

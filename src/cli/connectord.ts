@@ -16,7 +16,7 @@ import YAML from 'yaml';
 import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from '../connector/jsonrpcv2';
 import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/SwitchConfigurator';
 import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
-import { parseJsonConfigFileContent } from 'typescript';
+import { collapseTextChangeRangesAcrossMultipleVersions, parseJsonConfigFileContent } from 'typescript';
 import { SwitchConfigurator } from '../driver/generic/SwitchConfigurator';
 import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
 import { LogmanReqHandler } from '../connector/requesthandler/Logman';
@@ -113,7 +113,7 @@ export class ConnectorClient {
         this.ciscoCfgSvcRunner = new SvcRunner(launcherPath);
     }
 
-    private handleDriverInitError(device: string, feature: string, e: Error): void {
+    private handleDriverInitError(device: string, feature: string, e: MethodNotImplementedError | Error): void {
         if (e instanceof MethodNotImplementedError) {
             console.log(`Device ${device} does not support feature: ${feature}`);
         } else {
