@@ -10,14 +10,19 @@ async function pairTest() {
     if (socks.client.length > 0 && socks.test.length > 0) {
         const [ client ] = socks.client.slice(0, 1);
         const [ test ] = socks.test.slice(0, 1);
-        client.on('message', (msg: Buffer) => {
+        const msgCallback = (msg: Buffer) => {
             test.send(msg);
-        });
+        };
+        client.on('message', msgCallback);
         test.on('message', (msg: Buffer) => {
             client.send(msg);
         });
         client.on('end', () => {
             test.close();
+        });
+        test.on('end', () => {
+            console.log('Test instance disconnected.');
+            client.removeEventListener('message', msgCallback as () => void);
         });
         client.send(JSON.stringify({
             jsonrpc: '2.0',
