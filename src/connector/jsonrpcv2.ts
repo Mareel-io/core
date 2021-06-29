@@ -127,6 +127,9 @@ export class RPCProvider extends EventEmitter {
                 case 'ping':
                     this.sendResponse(chunk, 'pong');
                     return;
+                case 'error':
+                    this.sendResponse(chunk, null, new Error('Test error'));
+                    return;
             }
         }
 
