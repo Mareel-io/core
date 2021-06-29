@@ -53,7 +53,7 @@ export class RPCProvider extends EventEmitter {
                 this.notifyHandler(chunk);
             } else if (chunk.method !== undefined) {
                 this.requestHandler(chunk);
-            } else if (chunk.result !== undefined) {
+            } else if (chunk.result !== undefined || chunk.error != undefined) {
                 this.responseHandler(chunk);
             }
         });
@@ -79,7 +79,7 @@ export class RPCProvider extends EventEmitter {
         payload.id = curCallId;
         if (debug) { console.log('SEND'); console.log(payload); }
         this.stream.send(JSON.stringify(payload));
-        return ret;
+        return await ret;
     }
 
     public remoteNotify(payload: RPCv2Request): void {
