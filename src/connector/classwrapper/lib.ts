@@ -36,9 +36,14 @@ export class RPCControllerFactory extends GenericControllerFactory {
      * Initialize the RPCControllerFactory
      */
     public async init(): Promise<void> {
+        await this.rpc.remoteNotify({
+            jsonrpc: '2.0',
+            method: 'serverInit',
+            params: [],
+        });
         await new Promise((ful, _rej) => {
             const cb = async (notify: RPCv2Request): Promise<void> => {
-                if (notify.method == 'init') {
+                if (notify.method == 'clientInit') {
                     ful(null);
                     this.rpc.removeNotifyHandler(cb);
                 }
