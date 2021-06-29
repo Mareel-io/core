@@ -158,7 +158,7 @@ export class ConnectorClient {
         await this.registerRPCHandlers();
         this.rpc.remoteNotify({
             jsonrpc: '2.0',
-            method: 'init',
+            method: 'clientInit',
             params: [],
         });
     }
