@@ -19,9 +19,6 @@ async function pairTest() {
         client.on('end', () => {
             test.close();
         });
-        test.on('end', () => {
-            client.close();
-        });
         client.send(JSON.stringify({
             jsonrpc: '2.0',
             method: 'serverInit',
@@ -42,14 +39,17 @@ let wss: WebSocket.Server | null = null;
 export async function start(listenPort: number) {
     wss = new WebSocket.Server({ port: listenPort });
     wss.on('connection', async (ws: WebSocket) => {
+        console.log('conneciton received!');
         allSocks.push(ws);
         ws.on('message', (msg: Buffer) => {
             const jsonMsg = JSON.parse(msg.toString('utf-8'));
             switch(jsonMsg.method) {
                 case 'serverInit':
+                    console.log('serverInit received!');
                     socks.test.push(ws);
                     break;
                 case 'clientInit':
+                    console.log('clientInit received!');
                     socks.client.push(ws);
                     break;
             }
