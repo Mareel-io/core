@@ -62,6 +62,24 @@ export class RPCControllerFactory extends GenericControllerFactory {
         return this.devices;
     }
 
+    public async ping(): Promise<void> {
+        await this.rpc.remoteCall({
+            jsonrpc: '2.0',
+            class: 'base',
+            method: 'ping',
+            params: [],
+        });
+    }
+
+    public async errorPing(): Promise<void> {
+        await this.rpc.remoteCall({
+            jsonrpc: '2.0',
+	        class: 'base',
+            method: 'error',
+            params: [],
+        });
+    }
+
     public getSwitchConfigurator(targetId: string): RPCSwitchConfigurator {
         const switchConfigurator = new RPCSwitchConfigurator(this.rpc, targetId);
         return switchConfigurator;
