@@ -32,7 +32,7 @@ async function pairTest() {
             method: 'clientInit',
             params: [],
         }));
-        socks.client = socks.client.slice(1);
+        //socks.client = socks.client.slice(1);
         socks.test = socks.test.splice(1);
         pairTest();
     }
