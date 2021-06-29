@@ -2,10 +2,6 @@ import WebSocket from 'ws';
 
 import { GenericControllerFactory } from "../..";
 import { NetTester } from '../../driver/efm/monitor/NetTester';
-import { FirewallConfigurator } from '../../driver/generic/FirewallConfigurator';
-import { Logman } from '../../driver/generic/Logman';
-import { WLANConfigurator } from '../../driver/generic/wlan';
-import { WLANUserDeviceStat } from '../../driver/generic/WLANUserDeviceStat';
 import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCFirewallConfigurator } from './FireallConfigurator';
 import { RPCLogman } from './Logman';
@@ -71,19 +67,19 @@ export class RPCControllerFactory extends GenericControllerFactory {
         return switchConfigurator;
     }
 
-    public getWLANConfigurator(targetId: string): WLANConfigurator {
+    public getWLANConfigurator(targetId: string): RPCWLANConfigurator {
         return new RPCWLANConfigurator(this.rpc, targetId);
     }
 
-    public getWLANUserDeviceStat(targetId: string): WLANUserDeviceStat {
+    public getWLANUserDeviceStat(targetId: string): RPCWLANUserDeviceStat {
         return new RPCWLANUserDeviceStat(this.rpc, targetId);
     }
 
-    public getLogman(targetId: string): Logman {
+    public getLogman(targetId: string): RPCLogman {
         return new RPCLogman(this.rpc, targetId);
     }
 
-    public getFirewallConfigurator(targetId: string): FirewallConfigurator {
+    public getFirewallConfigurator(targetId: string): RPCFirewallConfigurator {
         return new RPCFirewallConfigurator(this.rpc, targetId);
     }
 
