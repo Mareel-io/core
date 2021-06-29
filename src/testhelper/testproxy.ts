@@ -39,7 +39,7 @@ async function pairTest() {
 }
 
 let wss: WebSocket.Server | null = null;
-export async function start(targetUrl: string, listenPort: number) {
+export async function start(listenPort: number) {
     wss = new WebSocket.Server({ port: listenPort });
     wss.on('connection', async (ws: WebSocket) => {
         allSocks.push(ws);
