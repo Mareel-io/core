@@ -21,6 +21,16 @@ async function pairTest() {
         test.on('end', () => {
             client.close();
         });
+        client.send(JSON.stringify({
+            jsonrpc: '2.0',
+            method: 'serverInit',
+            params: [],
+        }));
+        test.send(JSON.stringify({
+            jsonrpc: '2.0',
+            method: 'clientInit',
+            params: [],
+        }));
         socks.client = socks.client.slice(1);
         socks.test = socks.test.splice(1);
         pairTest();
