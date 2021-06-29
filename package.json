@@ -25,7 +25,7 @@
     "build": "make -C src/grammar && node_modules/.bin/tsc",
     "lint": "eslint ./src/",
     "test": "./ciscocfg/prepare.sh && yarn lint && ts-mocha 'test/**/*.ts'",
-    "integration-test": "ts-mocha 'test-integration/**/*.ts'",
+    "integration-test": "ts-mocha 'test-integration/**/*.ts' --timeout 10000",
     "clean": "rm -rf ./dist",
     "doc": "typedoc",
     "postinstall": "./ciscocfg/prepare.sh || true",
