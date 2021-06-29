@@ -20,7 +20,7 @@ import { collapseTextChangeRangesAcrossMultipleVersions, parseJsonConfigFileCont
 import { SwitchConfigurator } from '../driver/generic/SwitchConfigurator';
 import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
 import { LogmanReqHandler } from '../connector/requesthandler/Logman';
-import { MethodNotImplementedError } from '../error/MarilError';
+import { MarilError, MethodNotImplementedError } from '../error/MarilError';
 
 interface EFMCredential {
     id: string,
@@ -272,6 +272,8 @@ export class ConnectorClient {
                     case 'dummy':
                         controllerfactory = new DummyControllerFactory(device.addr);
                         break;
+                    default:
+                        throw new MarilError(`Unsupported device type ${device.type}`)
                 }
 
                 await controllerfactory.init();
