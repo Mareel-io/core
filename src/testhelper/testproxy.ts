@@ -1,5 +1,6 @@
 import WebSocket, { createWebSocketStream } from "ws";
 
+const allSocks: WebSocket[] = [];
 const socks: {
     client: WebSocket[],
     test: WebSocket[],
@@ -37,9 +38,11 @@ async function pairTest() {
     }
 }
 
-export async function testproxy(targetUrl: string, listenPort: number) {
-    const wss = new WebSocket.Server({ port: listenPort });
+let wss: WebSocket.Server | null = null;
+export async function start(targetUrl: string, listenPort: number) {
+    wss = new WebSocket.Server({ port: listenPort });
     wss.on('connection', async (ws: WebSocket) => {
+        allSocks.push(ws);
         ws.on('message', (msg: Buffer) => {
             const jsonMsg = JSON.parse(msg.toString('utf-8'));
             switch(jsonMsg.method) {
@@ -54,5 +57,15 @@ export async function testproxy(targetUrl: string, listenPort: number) {
             ws.removeAllListeners('message');
             pairTest();
         });
+    });
+}
+
+export async function stop() {
+    if (wss != null) {
+        wss.close();
+    }
+
+    allSocks.forEach((elem) => {
+        elem.close();
     });
 }
