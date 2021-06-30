@@ -1,7 +1,7 @@
 import { RPCLogman } from '../../../dist/connector/classwrapper/Logman';
 import { doRPCTest, RPCConnectionHelperCtx } from '../../../test-util/RPCConnectionHelper';
 
-doRPCTest('EFM WLAN test', (ctx: RPCConnectionHelperCtx) => {
+doRPCTest('EFM log test', (ctx: RPCConnectionHelperCtx) => {
     let logman: RPCLogman | null = null;
     before(() => {
         const devices = ctx.rpcControllerFactory.getDevices();
