@@ -5,12 +5,12 @@ import { RPCMethodTable, RPCRequestHandler } from './RPCRequestHandler';
 export class WLANUserDeviceStatReqHandler extends RPCRequestHandler {
     private wlanUserDeviceStat: GenericWLANUserDeviceStat | EFMWLANUserDeviceStat;
     protected rpcMethodTable: RPCMethodTable = {
-        getUserDevices: async(devname: string, ifname: string): Promise<any> => {
+        getUserDevices: async(devname: string, ifname: string): Promise<{[key: string]: any }> => {
             const res = await this.wlanUserDeviceStat.getUserDevices(devname as any, ifname);
-            res.map((elem) => {
+            return res.map((elem) => {
                 return elem.serialize();
             });
-        }
+        },
     };
 
     constructor(deviceId: string, wlanUserDeviceStat: GenericWLANUserDeviceStat | EFMWLANUserDeviceStat) {
