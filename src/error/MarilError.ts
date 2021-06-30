@@ -7,6 +7,13 @@ export class MarilError extends CustomError {
     }
 }
 
+export class InvalidParameterError extends MarilError {
+    constructor(msg: string) {
+        super(msg);
+        this.name = 'InvalidParameterError';
+    }
+}
+
 export class AuthError extends MarilError {
     constructor(msg: string) {
         super(msg);
