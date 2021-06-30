@@ -7,6 +7,13 @@ export class MarilError extends CustomError {
     }
 }
 
+export class MarilRPCError extends MarilError {
+    constructor(msg: string, name = 'MarilRPCError') {
+        super(msg);
+        this.name = name;
+    }
+}
+
 export class InvalidParameterError extends MarilError {
     constructor(msg: string) {
         super(msg);
