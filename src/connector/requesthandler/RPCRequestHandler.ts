@@ -1,3 +1,4 @@
+import { UnsupportedFeatureError } from "../../error/MarilError";
 import { RPCReturnType, RPCv2Request } from "../jsonrpcv2";
 
 export interface RPCMethodTable {
@@ -41,7 +42,7 @@ export abstract class RPCRequestHandler {
         }
 
         if (!(req.params instanceof Array)) {
-            throw new Error('K-V pair method calling is not supported yet');
+            throw new UnsupportedFeatureError('K-V pair method calling is not supported yet');
         }
 
         const ret = await cb(...req.params);
