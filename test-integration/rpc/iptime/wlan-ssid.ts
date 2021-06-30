@@ -14,5 +14,5 @@ doRPCTest('EFM WLAN test', (ctx: RPCConnectionHelperCtx) => {
     it('getDeviceList', async () => {
         const devices = await wlanConfigurator.getDeviceList();
         console.log(devices);
-    })
+    });
 });
