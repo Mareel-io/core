@@ -8,7 +8,7 @@ export class FirewallConfiguratorReqHandler extends RPCRequestHandler {
         getFirewallConfiguration: async(): Promise<FirewallEntry[]> => {
             return await this.firewallConfigurator.getFirewallConfiguration();
         },
-        setFireawllConfiguration: async(cfgs: FirewallEntry[]): Promise<void> => {
+        setFirewallConfiguration: async(cfgs: FirewallEntry[]): Promise<void> => {
             await this.firewallConfigurator.setFirewallConfiguration(cfgs);
         },
         getDNATRules: async(): Promise<DNATRule[]> => {
