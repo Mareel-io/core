@@ -6,6 +6,7 @@ import { DNATRule, FirewallEntry, FirewallConfigurator as GenericFirewallConfigu
 // @ts-ignore
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
 import FormData from 'form-data';
+import { MethodNotAvailableError } from '../../connector/jsonrpcv2';
 
 interface ParserEntry {
     type: string,
@@ -54,7 +55,7 @@ export class FirewallConfigurator extends GenericFirewallConfigurator {
                 return [parserOutput as ParserEntry]
             } else {
                 // How have you been here?
-                throw new Error('Invalid parser data structure.');
+                throw new MarilError('Invalid parser data structure.');
             }
         } else {
             // Hey, it is array!
@@ -90,7 +91,7 @@ export class FirewallConfigurator extends GenericFirewallConfigurator {
             src = map.src_mac_address;
         } else {
             // Huh? Please report to us.
-            throw new Error('Bad value!');
+            throw new MarilError('Bad value!');
         }
 
         if (map.direction === 'inout') {
@@ -286,10 +287,10 @@ schedule = 0000000 0000 0000
     }
 
     public async getDNATRules(): Promise<DNATRule[]> {
-        throw new Error('Method not implemented.');
+        throw new MethodNotAvailableError();
     }
 
     public async setDNATRules(rules: DNATRule[]): Promise<void> {
-        throw new Error('Method not implemented.');
+        throw new MethodNotAvailableError();
     }
 }

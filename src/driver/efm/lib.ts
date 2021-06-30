@@ -10,6 +10,7 @@ import { Logman } from './Logman';
 import { ResponseChecker } from './ResponseChecker';
 import { FirewallConfigurator } from './FirewallConfigurator';
 import { NetTester } from './monitor/NetTester';
+import { AuthError } from '../../error/MarilError';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -85,13 +86,13 @@ export class ControllerFactory extends GenericControllerFactory {
         // Cookie extraction
         // Executing JS in sandbox? I don't think that is good idea...
         if (res == null || res.data == null) {
-            throw new Error('Authentication rejected.');
+            throw new AuthError('Authentication rejected.');
         }
         const match = res.data.match(/setCookie\('([^']*)'\);/);
         const cookie: string | null = match == null ? null : match[1];
 
         if (cookie == null) {
-            throw new Error('Authentication rejected.');
+            throw new AuthError('Authentication rejected.');
         }
 
         this.authCookie = cookie;

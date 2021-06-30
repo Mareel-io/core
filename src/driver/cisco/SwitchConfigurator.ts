@@ -7,6 +7,8 @@ import { CiscoConfigEditor, CiscoPort } from './configedit/configeditor';
 import { CiscoTFTPServer } from '../../util/tftp';
 import { v4 as uuidv4 } from 'uuid';
 import { CiscoTFTPUtil } from './util/TFTPUtil';
+import { MarilError, ResourceNotAvailableError } from '../../error/MarilError';
+import { MethodNotAvailableError } from '../../connector/jsonrpcv2';
 
 // Possible OID table
 // iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) cisco(9) ciscoMgmt(9) ciscoCdpMIB(23)
@@ -199,7 +201,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
                         console.log(`${propSubOID} => ${propSub}`);
                 }
             } else {
-                throw new Error(`Error: Unknown OID ${elem.oid}, ${elem.oidIRI}`);
+                throw new MarilError(`Error: Unknown OID ${elem.oid}, ${elem.oidIRI}`);
             }
 
         })
@@ -260,7 +262,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      * @param portIdx Port index
      */
     public setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
-        throw new Error('Method not implemented.');
+        throw new MethodNotAvailableError();
     }
 
     /**
@@ -369,7 +371,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         for(const port of ports) {
             const match = port.port.portName.match(/^[A-Z]*([0-9]+)$/);
             if (match == null) {
-                throw new Error('Invalid portname: Not in GE[0-9]* format');
+                throw new ResourceNotAvailableError('Invalid portname: Not in GE[0-9]* format');
             }
 
             const portNo = parseInt(match[1], 10);

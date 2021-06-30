@@ -1,3 +1,4 @@
+import { MethodNotImplementedError } from '../../error/MarilError';
 import { EthernetPort as GenericEthernetPort } from '../generic/EthernetPort';
 
 export class EthernetPort extends GenericEthernetPort {
@@ -6,6 +7,6 @@ export class EthernetPort extends GenericEthernetPort {
     }
 
     public get tagLabel(): string {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
 }

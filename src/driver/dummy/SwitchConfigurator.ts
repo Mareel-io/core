@@ -2,6 +2,7 @@ import { EthernetPort as DummyEthernetPort } from './EthernetPort';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { VLAN as DummyVLAN } from './VLAN';
 import { EthernetPort } from '../generic/EthernetPort';
+import { MethodNotImplementedError } from '../../error/MarilError';
 
 export class SwitchConfigurator extends GenericSwitchConfigurator {
     private ethports: DummyEthernetPort[] = [];
@@ -24,12 +25,12 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     }
     
     public getSwitchPorts(): Promise<DummyEthernetPort[]> {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
 
     public setSwitchPort(port: DummyEthernetPort, portIdx: number): Promise<void> {
         //
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError();
     }
 
     public async getAllVLAN(): Promise<DummyVLAN[]> {
