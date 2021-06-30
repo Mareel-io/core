@@ -74,7 +74,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
     public async errorPing(): Promise<void> {
         await this.rpc.remoteCall({
             jsonrpc: '2.0',
-	        class: 'base',
+            class: 'base',
             method: 'error',
             params: [],
         });
