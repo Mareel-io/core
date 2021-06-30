@@ -3,6 +3,7 @@ import { WLANIFaceCfg as EFMWLANIFaceCfg } from "../../driver/efm/WLANIFaceCfg";
 import { WLANConfigurator as GenericWLANConfigurator } from "../../driver/generic/wlan";
 import { WLANDevConfiguration, WLANDevConfigurationState } from "../../driver/generic/WLANDevConfiguration";
 import { WLANIFaceCfg as GenericWLANIFaceCfg, WLANIFaceCfgState } from "../../driver/generic/WLANIFaceCfg";
+import { UnsupportedFeatureError } from "../../error/MarilError";
 import { RPCReturnType, RPCv2Request } from "../jsonrpcv2";
 import { RPCMethodTable, RPCRequestHandler } from "./RPCRequestHandler";
 
@@ -40,35 +41,35 @@ export class WLANConfiguratorReqHandler extends RPCRequestHandler {
             if (this.wlanConfigurator instanceof EFMWlanConfigurator) {
                 return await this.wlanConfigurator.setIFaceMACAuthMode(devname, ifname, mode as any);
             } else {
-                throw new Error('This feature is not supported.');
+                throw new UnsupportedFeatureError('This feature is not supported.');
             }
         },
         setIFaceMACAuthDevice: async(devname: string, ifname: string, device: {macaddr: string, name: string}): Promise<void> => {
             if (this.wlanConfigurator instanceof EFMWlanConfigurator) {
                 return await this.wlanConfigurator.setIFaceMACAuthDevice(devname, ifname, device);
             } else {
-                throw new Error('This feature is not supported.');
+                throw new UnsupportedFeatureError('This feature is not supported.');
             }
         },
         getIFaceMACAuthMode: async(devname: string, ifname: string): Promise<string> => {
             if (this.wlanConfigurator instanceof EFMWlanConfigurator) {
                 return await this.wlanConfigurator.getIFaceMACAuthMode(devname, ifname);
             } else {
-                throw new Error('This feature is not supported.');
+                throw new UnsupportedFeatureError('This feature is not supported.');
             }
         },
         getIFaceMACAuthList: async(devname: string, ifname: string): Promise<{[key: string]: string}[]> => {
             if (this.wlanConfigurator instanceof EFMWlanConfigurator) {
                 return await this.wlanConfigurator.getIFaceMACAuthList(devname, ifname);
             } else {
-                throw new Error('This feature is not supported.');
+                throw new UnsupportedFeatureError('This feature is not supported.');
             }
         },
         removeIFaceMACAuthDevice: async(devname: string, ifname: string, macaddr: string): Promise<void> => {
             if (this.wlanConfigurator instanceof EFMWlanConfigurator) {
                 return await this.wlanConfigurator.removeIFaceMACAuthDevice(devname, ifname, macaddr);
             } else {
-                throw new Error('This feature is not supported.');
+                throw new UnsupportedFeatureError('This feature is not supported.');
             }
         },
     }

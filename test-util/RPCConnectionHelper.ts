@@ -1,5 +1,13 @@
 import WebSocket from "ws";
 import { RPCControllerFactory } from "../dist";
+import * as chai from "chai";
+import chaiAsPromised from "chai-as-promised";
+
+before(() => {
+    console.log(chaiAsPromised);
+    chai.should();
+    chai.use(chaiAsPromised);
+});
 
 export interface RPCConnectionHelperCtx {
     connection: WebSocket | null,

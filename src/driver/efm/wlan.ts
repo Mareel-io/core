@@ -256,7 +256,7 @@ export class WLANConfigurator extends GenericWLANConfigurator {
             return configs as unknown as wlancap;
         }
 
-        throw new Error('Failed to fetch WLAN capability.');
+        throw new MarilError('Failed to fetch WLAN capability.');
     }
    
     /**

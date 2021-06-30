@@ -1,6 +1,7 @@
 import { Duplex, EventEmitter } from 'stream';
 import {Parser, parser} from 'stream-json';
 import WebSocket from 'ws';
+import { MarilError, MarilRPCError } from '../error/MarilError';
 
 export interface RPCv2Request {
     jsonrpc: '2.0',
@@ -53,7 +54,7 @@ export class RPCProvider extends EventEmitter {
                 this.notifyHandler(chunk);
             } else if (chunk.method !== undefined) {
                 this.requestHandler(chunk);
-            } else if (chunk.result !== undefined) {
+            } else if (chunk.result !== undefined || chunk.error != undefined) {
                 this.responseHandler(chunk);
             }
         });
@@ -79,7 +80,7 @@ export class RPCProvider extends EventEmitter {
         payload.id = curCallId;
         if (debug) { console.log('SEND'); console.log(payload); }
         this.stream.send(JSON.stringify(payload));
-        return ret;
+        return await ret;
     }
 
     public remoteNotify(payload: RPCv2Request): void {
@@ -105,7 +106,10 @@ export class RPCProvider extends EventEmitter {
         } else {
             const response: RPCv2Response = {
                 jsonrpc: '2.0',
-                error: error.toString(),
+                error: {
+                    message: error.message,
+                    name: error.name,
+                },
                 id: request.id!,
             };
 
@@ -126,6 +130,9 @@ export class RPCProvider extends EventEmitter {
             switch (chunk.method) {
                 case 'ping':
                     this.sendResponse(chunk, 'pong');
+                    return;
+                case 'error':
+                    this.sendResponse(chunk, null, new MarilError('Test error'));
                     return;
             }
         }
@@ -160,7 +167,14 @@ export class RPCProvider extends EventEmitter {
         const handler = this.callHandlerTable[chunk.id];
         if (handler != null) {
             if (chunk.error != null) {
-                handler(null, new Error(chunk.error as string));
+                if (typeof chunk.error === 'string') {
+                    handler(null, new MarilRPCError(chunk.error));
+                } else if (typeof chunk.error === 'object') {
+                    const errorObj = chunk.error as {message: string, name?: string};
+                    handler(null, new MarilRPCError(errorObj.message, errorObj.name));
+                } else {
+                    handler(null, new MarilRPCError(chunk.error + ''));
+                }
             } else {
                 handler(chunk.result);
             }

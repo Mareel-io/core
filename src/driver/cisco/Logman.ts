@@ -1,3 +1,4 @@
+import { InvalidParameterError, UnsupportedFeatureError } from "../../error/MarilError";
 import { SNMPClient } from "../../util/snmp/snmp";
 import { CiscoSSHClient } from "../../util/ssh";
 import { CiscoTFTPServer } from "../../util/tftp";
@@ -42,7 +43,7 @@ export class Logman extends GenericLogman {
                 });
                 break;
             default:
-                throw new Error(`Log storage ${source} is not supported.`);
+                throw new InvalidParameterError(`Log storage ${source} is not supported.`);
         }
     }
 }

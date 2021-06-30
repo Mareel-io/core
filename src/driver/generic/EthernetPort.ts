@@ -1,3 +1,5 @@
+import { InvalidParameterError, UnsupportedFeatureError } from "../../error/MarilError";
+
 /**
  * Ethernet port config object
  */
@@ -69,7 +71,7 @@ export abstract class EthernetPort {
         console.log(speed)
         const split = speed.match(/([0-9]+)([KMGTP]bps)/);
         if (split == null) {
-            throw new Error('Invalid linkspeed');
+            throw new InvalidParameterError('Invalid linkspeed');
         }
 
         const base = parseInt(split[1], 10);
@@ -107,7 +109,7 @@ export abstract class EthernetPort {
         if (unit === 'Mbps') {
             return this._linkSpeed;
         } else {
-            throw new Error(`Unsupported unit ${unit}`);
+            throw new UnsupportedFeatureError(`Unsupported unit ${unit}`);
         }
     }
 }

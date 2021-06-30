@@ -1,3 +1,4 @@
+import { UnsupportedFeatureError } from '../../error/MarilError';
 import { WLANIFaceCfg as GenricWLANIFaceCfg } from '../generic/WLANIFaceCfg';
 
 export class WLANIFaceCfg extends GenricWLANIFaceCfg {
@@ -14,7 +15,7 @@ export class WLANIFaceCfg extends GenricWLANIFaceCfg {
             case 'sae':
             case 'sae-mixed':
                 // WPA3 support WIP
-                throw new Error('Not support WPA3 yet...');
+                throw new UnsupportedFeatureError('Not support WPA3 yet...');
                 break;
             case 'psk':
                 personallist = 'wpapsk';
@@ -29,7 +30,7 @@ export class WLANIFaceCfg extends GenricWLANIFaceCfg {
                 personallist = 'nouse';
                 break;
             default:
-                throw new Error(`Not supported feature: ${list[0]}`);
+                throw new UnsupportedFeatureError(`Not supported feature: ${list[0]}`);
                 break;
         }
 
@@ -71,7 +72,7 @@ export class WLANIFaceCfg extends GenricWLANIFaceCfg {
                 encryption = '';
                 break;
             default:
-                throw new Error(`Not supported feature: ${list[0]}`);
+                throw new UnsupportedFeatureError(`Not supported feature: ${list[0]}`);
                 break;
         }
 
@@ -90,7 +91,7 @@ export class WLANIFaceCfg extends GenricWLANIFaceCfg {
                 // Do nothing
                 break;
             default:
-                throw new Error(`Not supported feature: ${list[1]}`);
+                throw new UnsupportedFeatureError(`Not supported feature: ${list[1]}`);
                 break;
         }
 
