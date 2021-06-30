@@ -12,3 +12,8 @@ export { MIBLoader } from './util/snmp/mibloader';
 export { CiscoTFTPServer } from './util/tftp';
 
 export { RPCControllerFactory } from './connector/classwrapper/lib';
+export { RPCFirewallConfigurator } from './connector/classwrapper/FireallConfigurator';
+export { RPCLogman } from './connector/classwrapper/Logman';
+export { RPCSwitchConfigurator } from './connector/classwrapper/SwitchConfigurator';
+export { RPCWLANConfigurator } from './connector/classwrapper/WLANConfigurator';
+export { RPCWLANUserDeviceStat } from './connector/classwrapper/WLANUserDeviceStat'

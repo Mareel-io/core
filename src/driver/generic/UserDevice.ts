@@ -1,4 +1,7 @@
 // FIXME: Create typedef for OUI pkg
+
+import { InvalidParameterError } from "../../error/MarilError";
+
 //eslint-disable-next-line @typescript-eslint/no-var-requires
 const oui = require('oui');
 
@@ -41,7 +44,7 @@ export abstract class UserDevice {
     public set macaddr(value: string) {
         const chk = value.match(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/);
         if (chk == null) {
-            throw new Error('Invalid MAC address');
+            throw new InvalidParameterError('Invalid MAC address');
         }
 
         const vendor: string | null = oui(this._macaddr);

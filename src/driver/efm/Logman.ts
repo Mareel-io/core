@@ -3,6 +3,7 @@ import { JSDOM } from 'jsdom';
 import { Logman as GenericLogman, LogEntry } from '../generic/Logman';
 import moment from 'moment';
 import { ResponseChecker } from './ResponseChecker';
+import { InvalidParameterError } from '../../error/MarilError';
 export { LogEntry };
 
 export class Logman extends GenericLogman {
@@ -70,7 +71,7 @@ export class Logman extends GenericLogman {
         if (source == 'syslog') {
             return this.syslog(from, to);
         } else {
-            throw new Error(`Unsupported source ${source}`);
+            throw new InvalidParameterError(`Unsupported source ${source}`);
         }
     }
 }
