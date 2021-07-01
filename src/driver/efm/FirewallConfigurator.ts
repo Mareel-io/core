@@ -302,6 +302,23 @@ flag = 0
         if (chkFail != null) {
             throw new MarilError('Unknown error occured while applying firewall rules.');
         }
+
+        if (cfgs.length === 0) {
+            const form = new FormData();
+            form.append('tmenu', 'iframe');
+            form.append('smenu', 'firewall');
+            form.append('act', 'del');
+            form.append('delcheck', 'dummy');
+            const result = await this.api.post('/sess-bin/timepro.cgi', form, {headers: {
+                'Content-Length': length,
+                ...form.getHeaders()
+            }});
+            const chkFail = result.data.match(/규칙 복원에 실패하였습니다/);
+
+            if (chkFail != null) {
+                throw new MarilError('Unknown error occured while working around ipTIME bug.')
+            }
+        }
     }
 
     public async getDNATRules(): Promise<DNATRule[]> {
