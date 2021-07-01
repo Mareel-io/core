@@ -45,6 +45,10 @@ export class ControllerFactory extends GenericControllerFactory {
         });
     }
 
+    public async refreshAuth(): Promise<void> {
+        // Eat up
+    }
+
     public async init() {
         //await this.svcRunner.start();
     }
