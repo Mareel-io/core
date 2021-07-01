@@ -253,6 +253,24 @@ schedule = 0000000 0000 0000
             firewallCfg += section;
         }
 
+        if (cfgs.length === 0) {
+            firewallCfg = `Type=firewall # Do not modify
+Version=1.0.0 # Do not modify
+lang=utf-8 # Do not modify
+
+[dummy]
+enable = 1
+schedule = 0000000 0000 0000
+flag = 0
+{
+    direction = inout
+    src_type = ip
+    dest_ip_address = 255.255.255.255
+    protocol = none
+    policy = accept
+}`;
+        }
+
         const form = new FormData();
         form.append('tmenu', 'iframe');
         form.append('smenu', 'restore_firewall');
