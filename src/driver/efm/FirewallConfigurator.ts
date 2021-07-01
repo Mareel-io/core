@@ -7,6 +7,7 @@ import { DNATRule, FirewallEntry, FirewallConfigurator as GenericFirewallConfigu
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
 import FormData from 'form-data';
 import { MethodNotAvailableError } from '../../connector/jsonrpcv2';
+import qs from 'qs';
 
 interface ParserEntry {
     type: string,
@@ -304,20 +305,17 @@ flag = 0
         }
 
         if (cfgs.length === 0) {
-            const form = new FormData();
-            form.append('tmenu', 'iframe');
-            form.append('smenu', 'firewall');
-            form.append('act', 'del');
-            form.append('delcheck', 'dummy');
-            const result = await this.api.post('/sess-bin/timepro.cgi', form, {headers: {
-                'Content-Length': length,
-                ...form.getHeaders()
-            }});
-            const chkFail = result.data.match(/규칙 복원에 실패하였습니다/);
-
-            if (chkFail != null) {
-                throw new MarilError('Unknown error occured while working around ipTIME bug.')
+            const params = {
+                tmenu: 'iframe',
+                smenu: 'firewall',
+                act: 'del',
+                delcheck: 'dummy',
             }
+            const result = await this.api.post('/sess-bin/timepro.cgi', qs.stringify(params), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
         }
     }
 
