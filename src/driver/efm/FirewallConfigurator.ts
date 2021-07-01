@@ -238,7 +238,8 @@ schedule = 0000000 0000 0000
             }
 
             if (cfg.proto != null) {
-                section += `    protocol = ${cfg.proto}\n`;
+                const proto = cfg.proto === 'all' ? 'none' : cfg.proto;
+                section += `    protocol = ${proto}`;
             }
 
             if (cfg.dest_port != null) {
