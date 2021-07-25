@@ -17,6 +17,10 @@ export class ControllerFactory extends GenericControllerFactory {
         console.log('DummyControllerFactory: Auth OK');
     }
 
+    public async refreshAuth(): Promise<void> {
+        console.log('DummyControllerFactory: Auth OK');
+    }
+
     public getSwitchConfigurator(): DummySwitchConfigurator {
         return new DummySwitchConfigurator();
     }

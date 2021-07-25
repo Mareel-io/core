@@ -29,6 +29,14 @@ export class RPCControllerFactory extends GenericControllerFactory {
     }
 
     /**
+     * Dummy function. it is okay to call this (for API similarity)
+     * but not necessary
+     */
+    public async refreshAuth(): Promise<void> {
+        // Do nothing
+    }
+
+    /**
      * Initialize the RPCControllerFactory
      */
     public async init(): Promise<void> {

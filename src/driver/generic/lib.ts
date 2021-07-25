@@ -27,6 +27,7 @@ export abstract class ControllerFactory {
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     public abstract authenticate(credential: any): Promise<void>;
+    public abstract refreshAuth(): Promise<void>;
     public abstract getWLANConfigurator(deviceId?: string): WLANConfigurator;
     public abstract getWLANUserDeviceStat(deviceId?: string): WLANUserDeviceStat;
     public abstract getSwitchConfigurator(deviceId?: string): SwitchConfigurator;

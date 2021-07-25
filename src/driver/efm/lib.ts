@@ -14,6 +14,7 @@ import { AuthError } from '../../error/MarilError';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
+    protected login: {id: string, pass: string} | null = null;
     /**
      * EFMControllerFactory constructor
      * 
@@ -61,6 +62,7 @@ export class ControllerFactory extends GenericControllerFactory {
      * @param captcha - CAPTCHA login support. You must supply captcha filename and challenge response
      */
     public async authenticate(credential: {id: string, pass: string}, captcha: EFMCaptcha | null = null): Promise<void> {
+        this.login = credential;
         const formbase = {
             init_status: 1,
             captcha_on: 0,
@@ -96,6 +98,14 @@ export class ControllerFactory extends GenericControllerFactory {
         }
 
         this.authCookie = cookie;
+    }
+
+    public async refreshAuth(): Promise<void> {
+        if (this.login != null) {
+            await this.authenticate(this.login, null);
+        } else {
+            throw new AuthError('No credential available for refreshing');
+        }
     }
 
     /**
