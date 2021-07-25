@@ -2,24 +2,24 @@ export interface FirewallEntry {
     /** rule name (human readable) */
     name: string,
     /** source zone */
-    src: string | undefined | null,
+    src?: string,
     /** Source IP address. */
-    src_ip: string | undefined | null,
+    src_ip?: string,
     /** Source MAC address. */
-    src_mac: string | undefined | null,
+    src_mac?: string,
     /** Source port */
-    src_port: number | string | undefined | null,
+    src_port?: number | string,
     /** Protocol */
     proto: 'all' | 'tcp' | 'udp' | 'igmp', // Or whatever. Need to research more
-    icmp_type: string | undefined | null,
-    dest: string | undefined | null,
-    dest_ip: string | undefined | null,
-    dest_port: number | string | undefined | null,
-    ipset: string | undefined | null,
-    mark: number | undefined | null,
-    target: string | undefined | null,
-    set_mark: number | undefined | null,
-    set_xmark: number | undefined | null,
+    icmp_type?: string,
+    dest?: string,
+    dest_ip?: string,
+    dest_port?: number | string,
+    ipset?: string,
+    mark?: number,
+    target?: string,
+    set_mark?: number,
+    set_xmark?: number,
     family: 'any' | 'ipv4' | 'ipv6',
     enabled: boolean,
 }

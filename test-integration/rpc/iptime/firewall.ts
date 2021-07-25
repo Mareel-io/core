@@ -20,5 +20,27 @@ doRPCTest('EFM Firewall test', (ctx: RPCConnectionHelperCtx) => {
     it('setFirewallConfiguration', async() => {
         const ret = await firewallConfigurator.getFirewallConfiguration();
         await firewallConfigurator.setFirewallConfiguration(ret);
-    })
+    });
+
+    it('setFirewallConfiguration - custom', async () => {
+        const ret = await firewallConfigurator.getFirewallConfiguration();
+        await firewallConfigurator.setFirewallConfiguration([
+            {
+                name: 'testsubject',
+                src: 'LAN',
+                src_ip: '192.168.1.3',
+                proto: 'all',
+                dest: 'WAN',
+                dest_ip: '255.255.255.255',
+                family: 'ipv4',
+                target: 'DROP',
+                enabled: true,
+            }
+        ])
+    });
+
+    it('setFirewallConfiguration - remove', async () => {
+        const ret = await firewallConfigurator.getFirewallConfiguration();
+        await firewallConfigurator.setFirewallConfiguration([]);
+    });
 });

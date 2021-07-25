@@ -7,6 +7,7 @@ import { DNATRule, FirewallEntry, FirewallConfigurator as GenericFirewallConfigu
 import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
 import FormData from 'form-data';
 import { MethodNotAvailableError } from '../../connector/jsonrpcv2';
+import qs from 'qs';
 
 interface ParserEntry {
     type: string,
@@ -237,7 +238,8 @@ schedule = 0000000 0000 0000
             }
 
             if (cfg.proto != null) {
-                section += `    protocol = ${cfg.proto}\n`;
+                const proto = cfg.proto === 'all' ? 'none' : cfg.proto;
+                section += `    protocol = ${proto}\n`;
             }
 
             if (cfg.dest_port != null) {
@@ -251,6 +253,24 @@ schedule = 0000000 0000 0000
             section += '}\n';
 
             firewallCfg += section;
+        }
+
+        if (cfgs.length === 0) {
+            firewallCfg = `Type=firewall # Do not modify
+Version=1.0.0 # Do not modify
+lang=utf-8 # Do not modify
+
+[dummy]
+enable = 1
+schedule = 0000000 0000 0000
+flag = 0
+{
+    direction = inout
+    src_type = ip
+    dest_ip_address = 255.255.255.255
+    protocol = none
+    policy = accept
+}`;
         }
 
         const form = new FormData();
@@ -283,6 +303,20 @@ schedule = 0000000 0000 0000
 
         if (chkFail != null) {
             throw new MarilError('Unknown error occured while applying firewall rules.');
+        }
+
+        if (cfgs.length === 0) {
+            const params = {
+                tmenu: 'iframe',
+                smenu: 'firewall',
+                act: 'del',
+                delcheck: 'dummy',
+            }
+            const result = await this.api.post('/sess-bin/timepro.cgi', qs.stringify(params), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
         }
     }
 
