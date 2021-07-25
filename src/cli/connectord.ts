@@ -57,14 +57,25 @@ function setupCleanup() {
 export async function svcmain() {
     const args = arg({
         '--config': String,
+        '--devicedb': String,
     });
 
     const config = args['--config'] ? args['--config'] : '/etc/mareel/connectord.yaml';
     const configFile = YAML.parse(fs.readFileSync(config).toString('utf-8'));
+    const deviceDB = args['--devicedb'] ? args['--devicedb'] : null;
+
+    if (deviceDB != null) {
+        // Separated devicedb file, if not exist, create one.
+        if(!fs.existsSync(deviceDB)) {
+            fs.writeFileSync(deviceDB, '[]');
+        }
+        const devicedbFile = JSON.parse(fs.readFileSync(deviceDB).toString('utf-8'));
+        configFile.devices = devicedbFile;
+    }
 
     // Initialize essential services
     console.log('Main process started');
-    const connectorClient = new ConnectorClient(configFile);
+    const connectorClient = new ConnectorClient(configFile, deviceDB);
 
     process.on('uncaughtException', (e) => {
         console.error('Uncaught exception occured');
@@ -99,14 +110,16 @@ export async function svcmain() {
 
 export class ConnectorClient {
     private config: ConnectorClientConfig;
+    private devicedb: string | null;
     private tftp: CiscoTFTPServer;
     private ciscoCfgSvcRunner: SvcRunner;
     private controllerFactoryTable: {[key: string]: {device: ConnectorDevice, controllerFactory: GenericControllerFactory}} = {};
     private rpc: RPCProvider | null = null;
     private client: WebSocket | null = null;
 
-    constructor(config: ConnectorClientConfig) {
+    constructor(config: ConnectorClientConfig, devicedb: string | null) {
         this.config = config;
+        this.devicedb = devicedb;
         if (config.client == null) config.client = {};
         // Essential services
         this.tftp = new CiscoTFTPServer(config.tftpserver.hostip);
