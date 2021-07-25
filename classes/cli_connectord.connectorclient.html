@@ -93,6 +93,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="cli_connectord.connectorclient.html#client" class="tsd-kind-icon">client</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="cli_connectord.connectorclient.html#config" class="tsd-kind-icon">config</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="cli_connectord.connectorclient.html#controllerfactorytable" class="tsd-kind-icon">controller<wbr>Factory<wbr>Table</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="cli_connectord.connectorclient.html#devicedb" class="tsd-kind-icon">devicedb</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="cli_connectord.connectorclient.html#rpc" class="tsd-kind-icon">rpc</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="cli_connectord.connectorclient.html#tftp" class="tsd-kind-icon">tftp</a></li>
 							</ul>
@@ -120,19 +121,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Connector<wbr>Client<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectorClientConfig</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="cli_connectord.connectorclient.html" class="tsd-signature-type" data-tsd-kind="Class">ConnectorClient</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Connector<wbr>Client<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectorClientConfig</span>, devicedb<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="cli_connectord.connectorclient.html" class="tsd-signature-type" data-tsd-kind="Class">ConnectorClient</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L106">src/cli/connectord.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L118">src/cli/connectord.ts:118</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>config: <span class="tsd-signature-type">ConnectorClientConfig</span></h5>
+								</li>
+								<li>
+									<h5>devicedb: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="cli_connectord.connectorclient.html" class="tsd-signature-type" data-tsd-kind="Class">ConnectorClient</a></h4>
@@ -148,7 +152,7 @@
 					<div class="tsd-signature tsd-kind-icon">cisco<wbr>Cfg<wbr>Svc<wbr>Runner<span class="tsd-signature-symbol">:</span> <a href="util_svcrunner.svcrunner.html" class="tsd-signature-type" data-tsd-kind="Class">SvcRunner</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L103">src/cli/connectord.ts:103</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L115">src/cli/connectord.ts:115</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -158,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">WebSocket</span><span class="tsd-signature-symbol"> = null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L106">src/cli/connectord.ts:106</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L118">src/cli/connectord.ts:118</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -168,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConnectorClientConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L101">src/cli/connectord.ts:101</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L112">src/cli/connectord.ts:112</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -178,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">controller<wbr>Factory<wbr>Table<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> = {}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L104">src/cli/connectord.ts:104</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L116">src/cli/connectord.ts:116</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -199,12 +203,22 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="devicedb" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> devicedb</h3>
+					<div class="tsd-signature tsd-kind-icon">devicedb<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L113">src/cli/connectord.ts:113</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="rpc" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> rpc</h3>
 					<div class="tsd-signature tsd-kind-icon">rpc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="connector_jsonrpcv2.rpcprovider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a><span class="tsd-signature-symbol"> = null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L105">src/cli/connectord.ts:105</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L117">src/cli/connectord.ts:117</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -214,7 +228,7 @@
 					<div class="tsd-signature tsd-kind-icon">tftp<span class="tsd-signature-symbol">:</span> <a href="util_tftp.ciscotftpserver.html" class="tsd-signature-type" data-tsd-kind="Class">CiscoTFTPServer</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L102">src/cli/connectord.ts:102</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L114">src/cli/connectord.ts:114</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -231,7 +245,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L143">src/cli/connectord.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L156">src/cli/connectord.ts:156</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -248,7 +262,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L227">src/cli/connectord.ts:227</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L240">src/cli/connectord.ts:240</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -271,7 +285,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L257">src/cli/connectord.ts:257</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L270">src/cli/connectord.ts:270</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -288,7 +302,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L305">src/cli/connectord.ts:305</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L318">src/cli/connectord.ts:318</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -311,7 +325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L117">src/cli/connectord.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L130">src/cli/connectord.ts:130</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -340,7 +354,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L265">src/cli/connectord.ts:265</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L278">src/cli/connectord.ts:278</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -357,7 +371,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L167">src/cli/connectord.ts:167</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L180">src/cli/connectord.ts:180</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -374,7 +388,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L125">src/cli/connectord.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L138">src/cli/connectord.ts:138</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -391,7 +405,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/b0f97c2/src/cli/connectord.ts#L134">src/cli/connectord.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6dd52da/src/cli/connectord.ts#L147">src/cli/connectord.ts:147</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -432,6 +446,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="cli_connectord.connectorclient.html#controllerfactorytable" class="tsd-kind-icon">controller<wbr>Factory<wbr>Table</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="cli_connectord.connectorclient.html#devicedb" class="tsd-kind-icon">devicedb</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="cli_connectord.connectorclient.html#rpc" class="tsd-kind-icon">rpc</a>
