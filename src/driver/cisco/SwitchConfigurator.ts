@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { CiscoTFTPUtil } from './util/TFTPUtil';
 import { MarilError, ResourceNotAvailableError } from '../../error/MarilError';
 import { MethodNotAvailableError } from '../../connector/jsonrpcv2';
+import { CiscoConfigUtil } from './util/ConfigUtil';
 
 // Possible OID table
 // iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) cisco(9) ciscoMgmt(9) ciscoCdpMIB(23)
@@ -37,19 +38,13 @@ interface IFProperties {
  */
 export class SwitchConfigurator extends GenericSwitchConfigurator {
     private snmp: SNMPClient;
-    private ssh: CiscoSSHClient;
-    private configedit: CiscoConfigEditor;
-    private tftpServer: CiscoTFTPServer;
-    private tftpUtil: CiscoTFTPUtil;
     private portList: number[] = [];
+    private configUtil: CiscoConfigUtil;
 
     constructor(snmp: SNMPClient, ssh: CiscoSSHClient, tftpServer: CiscoTFTPServer) {
         super();
         this.snmp = snmp;
-        this.ssh = ssh;
-        this.tftpServer = tftpServer;
-        this.configedit = new CiscoConfigEditor(1337);
-        this.tftpUtil = new CiscoTFTPUtil(this.ssh, this.tftpServer);
+        this.configUtil = new CiscoConfigUtil(1337, ssh, tftpServer);
 
         // FIXME: hardcoded 24-port switch
         for(let i = 1; i <= 24; i++) {
@@ -61,7 +56,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      * Initialize Cisco switch configurator.
      */
     public async init(): Promise<void> {
-        await this.configedit.connect();
+        await this.configUtil.init();
     }
 
     /**
@@ -212,19 +207,14 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      * Download & load config using TFTP & SSH
      */
     public async loadConfig(): Promise<void> {
-        const configFile = await this.tftpUtil.fetchFile('running-config')
-        const config = configFile.toString('utf-8');
-        await this.configedit.loadCfg(config);
-        console.log('config loaded.');
+        await this.configUtil.loadConfig();
     }
 
     /**
      * Upload config to device using TFTP & ssh.
      */
     public async applyConfig(): Promise<void> {
-        const configFile = Buffer.from(await this.configedit.extractCfg());
-        await this.tftpUtil.putFile('running-config', configFile);
-        console.log('Configuration uploaded to device.');
+        await this.configUtil.applyConfig();
     }
    
     /**
@@ -232,7 +222,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      * @returns Config file
      */
     public async extractCfg(): Promise<string> {
-        return await this.configedit.extractCfg();
+        return await this.configUtil.extractCfg();
     }
 
     /**
@@ -270,9 +260,9 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      * @returns All VLAN entry
      */
     public async getAllVLAN(): Promise<VLAN[]> {
-        const vlanRange = await this.configedit.getVLANRange();
-        const vlanEntries = await this.configedit.getVLANs();
-        const ports = await this.configedit.getPorts();
+        const vlanRange = await this.configUtil.configEditor.getVLANRange();
+        const vlanEntries = await this.configUtil.configEditor.getVLANs();
+        const ports = await this.configUtil.configEditor.getPorts();
         const vlans: VLAN[] = [];
         const vlanMap: {[key: number]: VLAN} = {};
 
@@ -361,7 +351,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      */
     public async setVLAN(vlan: VLAN): Promise<void> {
         const ports = vlan.getPortList();
-        const configPorts = await this.configedit.getPorts();
+        const configPorts = await this.configUtil.configEditor.getPorts();
         const portMap: {[key: number]: CiscoPort} = {};
 
         for(const cfgPort of configPorts){
@@ -400,7 +390,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
                 cfgPort.taggedList.push(vlan.vid)
             }
 
-            this.configedit.setPortVLAN(cfgPort.portNo, cfgPort.pvid, cfgPort.taggedList, cfgPort.allowedList);
+            this.configUtil.configEditor.setPortVLAN(cfgPort.portNo, cfgPort.pvid, cfgPort.taggedList, cfgPort.allowedList);
         }
     }
 }
