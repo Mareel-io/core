@@ -95,11 +95,11 @@ export class CiscoConfigEditor extends MsgpackRPC {
         return await this.runRPCCommand('setPortVLAN', portNo, pvid, taggedList, allowedList);
     }
 
-    public async getDCSPMap(): Promise<DSCPMap> {
+    public async getDSCPMap(): Promise<DSCPMap> {
         return await this.runRPCCommand('getDCSPMap');
     }
 
-    public async setDCSPMap(map: DSCPMap): Promise<void> {
+    public async setDSCPMap(map: DSCPMap): Promise<void> {
         return await this.runRPCCommand('setDCSPMap', map);
     }
 
@@ -109,5 +109,21 @@ export class CiscoConfigEditor extends MsgpackRPC {
 
     public async setCoSMap(map: CoSMap): Promise<void> {
         return await this.runRPCCommand('setCoSMap', map);
+    }
+
+    public async getQueuePriority(): Promise<number[]> {
+        return await this.runRPCCommand('getQueuePriority');
+    }
+
+    public async setQueuePriority(prio: number[]): Promise<void> {
+        return await this.runRPCCommand('setQueuePriority', prio);
+    }
+
+    public async getStrictPriorityQ(): Promise<number> {
+        return await this.runRPCCommand('getStrictPriorityQ');
+    }
+
+    public async setStrictPriorityQ(prio: number): Promise<void> {
+        return await this.runRPCCommand('setStrictPriorityQ', prio);
     }
 }

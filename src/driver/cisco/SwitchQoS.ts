@@ -44,35 +44,35 @@ export class SwitchQoS extends GenericSwitchQoS {
         return await this.configUtil.extractCfg();
     }
 
-    public setQueuePriority(wrr: number[]): Promise<void> {
-        throw new Error('Method not implemented.');
+    public async setQueuePriority(wrr: number[]): Promise<void> {
+        await this.configUtil.configEditor.setQueuePriority(wrr);
     }
 
-    public setStrictPriorityQ(idx: number): Promise<void> {
-        throw new Error('Method not implemented.');
+    public async setStrictPriorityQ(idx: number): Promise<void> {
+        await this.configUtil.configEditor.setStrictPriorityQ(idx);
     }
 
-    public getQueuePriority(): Promise<number[]> {
-        throw new Error('Method not implemented.');
+    public async getQueuePriority(): Promise<number[]> {
+        return await this.configUtil.configEditor.getQueuePriority();
     }
 
-    public getStrictPriorityQ(): Promise<number> {
-        throw new Error('Method not implemented.');
+    public async getStrictPriorityQ(): Promise<number> {
+        return await this.configUtil.configEditor.getStrictPriorityQ();
     }
 
-    public setDSCPMap(map: DSCPMap): Promise<void> {
-        throw new Error('Method not implemented.');
+    public async setDSCPMap(map: DSCPMap): Promise<void> {
+        await this.configUtil.configEditor.setDSCPMap(map);
     }
 
-    public setCoSMap(map: CoSMap): Promise<void> {
-        throw new Error('Method not implemented.');
+    public async setCoSMap(map: CoSMap): Promise<void> {
+        await this.configUtil.configEditor.setCoSMap(map);
     }
 
-    public getDSCPMap(): Promise<DSCPMap> {
-        throw new Error('Method not implemented.');
+    public async getDSCPMap(): Promise<DSCPMap> {
+        return await this.configUtil.configEditor.getDSCPMap();
     }
 
-    public getCoSMap(): Promise<CoSMap> {
-        throw new Error('Method not implemented.');
+    public async getCoSMap(): Promise<CoSMap> {
+        return await this.configUtil.configEditor.getCoSMap();
     }
 }
