@@ -1,5 +1,5 @@
-export interface DSCPMap {[key: number]: number};
-export interface CoSMap {[key: number]: number};
+export interface DSCPMap {[key: number]: number}
+export interface CoSMap {[key: number]: number}
 
 export abstract class SwitchQoS {
     public abstract setQueuePriority(wrr: number[]): Promise<void>;
