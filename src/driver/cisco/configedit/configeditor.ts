@@ -1,4 +1,5 @@
 import { MsgpackRPC } from '../../../util/msgpack-rpc';
+import { CoSMap, DSCPMap } from '../../generic/SwitchQoS';
 
 export type CiscoPort = {
     portNo: number,
@@ -92,5 +93,21 @@ export class CiscoConfigEditor extends MsgpackRPC {
 
     public async setPortVLAN(portNo: number, pvid: number, taggedList: (number|string)[] | undefined, allowedList: (number|string)[] | undefined): Promise<void> {
         return await this.runRPCCommand('setPortVLAN', portNo, pvid, taggedList, allowedList);
+    }
+
+    public async getDCSPMap(): Promise<DSCPMap> {
+        return await this.runRPCCommand('getDCSPMap');
+    }
+
+    public async setDCSPMap(map: DSCPMap): Promise<void> {
+        return await this.runRPCCommand('setDCSPMap', map);
+    }
+
+    public async getCoSMap(): Promise<CoSMap> {
+        return await this.runRPCCommand('getCoSMap');
+    }
+
+    public async setCoSMap(map: CoSMap): Promise<void> {
+        return await this.runRPCCommand('setCoSMap', map);
     }
 }
