@@ -1,4 +1,5 @@
 import { MsgpackRPC } from '../../../util/msgpack-rpc';
+import { CoSMap, DSCPMap } from '../../generic/SwitchQoS';
 
 export type CiscoPort = {
     portNo: number,
@@ -92,5 +93,37 @@ export class CiscoConfigEditor extends MsgpackRPC {
 
     public async setPortVLAN(portNo: number, pvid: number, taggedList: (number|string)[] | undefined, allowedList: (number|string)[] | undefined): Promise<void> {
         return await this.runRPCCommand('setPortVLAN', portNo, pvid, taggedList, allowedList);
+    }
+
+    public async getDSCPMap(): Promise<DSCPMap> {
+        return await this.runRPCCommand('getDCSPMap');
+    }
+
+    public async setDSCPMap(map: DSCPMap): Promise<void> {
+        return await this.runRPCCommand('setDCSPMap', map);
+    }
+
+    public async getCoSMap(): Promise<CoSMap> {
+        return await this.runRPCCommand('getCoSMap');
+    }
+
+    public async setCoSMap(map: CoSMap): Promise<void> {
+        return await this.runRPCCommand('setCoSMap', map);
+    }
+
+    public async getQueuePriority(): Promise<number[]> {
+        return await this.runRPCCommand('getQueuePriority');
+    }
+
+    public async setQueuePriority(prio: number[]): Promise<void> {
+        return await this.runRPCCommand('setQueuePriority', prio);
+    }
+
+    public async getStrictPriorityQ(): Promise<number> {
+        return await this.runRPCCommand('getStrictPriorityQ');
+    }
+
+    public async setStrictPriorityQ(prio: number): Promise<void> {
+        return await this.runRPCCommand('setStrictPriorityQ', prio);
     }
 }
