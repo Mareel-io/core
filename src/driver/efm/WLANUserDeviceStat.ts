@@ -23,6 +23,9 @@ export class WLANUserDeviceStat extends GenericWLANUserDeviceStat {
         let multiplier = 1;
 
         switch(multStr) {
+            case '일':
+                multiplier = 86400;
+                break;
             case '시간': 
                 multiplier = 3600;
                 break;
