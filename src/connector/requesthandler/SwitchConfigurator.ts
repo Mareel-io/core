@@ -16,6 +16,13 @@ export class SwitchConfiguratorReqHandler extends RPCRequestHandler {
                 return;
             }
         },
+        applyConfig: async (): Promise<void> => {
+            if (this.switchConfigurator instanceof CiscoSwitchConfigurator) {
+                await this.switchConfigurator.applyConfig();
+            } else {
+                return;
+            }
+        },
         getSwitchPorts: async () => {
             const switchPorts = await this.switchConfigurator.getSwitchPorts();
             return switchPorts.map((elem) => {
