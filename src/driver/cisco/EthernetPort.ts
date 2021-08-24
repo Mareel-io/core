@@ -7,6 +7,6 @@ export class EthernetPort extends GenericEthernetPort {
     }
 
     public get tagLabel(): string {
-        throw new MethodNotImplementedError('Method not implemented.');
+        return '';
     }
 }
