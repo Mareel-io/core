@@ -18,6 +18,14 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
         this.targetId = targetId;
     }
 
+    /**
+     * load config from device.
+     * 
+     * This method must called before doing anything.
+     * 
+     * Note that, calling this method will throw out current
+     * modification
+     */
     public async loadConfig(): Promise<void> {
         await this.rpc.remoteCall({
             jsonrpc: '2.0',
@@ -28,6 +36,26 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
         });
     }
 
+    /**
+     * Apply config to device.
+     * 
+     * This method must called after modifying the configuration.
+     */
+    public async applyConfig(): Promise<void> {
+        await this.rpc.remoteCall({
+            jsonrpc: '2.0',
+            target: this.targetId,
+            class: 'SwitchConfigurator',
+            method: 'applyConfig',
+            params: [],
+        });
+    }
+
+    /**
+     * Fetch all ports from the switch
+     * 
+     * @returns Switch ports
+     */
     public async getSwitchPorts(): Promise<GenericEthernetPort[]> {
         const ret = (await this.rpc.remoteCall({
             jsonrpc: '2.0',
@@ -46,6 +74,13 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
         });
     }
 
+    /**
+     * Configure specific switch port
+     * 
+     * @param port Configured EthernetPort object
+     * @param portIdx Target port which EthernetPort configuration applied.
+     * @returns 
+     */
     public async setSwitchPort(port: GenericEthernetPort, portIdx: number): Promise<void> {
         return (await this.rpc.remoteCall({
             jsonrpc: '2.0',
@@ -56,6 +91,11 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
         })) as void;
     }
 
+    /**
+     * Return all available VLANs
+     * 
+     * @returns Available all VLANs
+     */
     public async getAllVLAN(): Promise<GenericVLAN[]> {
         const ret = await this.rpc.remoteCall({
             jsonrpc: '2.0',
@@ -74,6 +114,12 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
         });
     }
 
+    /**
+     * Get specific VLAN using VID
+     * 
+     * @param vid VLAN ID
+     * @returns VLAN or NULL if there is no VLAN available in given VID
+     */
     public async getVLAN(vid: number): Promise<GenericVLAN | null> {
         const ret = (await this.rpc.remoteCall({
             jsonrpc: '2.0',
@@ -92,6 +138,11 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
         }
     }
 
+    /**
+     * Set specific vlan using VLAN object
+     * 
+     * @param vlan VLAN object want to modify/create
+     */
     public async setVLAN(vlan: GenericVLAN): Promise<void> {
         return (await this.rpc.remoteCall({
             jsonrpc: '2.0',

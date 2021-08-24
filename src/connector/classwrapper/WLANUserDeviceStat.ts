@@ -13,6 +13,13 @@ export class RPCWLANUserDeviceStat extends WLANUserDeviceStat {
         this.targetId = targetId;
     }
 
+    /**
+     * Get STAs connected to given WLAN interface
+     * 
+     * @param devname WLAN device name
+     * @param ifname WLAN interface name
+     * @returns List of currently connected STAs
+     */
     public async getUserDevices(devname: string, ifname: string): Promise<User80211Device[]> {
         const res = await this.rpc.remoteCall({
             jsonrpc: '2.0',

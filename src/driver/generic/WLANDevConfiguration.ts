@@ -33,6 +33,11 @@ export class WLANDevConfiguration {
         //
     }
 
+    /**
+     * Intended to use in RPC communication
+     * 
+     * @returns Serialized state
+     */
     public serialize(): WLANDevConfigurationState {
         return {
             disabled: this.disabled,
@@ -51,6 +56,11 @@ export class WLANDevConfiguration {
         }
     }
 
+    /**
+     * Intended to use in RPC communication
+     * 
+     * @param state Serialized state
+     */
     public restore(state: WLANDevConfigurationState): void {
         this.disabled = state.disabled;
         this.channel = state.channel;

@@ -6,6 +6,9 @@ import { RPCMethodTable, RPCRequestHandler } from './RPCRequestHandler';
 export class LogmanReqHandler extends RPCRequestHandler {
     private logman: GenericLogman | EFMLogman | CiscoLogman;
     protected rpcMethodTable: RPCMethodTable = {
+        getAvailableSources: async(): Promise<string[]> => {
+            return await this.logman.getAvailableSources();
+        },
         queryLog: async(source: string, from: string | null, to: string | null) => {
             const fromTS = from ? new Date(from) : undefined;
             const toTS = to ? new Date(to) : undefined;

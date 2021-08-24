@@ -29,6 +29,11 @@ export class WLANIFaceCfg {
         //
     }
 
+    /**
+     * Intended to use in RPC communication
+     * 
+     * @returns Serialized state
+     */
     public serialize(): WLANIFaceCfgState {
         return {
             mode: this.mode,
@@ -45,6 +50,11 @@ export class WLANIFaceCfg {
         };
     }
 
+    /**
+     * Intended to use in RPC communication
+     * 
+     * @param state Serialized state
+     */
     public restore(state: WLANIFaceCfgState): void {
         this.mode = state.mode;
         this.disabled = state.disabled;

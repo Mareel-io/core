@@ -60,6 +60,10 @@ export class Logman extends GenericLogman {
         return logArr;
     }
 
+    public async getAvailableSources(): Promise<string[]> {
+        return ['syslog'];
+    }
+
     /**
      * Retrieve log from target
      * 

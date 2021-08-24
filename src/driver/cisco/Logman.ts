@@ -10,6 +10,7 @@ export class Logman extends GenericLogman {
     private ssh: CiscoSSHClient;
     private tftpServer: CiscoTFTPServer;
     private tftpUtil: CiscoTFTPUtil;
+
     constructor(snmp: SNMPClient, ssh: CiscoSSHClient, tftpServer: CiscoTFTPServer) {
         super();
         this.snmp = snmp;
@@ -18,16 +19,38 @@ export class Logman extends GenericLogman {
         this.tftpUtil = new CiscoTFTPUtil(this.ssh, this.tftpServer);
     }
 
+    /**
+     * Fetch Cisco log stored in flash memory
+     * 
+     * @returns Log entries
+     */
     private async getFlashLog(): Promise<string[]> {
         const file = await this.tftpUtil.fetchFile('flash://system/syslog/logging');
         return file.toString('utf-8').split('\n');
     }
 
+    /**
+     * Fetch Cisco log stored in RAM
+     * 
+     * @returns Log entries
+     */
     private async getRAMLog(): Promise<string[]> {
         const file = await this.tftpUtil.fetchFile('logging');
         return file.toString('utf-8').split('\n');
     }
 
+    public async getAvailableSources(): Promise<string[]> {
+        return ['flash', 'ram'];
+    }
+
+    /**
+     * Fetch log from Cisco device
+     * 
+     * @param source Log source. Can be flash or ram
+     * @param from Date from
+     * @param to Date to
+     * @returns Log entries
+     */
     public async queryLog(source: string, from: Date | undefined, to: Date | undefined): Promise<LogEntry[]> {
         switch (source) {
             case 'flash':
