@@ -101,6 +101,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="connector_classwrapper_switchconfigurator.rpcswitchconfigurator.html#applyconfig" class="tsd-kind-icon">apply<wbr>Config</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_switchconfigurator.rpcswitchconfigurator.html#getallvlan" class="tsd-kind-icon">get<wbr>AllVLAN</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_switchconfigurator.rpcswitchconfigurator.html#getswitchports" class="tsd-kind-icon">get<wbr>Switch<wbr>Ports</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_switchconfigurator.rpcswitchconfigurator.html#getvlan" class="tsd-kind-icon">getVLAN</a></li>
@@ -126,7 +127,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_switchconfigurator.switchconfigurator.html">SwitchConfigurator</a>.<a href="driver_generic_switchconfigurator.switchconfigurator.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/connector/classwrapper/SwitchConfigurator.ts#L12">src/connector/classwrapper/SwitchConfigurator.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L12">src/connector/classwrapper/SwitchConfigurator.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -151,7 +152,7 @@
 					<div class="tsd-signature tsd-kind-icon">rpc<span class="tsd-signature-symbol">:</span> <a href="connector_jsonrpcv2.rpcprovider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/connector/classwrapper/SwitchConfigurator.ts#L11">src/connector/classwrapper/SwitchConfigurator.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L11">src/connector/classwrapper/SwitchConfigurator.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -161,13 +162,36 @@
 					<div class="tsd-signature tsd-kind-icon">target<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/connector/classwrapper/SwitchConfigurator.ts#L12">src/connector/classwrapper/SwitchConfigurator.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L12">src/connector/classwrapper/SwitchConfigurator.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="applyconfig" class="tsd-anchor"></a>
+					<h3>apply<wbr>Config</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">apply<wbr>Config<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L44">src/connector/classwrapper/SwitchConfigurator.ts:44</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Apply config to device.</p>
+								</div>
+								<p>This method must called after modifying the configuration.</p>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getallvlan" class="tsd-anchor"></a>
 					<h3>get<wbr>AllVLAN</h3>
@@ -179,10 +203,16 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_switchconfigurator.switchconfigurator.html">SwitchConfigurator</a>.<a href="driver_generic_switchconfigurator.switchconfigurator.html#getallvlan">getAllVLAN</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/connector/classwrapper/SwitchConfigurator.ts#L59">src/connector/classwrapper/SwitchConfigurator.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L99">src/connector/classwrapper/SwitchConfigurator.ts:99</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return all available VLANs</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="driver_generic_vlan.vlan.html" class="tsd-signature-type" data-tsd-kind="Class">VLAN</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Available all VLANs</p>
 						</li>
 					</ul>
 				</section>
@@ -197,10 +227,16 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_switchconfigurator.switchconfigurator.html">SwitchConfigurator</a>.<a href="driver_generic_switchconfigurator.switchconfigurator.html#getswitchports">getSwitchPorts</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/connector/classwrapper/SwitchConfigurator.ts#L31">src/connector/classwrapper/SwitchConfigurator.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L59">src/connector/classwrapper/SwitchConfigurator.ts:59</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Fetch all ports from the switch</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="driver_generic_ethernetport.ethernetport.html" class="tsd-signature-type" data-tsd-kind="Class">EthernetPort</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Switch ports</p>
 						</li>
 					</ul>
 				</section>
@@ -215,16 +251,25 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_switchconfigurator.switchconfigurator.html">SwitchConfigurator</a>.<a href="driver_generic_switchconfigurator.switchconfigurator.html#getvlan">getVLAN</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/connector/classwrapper/SwitchConfigurator.ts#L77">src/connector/classwrapper/SwitchConfigurator.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L123">src/connector/classwrapper/SwitchConfigurator.ts:123</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get specific VLAN using VID</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>vid: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>VLAN ID</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="driver_generic_vlan.vlan.html" class="tsd-signature-type" data-tsd-kind="Class">VLAN</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>VLAN or NULL if there is no VLAN available in given VID</p>
 						</li>
 					</ul>
 				</section>
@@ -239,7 +284,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="driver_generic_switchconfigurator.switchconfigurator.html">SwitchConfigurator</a>.<a href="driver_generic_switchconfigurator.switchconfigurator.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/driver/generic/SwitchConfigurator.ts#L9">src/driver/generic/SwitchConfigurator.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/driver/generic/SwitchConfigurator.ts#L9">src/driver/generic/SwitchConfigurator.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -256,9 +301,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/connector/classwrapper/SwitchConfigurator.ts#L21">src/connector/classwrapper/SwitchConfigurator.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L29">src/connector/classwrapper/SwitchConfigurator.ts:29</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>load config from device.</p>
+								</div>
+								<p>This method must called before doing anything.</p>
+								<p>Note that, calling this method will throw out current
+								modification</p>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -274,16 +327,27 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_switchconfigurator.switchconfigurator.html">SwitchConfigurator</a>.<a href="driver_generic_switchconfigurator.switchconfigurator.html#setswitchport">setSwitchPort</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/connector/classwrapper/SwitchConfigurator.ts#L49">src/connector/classwrapper/SwitchConfigurator.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L84">src/connector/classwrapper/SwitchConfigurator.ts:84</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Configure specific switch port</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>port: <a href="driver_generic_ethernetport.ethernetport.html" class="tsd-signature-type" data-tsd-kind="Class">EthernetPort</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Configured EthernetPort object</p>
+									</div>
 								</li>
 								<li>
 									<h5>portIdx: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Target port which EthernetPort configuration applied.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -301,13 +365,21 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_switchconfigurator.switchconfigurator.html">SwitchConfigurator</a>.<a href="driver_generic_switchconfigurator.switchconfigurator.html#setvlan">setVLAN</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/37bc8d5/src/connector/classwrapper/SwitchConfigurator.ts#L95">src/connector/classwrapper/SwitchConfigurator.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fd887f4/src/connector/classwrapper/SwitchConfigurator.ts#L146">src/connector/classwrapper/SwitchConfigurator.ts:146</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set specific vlan using VLAN object</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>vlan: <a href="driver_generic_vlan.vlan.html" class="tsd-signature-type" data-tsd-kind="Class">VLAN</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>VLAN object want to modify/create</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -342,6 +414,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="connector_classwrapper_switchconfigurator.rpcswitchconfigurator.html#targetid" class="tsd-kind-icon">target<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="connector_classwrapper_switchconfigurator.rpcswitchconfigurator.html#applyconfig" class="tsd-kind-icon">apply<wbr>Config</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="connector_classwrapper_switchconfigurator.rpcswitchconfigurator.html#getallvlan" class="tsd-kind-icon">get<wbr>AllVLAN</a>
