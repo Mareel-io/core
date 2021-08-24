@@ -1,8 +1,16 @@
+import { AxiosInstance } from "axios";
 import { EthernetPort } from "../generic/EthernetPort";
 import { SwitchConfigurator as GenericSwitchConfigurator } from "../generic/SwitchConfigurator";
 import { VLAN } from "../generic/VLAN";
 
 export class SwitchConfigurator extends GenericSwitchConfigurator {
+    private api: AxiosInstance;
+
+    constructor(api: AxiosInstance) {
+        super();
+        this.api = api;
+    }
+
     public getSwitchPorts(): Promise<EthernetPort[]> {
         throw new Error("Method not implemented.");
     }
