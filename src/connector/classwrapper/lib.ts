@@ -40,7 +40,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
      * Initialize the RPCControllerFactory
      */
     public async init(): Promise<void> {
-        await this.rpc.remoteNotify({
+        this.rpc.remoteNotify({
             jsonrpc: '2.0',
             method: 'serverInit',
             params: [],
@@ -62,6 +62,11 @@ export class RPCControllerFactory extends GenericControllerFactory {
         })) as {id: string, type: string}[];
     }
 
+    /**
+     * Fetch available devices in given Mareel Key
+     * 
+     * @returns Device list
+     */
     public getDevices(): {id: string, type: string}[] {
         if (this.devices == null) {
             throw new Error('You have to initialize first!');
@@ -70,6 +75,9 @@ export class RPCControllerFactory extends GenericControllerFactory {
         return this.devices;
     }
 
+    /**
+     * RPC ping. Not network ping.
+     */
     public async ping(): Promise<void> {
         await this.rpc.remoteCall({
             jsonrpc: '2.0',
@@ -79,6 +87,9 @@ export class RPCControllerFactory extends GenericControllerFactory {
         });
     }
 
+    /**
+     * RPC ping which will always fail. Intended to test use only.
+     */
     public async errorPing(): Promise<void> {
         await this.rpc.remoteCall({
             jsonrpc: '2.0',
@@ -88,23 +99,53 @@ export class RPCControllerFactory extends GenericControllerFactory {
         });
     }
 
+    /**
+     * Get SwitchConfigurator using device ID.
+     * 
+     * @param targetId device ID
+     * @returns SwitchConfigurator of given target
+     */
     public getSwitchConfigurator(targetId: string): RPCSwitchConfigurator {
         const switchConfigurator = new RPCSwitchConfigurator(this.rpc, targetId);
         return switchConfigurator;
     }
 
+    /**
+     * Get WLANConfigurator using device ID.
+     * 
+     * @param targetId device ID
+     * @returns WLANConfigurator of given target
+     */
     public getWLANConfigurator(targetId: string): RPCWLANConfigurator {
         return new RPCWLANConfigurator(this.rpc, targetId);
     }
 
+    /**
+     * Get WLANUserDeviceStat using device ID.
+     * 
+     * @param targetId device ID
+     * @returns WLANUserDeviceStat of given target
+     */
     public getWLANUserDeviceStat(targetId: string): RPCWLANUserDeviceStat {
         return new RPCWLANUserDeviceStat(this.rpc, targetId);
     }
 
+    /**
+     * Get Logman using device ID.
+     * 
+     * @param targetId device ID
+     * @returns Logman of given target
+     */
     public getLogman(targetId: string): RPCLogman {
         return new RPCLogman(this.rpc, targetId);
     }
 
+    /**
+     * Get FirewallConfigurator using device ID.
+     * 
+     * @param targetId device ID
+     * @returns FirewallConfigurator of given target
+     */
     public getFirewallConfigurator(targetId: string): RPCFirewallConfigurator {
         return new RPCFirewallConfigurator(this.rpc, targetId);
     }
