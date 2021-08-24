@@ -3,6 +3,7 @@ import { NetTester } from '../efm/monitor/NetTester';
 import { FirewallConfigurator } from '../generic/FirewallConfigurator';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
 import { Logman } from '../generic/Logman';
+import { SwitchQoS } from '../generic/SwitchQoS';
 import { WLANConfigurator } from '../generic/wlan';
 import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { SwitchConfigurator as DummySwitchConfigurator } from './SwitchConfigurator';
@@ -23,6 +24,10 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getSwitchConfigurator(): DummySwitchConfigurator {
         return new DummySwitchConfigurator();
+    }
+
+    public getSwitchQoS(): SwitchQoS {
+        throw new MethodNotImplementedError();
     }
 
     public getWLANConfigurator(): WLANConfigurator {

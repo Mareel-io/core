@@ -2,6 +2,7 @@ import { NetTester } from "../efm/monitor/NetTester";
 import { FirewallConfigurator } from "./FirewallConfigurator";
 import { Logman } from "./Logman";
 import { SwitchConfigurator } from "./SwitchConfigurator";
+import { SwitchQoS } from "./SwitchQoS";
 import { WLANConfigurator } from "./wlan";
 import { WLANUserDeviceStat } from "./WLANUserDeviceStat";
 
@@ -31,6 +32,7 @@ export abstract class ControllerFactory {
     public abstract getWLANConfigurator(deviceId?: string): WLANConfigurator;
     public abstract getWLANUserDeviceStat(deviceId?: string): WLANUserDeviceStat;
     public abstract getSwitchConfigurator(deviceId?: string): SwitchConfigurator;
+    public abstract getSwitchQoS(deviceId?: string): SwitchQoS;
     public abstract getLogman(deviceId?: string): Logman;
     public abstract getFirewallConfigurator(deviceId?: string): FirewallConfigurator;
     public abstract getNetTester(deviceId?: string): NetTester;

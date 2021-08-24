@@ -10,7 +10,8 @@ import { Logman } from './Logman';
 import { ResponseChecker } from './ResponseChecker';
 import { FirewallConfigurator } from './FirewallConfigurator';
 import { NetTester } from './monitor/NetTester';
-import { AuthError } from '../../error/MarilError';
+import { AuthError, UnsupportedFeatureError } from '../../error/MarilError';
+import { SwitchQoS } from '../generic/SwitchQoS';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -148,6 +149,10 @@ export class ControllerFactory extends GenericControllerFactory {
      */
     public getSwitchConfigurator(): SwitchConfigurator {
         return new SwitchConfigurator(this.api);
+    }
+
+    public getSwitchQoS(): SwitchQoS {
+        throw new UnsupportedFeatureError();
     }
 
     /**
