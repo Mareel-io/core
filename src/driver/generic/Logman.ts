@@ -25,5 +25,6 @@ export class LogEntry {
 }
 
 export abstract class Logman {
+    public abstract getAvailableSources(): Promise<string[]>;
     public abstract queryLog(source: string, from: Date | undefined, to: Date | undefined): Promise<LogEntry[]>;
 }
