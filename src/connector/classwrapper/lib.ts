@@ -6,6 +6,7 @@ import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCFirewallConfigurator } from './FireallConfigurator';
 import { RPCLogman } from './Logman';
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
+import { RPCSwitchQoS } from './SwitchQoS';
 import { RPCWLANConfigurator } from './WLANConfigurator';
 import { RPCWLANUserDeviceStat } from './WLANUserDeviceStat';
 
@@ -108,6 +109,17 @@ export class RPCControllerFactory extends GenericControllerFactory {
     public getSwitchConfigurator(targetId: string): RPCSwitchConfigurator {
         const switchConfigurator = new RPCSwitchConfigurator(this.rpc, targetId);
         return switchConfigurator;
+    }
+
+    /**
+     * Get SwitchQoS using device ID.
+     * 
+     * @param targetId device ID
+     * @returns SwitchQoS of given target
+     */
+    public getSwitchQoS(targetId: string): RPCSwitchQoS {
+        const switchQoS = new RPCSwitchQoS(this.rpc, targetId);
+        return switchQoS;
     }
 
     /**

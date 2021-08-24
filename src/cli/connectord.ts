@@ -22,6 +22,7 @@ import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/Fire
 import { LogmanReqHandler } from '../connector/requesthandler/Logman';
 import { MarilError, MethodNotImplementedError } from '../error/MarilError';
 import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUserDeviceStat';
+import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
 
 interface EFMCredential {
     id: string,
@@ -197,6 +198,15 @@ export class ConnectorClient {
                 this.rpc.addRequestHandler(switchReqHandler.getRPCHandler());
             } catch(e) {
                 this.handleDriverInitError(id, 'switch', e);
+            }
+
+            // SwitchQoS
+            try {
+                const switchQoSReqHandler = new SwitchQoSReqHandler(id, genericControllerFactory.getSwitchQoS());
+                await switchQoSReqHandler.init();
+                this.rpc.addRequestHandler(switchQoSReqHandler.getRPCHandler());
+            } catch(e) {
+                this.handleDriverInitError(id, 'SwithcQoS', e);
             }
 
             // WLAN

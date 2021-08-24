@@ -12,6 +12,7 @@ import { Logman } from './Logman';
 import { WLANConfigurator } from '../generic/wlan';
 import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { AuthError, MethodNotImplementedError } from '../../error/MarilError';
+import { SwitchQoS as CiscoSwitchQoS } from './SwitchQoS';
 
 export interface CiscoCredential {
     snmpCredential: SNMPClientConfig,
@@ -59,6 +60,14 @@ export class ControllerFactory extends GenericControllerFactory {
         }
 
         return new CiscoSwitchConfigurator(this.snmp, this.sshClient, this.tftpServer);
+    }
+
+    public getSwitchQoS(): CiscoSwitchQoS {
+        if (this.snmp == null || this.sshClient == null) {
+            throw new AuthError('Not authenticated.');
+        }
+
+        return new CiscoSwitchQoS(this.snmp, this.sshClient, this.tftpServer);
     }
 
     public getWLANConfigurator(): WLANConfigurator {
