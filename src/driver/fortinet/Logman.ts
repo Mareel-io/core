@@ -2,38 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import moment from 'moment';
 import { StringMappingType } from 'typescript';
 import { Logman as GenericLogman, LogEntry } from '../generic/Logman';
-
-interface FortiOSLog {
-    date: string,
-    time: string,
-    eventtime: string,
-    tz: string,
-    logid: string,
-    type: string,
-    subtype: string,
-    level: string,
-    vd: string,
-    logdesc: string,
-    action: string,
-    cpu: number,
-    mem: number,
-    totalsession: number,
-    disk: number,
-    bandwidth: string,
-    setuprate: number,
-    disklograte: number,
-    gbazlograte: number,
-    freediskstorage: number,
-    sysuptime: number,
-    waninfo: string,
-    msg: string,
-    _metadata: {
-        "#": string,
-        logid: number,
-        timestamp: number,
-        roll: number
-    }
-}
+import { FortiOSLog } from './util/types';
 
 export class Logman extends GenericLogman {
     private api: AxiosInstance;
