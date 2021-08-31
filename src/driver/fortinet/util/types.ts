@@ -183,3 +183,50 @@ export interface FortigateShapingPolicy extends FortigateElement {
     "diffservcode-forward": string,
     "diffservcode-rev": string
 }
+
+export interface FortigateRADIUS extends FortigateElement {
+    server: string,
+    secret: string,
+    "secondary-server": string,
+    "secondary-secret": string,
+    "tertiary-server": string,
+    "tertiary-secret": string,
+    timeout: number,
+    "all-usergroup": 'enable' | 'disable',
+    "use-management-vdom": 'enable' | 'disable',
+    "nas-ip": string,
+    "acct-interim-interval": number,
+    "radius-coa": 'enable' | 'disable',
+    "radius-port": number,
+    "h3c-compatibility": 'enable' | 'disable',
+    "auth-type": 'chap' | 'ms_chap' | 'ms_chap_v2' | 'pap',
+    "source-ip": string,
+    "username-case-sensitive": 'enable' | 'disable',
+    "group-override-attr-type": string,
+    class:[
+    ],
+    "password-renewal": 'enable' | 'disable',
+    "password-encoding": 'auto', // TODO: FIXME
+    "acct-all-servers":"disable",
+    "switch-controller-acct-fast-framedip-detect":2,
+    "interface-select-method":"auto",
+    interface: string,
+    "switch-controller-service-type": string,
+    rsso: 'enable' | 'disable',
+    "rsso-radius-server-port":1813,
+    "rsso-radius-response": 'enable' | 'disable',
+    "rsso-validate-request-secret": 'enable' | 'disable',
+    "rsso-secret": string,
+    "rsso-endpoint-attribute": string,
+    "rsso-endpoint-block-attribute": string,
+    "sso-attribute": string,
+    "sso-attribute-key": string,
+    "sso-attribute-value-override": 'enable' | 'disable',
+    "rsso-context-timeout": number,
+    "rsso-log-period": number,
+    "rsso-log-flags": string,
+    "rsso-flush-ip-session": 'enable' | 'disable',
+    "rsso-ep-one-ip-only": 'enable' | 'disable',
+    "accounting-server":[
+    ]
+}

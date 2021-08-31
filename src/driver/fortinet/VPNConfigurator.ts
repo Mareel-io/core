@@ -24,11 +24,11 @@ export class VPNConfigurator extends GenericVPNConfigurator {
     }
 
     private async getIPSecConfiguration() {
-        // TODO: Implement me
+        throw new MethodNotImplementedError('Method not implemented.');
     }
 
     private async setIPSecConfiguration() {
-        //
+        throw new MethodNotImplementedError('Method not implemented.');
     }
 
     public async getVPNConfigurations(type: string): Promise<any[]> {
@@ -45,14 +45,36 @@ export class VPNConfigurator extends GenericVPNConfigurator {
     }
 
     public async setVPNConfiguration(type: string, idx: number, config: any): Promise<void> {
-        //
+        switch (type) {
+            case 'fortissl':
+                //await this.setSSLVPNConfiguration();
+                break;
+            default:
+                throw new UnsupportedFeatureError(`Unsupported VPN type ${type}`);
+        }
     }
 
     public async deleteVPNConfiguration(type: string, idx: number): Promise<void> {
-        //
+        switch (type) {
+            case 'fortissl':
+                throw new UnsupportedFeatureError('Only set is allowed.');
+                break;
+            case 'ipsec':
+                throw new MethodNotImplementedError(`ipsec need to be implemented.`)
+            default:
+                throw new UnsupportedFeatureError(`Unsupported VPN type ${type}`);
+        }
     }
 
     public async addVPNConfiguration(type: string, config: any): Promise<void> {
-        //
+        switch (type) {
+            case 'fortissl':
+                throw new UnsupportedFeatureError('Only set is allowed.');
+                break;
+            case 'ipsec':
+                throw new MethodNotImplementedError(`ipsec need to be implemented.`)
+            default:
+                throw new UnsupportedFeatureError(`Unsupported VPN type ${type}`);
+        }
     }
 }
