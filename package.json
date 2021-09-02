@@ -67,6 +67,7 @@
     "express": "^4.17.1",
     "form-data": "^4.0.0",
     "hexy": "^0.3.1",
+    "ipaddr.js": "^2.0.1",
     "jsdom": "^16.4.0",
     "moment": "^2.29.1",
     "msgpack-lite": "^0.1.26",
