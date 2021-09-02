@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { AuthError, UnsupportedFeatureError } from '../../error/MarilError';
 import { NetTester } from '../efm/monitor/NetTester';
-import { FirewallConfigurator } from '../generic/FirewallConfigurator';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
 import { Logman } from './Logman';
 import { SwitchConfigurator } from './SwitchConfigurator';
@@ -10,6 +9,7 @@ import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { FortigateQoS } from './FortigateQoS';
 import { RouteConfigurator as FortigateRouteConfigurator } from './RouteConfigurator';
 import { SwitchQoS } from '../generic/SwitchQoS';
+import { FirewallConfigurator } from './FirewallConfigurator';
 
 export class ControllerFactory extends GenericControllerFactory {
     private api: AxiosInstance;
@@ -56,7 +56,7 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getFirewallConfigurator(deviceId?: string): FirewallConfigurator {
-        throw new Error('Method not implemented.');
+        return new FirewallConfigurator(this.api);
     }
 
     public getNetTester(deviceId?: string): NetTester {
