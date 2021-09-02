@@ -13,6 +13,7 @@ import { WLANConfigurator } from '../generic/wlan';
 import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { AuthError, MethodNotImplementedError } from '../../error/MarilError';
 import { SwitchQoS as CiscoSwitchQoS } from './SwitchQoS';
+import { RouteConfigurator } from '../generic/RouteConfigurator';
 
 export interface CiscoCredential {
     snmpCredential: SNMPClientConfig,
@@ -91,6 +92,10 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getNetTester(): NetTester {
+        throw new MethodNotImplementedError();
+    }
+
+    public getRouteConfigurator(): RouteConfigurator {
         throw new MethodNotImplementedError();
     }
 }

@@ -23,6 +23,7 @@ import { LogmanReqHandler } from '../connector/requesthandler/Logman';
 import { MarilError, MethodNotImplementedError } from '../error/MarilError';
 import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUserDeviceStat';
 import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
+import { RouteConfiguratorReqHandler } from '../connector/requesthandler/RouteConfigurator';
 
 interface EFMCredential {
     id: string,
@@ -243,6 +244,15 @@ export class ConnectorClient {
                 this.rpc.addRequestHandler(wlanUserDeviceStatReqHandler.getRPCHandler());
             } catch(e) {
                 this.handleDriverInitError(id, 'WLANUserDeviceStat', e);
+            }
+
+            // Route
+            try {
+                const routeReqHandler = new RouteConfiguratorReqHandler(id, genericControllerFactory.getRouteConfigurator());
+                await routeReqHandler.init();
+                this.rpc.addRequestHandler(routeReqHandler.getRPCHandler());
+            } catch(e) {
+                this.handleDriverInitError(id, 'RouteConfigurator', e);
             }
         }
     }

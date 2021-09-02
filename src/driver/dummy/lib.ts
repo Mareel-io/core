@@ -4,6 +4,7 @@ import { FirewallConfigurator } from '../generic/FirewallConfigurator';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
 import { Logman } from '../generic/Logman';
 import { SwitchQoS } from '../generic/SwitchQoS';
+import { RouteConfigurator } from '../generic/RouteConfigurator';
 import { WLANConfigurator } from '../generic/wlan';
 import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { SwitchConfigurator as DummySwitchConfigurator } from './SwitchConfigurator';
@@ -43,6 +44,9 @@ export class ControllerFactory extends GenericControllerFactory {
         throw new MethodNotImplementedError();
     }
     public getNetTester(): NetTester {
+        throw new MethodNotImplementedError();
+    }
+    public getRouteConfigurator(): RouteConfigurator {
         throw new MethodNotImplementedError();
     }
 }

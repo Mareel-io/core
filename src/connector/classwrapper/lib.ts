@@ -5,6 +5,7 @@ import { NetTester } from '../../driver/efm/monitor/NetTester';
 import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCFirewallConfigurator } from './FireallConfigurator';
 import { RPCLogman } from './Logman';
+import { RPCRouteConfigurator } from './RouteConfigurator';
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
 import { RPCSwitchQoS } from './SwitchQoS';
 import { RPCWLANConfigurator } from './WLANConfigurator';
@@ -164,5 +165,9 @@ export class RPCControllerFactory extends GenericControllerFactory {
 
     public getNetTester(targetId: string): NetTester {
         throw new Error('Method not implemented.');
+    }
+
+    public getRouteConfigurator(targetId: string): RPCRouteConfigurator {
+        return new RPCRouteConfigurator(this.rpc, targetId);
     }
 }
