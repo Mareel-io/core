@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { AuthError } from '../../error/MarilError';
+import { AuthError, UnsupportedFeatureError } from '../../error/MarilError';
 import { NetTester } from '../efm/monitor/NetTester';
 import { FirewallConfigurator } from '../generic/FirewallConfigurator';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
@@ -8,6 +8,8 @@ import { SwitchConfigurator } from './SwitchConfigurator';
 import { WLANConfigurator } from '../generic/wlan';
 import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { FortigateQoS } from './FortigateQoS';
+import { RouteConfigurator as FortigateRouteConfigurator } from './RouteConfigurator';
+import { SwitchQoS } from '../generic/SwitchQoS';
 
 export class ControllerFactory extends GenericControllerFactory {
     private api: AxiosInstance;
@@ -61,7 +63,15 @@ export class ControllerFactory extends GenericControllerFactory {
         throw new Error('Feature not supported');
     }
 
+    public getSwitchQoS(deviceId?: string): SwitchQoS {
+        throw new UnsupportedFeatureError('Feature not supported');
+    }
+
     public getQoSConfigurator(): FortigateQoS {
         throw new Error('Method not implemented.');
+    }
+
+    public getRouteConfigurator(): FortigateRouteConfigurator {
+        return new FortigateRouteConfigurator(this.api);
     }
 }

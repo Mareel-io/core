@@ -1,12 +1,12 @@
 import { StringMappingType } from "typescript";
 
 export interface FortigateElement {
-    name: string,
+    name?: string,
     q_origin_key: string,
 }
 
 export interface FortigateIDElement {
-    id: number,
+    id?: number,
     q_origin_key: number,
 }
 
@@ -62,10 +62,10 @@ export interface FortiSSLVPN {
     status: 'enable' | 'disable',
     reqclientcert: 'enable' | 'disable',
     'user-peer': string,
-    'ssl-max-proto-ver': 'tls1-0' | 'tls1-1' | 'tls1-2' | 'tls1-3',
-    'ssl-min-proto-ver': 'tls1-0' | 'tls1-1' | 'tls1-2' | 'tls1-3',
-    'banned-cipher': string, // Typical OpenSSL cipher description
-    ciphersuite: string, // Typical OpenSSL cipher description
+    'ssl-max-proto-ver'?: 'tls1-0' | 'tls1-1' | 'tls1-2' | 'tls1-3',
+    'ssl-min-proto-ver'?: 'tls1-0' | 'tls1-1' | 'tls1-2' | 'tls1-3',
+    'banned-cipher'?: string, // Typical OpenSSL cipher description
+    ciphersuite?: string, // Typical OpenSSL cipher description
     'ssl-insert-empty-fragment': 'enable' | 'disable',
     'https-redirect': 'enable' | 'disable',
     'x-content-type-options': 'enable' | 'disable',
@@ -229,4 +229,47 @@ export interface FortigateRADIUS extends FortigateElement {
     "rsso-ep-one-ip-only": 'enable' | 'disable',
     "accounting-server":[
     ]
+}
+
+export interface FortigateRoute {
+    "seq-num"?: number,
+    "q_origin_key"?: number,
+    "status": 'enable' | 'disable',
+    "dst": string,
+    "src": string,
+    "gateway": string,
+    "distance": number,
+    "weight": number,
+    "priority": number,
+    "device": string,
+    "comment": string,
+    "blackhole": 'enable' | 'disable',
+    "dynamic-gateway": 'enable' | 'disable',
+    "sdwan-zone":[
+    ],
+    "dstaddr": string,
+    "internet-service": number,
+    "internet-service-custom": string,
+    "link-monitor-exempt": 'enable' | 'disable',
+    "vrf": number,
+    "bfd": 'enable' | 'disable',
+}
+
+// Future common types
+
+
+// Intended to abstract OpenConnect VPNs (Cisco, Juniper, Fortigate, etc..)
+export interface OpenConnectVPN {
+    minTLSProtocol?: 'tls1.0' | 'tls1.1' | 'tls1.2' | 'tls1.3'
+    maxTLSProtocol?: 'tls1.0' | 'tls1.1' | 'tls1.2' | 'tls1.3'
+    ciphersuite?: string,
+    bannedCipher?: string,
+    sessionTTL: number,
+    listenPort: number,
+
+    // Below is prone to change, stay tuned!
+    authServerId: {
+        serverId: string,
+        permission: string,
+    }[]
 }

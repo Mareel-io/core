@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { EmitFlags } from "typescript";
 import { UnsupportedFeatureError } from "../../error/MarilError";
 import { RADIUSAuthMethod, RADIUS } from "../generic/RADIUS";
 import { FortigateElement, FortigateRADIUS } from "./util/types";
@@ -14,27 +15,58 @@ export class AuthConfigurator {
     constructor(api: AxiosInstance) {
         this.api = api;
     }
-    private async getFortigateRADIUSServers(): Promise<FortigateRADIUS[]> {
+
+    public async getRADIUSServers(): Promise<{id: string, servers: RADIUS[], authMethod: RADIUSAuthMethod}[]> {
         const res = await this.api.get('/api/v2/cmdb/user/radius');
         const radiusServers: FortigateRADIUS[] = res.data.results;
 
-        radiusServers.map((elem) => {
-            //
+        return radiusServers.map((elem) => {
+            const servers: RADIUS[] = [];
+            servers.push({
+                server: elem.server,
+                key: elem.secret,
+            });
+
+            if (elem['secondary-server'] != null) {
+                servers.push({
+                    server: elem['secondary-server'],
+                    key: elem['secondary-secret'],
+                });
+            }
+
+            if (elem['tertiary-server'] != null) {
+                servers.push({
+                    server: elem['tertiary-server'],
+                    key: elem['tertiary-secret'],
+                });
+            }
+
+            const authMethod: RADIUSAuthMethod = ((): RADIUSAuthMethod => {
+                switch (elem['auth-type']) {
+                    case 'pap':
+                    case 'chap':
+                        return {
+                            method: elem['auth-type'],
+                        };
+                    case 'ms_chap':
+                        return {
+                            method: 'mschap',
+                        };
+                    case 'ms_chap_v2':
+                        return {
+                            method: 'mschapv2',
+                        };
+                    default:
+                        throw new Error(`Unknown auth method:${elem['auth-type']}`);
+                }
+            })();
+
+            return {
+                id: elem.q_origin_key,
+                servers: servers,
+                authMethod: authMethod,
+            }
         });
-
-        return radiusServers;
-    }
-
-    private async addFortigateRADIUSServer(config: FortigateRADIUS): Promise<void> {
-        await this.api.post(`/api/v2/cmdb/user/radius`, config);
-    }
-
-    private async deleteFortigateRADIUSServer(id: FortigateElement): Promise<void> {
-        await this.api.delete(`/api/v2/cmdb/user/radius/${id.q_origin_key}`);
-    }
-
-    public async getRADIUSServers() {
-        //
     }
 
     public async addRADIUSServer(name: string, method: RADIUSAuthMethod, servers: RADIUS[]) {
@@ -67,7 +99,7 @@ export class AuthConfigurator {
             }
         })();
 
-        this.addFortigateRADIUSServer({
+        const fortigateRADIUS: FortigateRADIUS = {
             name: name,
             "q_origin_key": name,
             "server": radiusServer01.server,
@@ -113,11 +145,13 @@ export class AuthConfigurator {
             "rsso-flush-ip-session":"disable",
             "rsso-ep-one-ip-only":"disable",
             "accounting-server":[
-            ]
-        })
+            ],
+        };
+
+        await this.api.post(`/api/v2/cmdb/user/radius`, fortigateRADIUS);
     }
 
-    public async deleteRADIUSServer() {
-        //
+    public async deleteRADIUSServer(id: string) {
+        await this.api.delete(`/api/v2/cmdb/user/radius/${id}`);
     }
 }

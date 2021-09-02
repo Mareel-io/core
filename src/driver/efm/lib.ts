@@ -10,8 +10,9 @@ import { Logman } from './Logman';
 import { ResponseChecker } from './ResponseChecker';
 import { FirewallConfigurator } from './FirewallConfigurator';
 import { NetTester } from './monitor/NetTester';
-import { AuthError, UnsupportedFeatureError } from '../../error/MarilError';
 import { SwitchQoS } from '../generic/SwitchQoS';
+import { AuthError, UnsupportedFeatureError, MethodNotImplementedError } from '../../error/MarilError';
+import { RouteConfigurator } from '../generic/RouteConfigurator';
 
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
@@ -173,5 +174,9 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getNetTester(): NetTester {
         return new NetTester(this.api);
+    }
+
+    public getRouteConfigurator(): RouteConfigurator {
+        throw new MethodNotImplementedError();
     }
 }

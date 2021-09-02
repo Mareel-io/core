@@ -12,6 +12,10 @@ export class Logman extends GenericLogman {
         this.api = api;
     }
 
+    public getAvailableSources(): Promise<string[]> {
+        throw new Error('Method not implemented.');
+    }
+
     private async requestLog(source: string, from: Date | undefined, to: Date | undefined): Promise<LogEntry[]> {
         // Partial implementation which ignores from and to
         // TODO: Complete meeee..
