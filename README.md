@@ -1,4 +1,6 @@
-# Mareel core
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMareel-io%2Fcore.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FMareel-io%2Fcore?ref=badge_shield)
+
+# Mareel Core
 
 Universal network device control module by using Javascript.
 
@@ -20,7 +22,6 @@ yarn doc
 
 ## (EFM) CAPTCHA access flow
 ![flow diagram](./flow.png)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMareel-io%2Fcore.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FMareel-io%2Fcore?ref=badge_shield)
 
 ## Access flow example
 ```
