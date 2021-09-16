@@ -133,14 +133,80 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
     }
 
     public async getAllVLAN(): Promise<VLAN[]> {
-        return []; // TODO: Implement me
+        const res = await this.api.get('/sess-bin/timepro.cgi', {
+            params: {
+                tmenu: 'iframe',
+                smenu: 'trafficconf_linksetup_linkstatus_status',
+            },
+        });
+        ResponseChecker.check(res.data);
+
+        const dom = new JSDOM(res.data);
+
+        const portTable = Array.from(dom.window.document.body.getElementsByTagName('tr'))
+        .filter((elem) => {
+            // Bad for performance but...
+            try {
+                return (elem.childNodes[0].childNodes[0] as HTMLInputElement).type === 'checkbox';
+            } catch {
+                return false;
+            }
+        });
+
+        const rawRows = portTable.map((elem) => {
+            return Array.from(elem.childNodes).map(e => e.childNodes[0]).slice(1);
+        });
+
+        return rawRows.map((e) => {
+            const vlan = new VLAN('port-based');
+            vlan.alias = e[0].textContent!;
+            const ports: boolean[] = e.slice(1).map((e) => {
+                return !(e.textContent === '--');
+            });
+
+            ports.forEach((elem, idx) => {
+                if (elem) {
+                    const port = new EthernetPort();
+                    // TODO: Fetch real data
+                    port.portName = (idx + 1) + '';
+                    port.duplex = 'Full';
+
+                    vlan.addPortMember(port, 'U')
+                }
+            });
+            
+            return vlan;
+        });
     }
 
     public async getVLAN(vid: number): Promise<VLAN> {
-        return new VLAN('port-based'); //TODO: Implement me
+        const vlans = await this.getAllVLAN();
+        return vlans[vid];
     }
 
     public async setVLAN(vlan: VLAN): Promise<void> {
-        //
+        const params: {[key: string]: string | number} = {
+            tmenu: 'switchconf',
+            smenu: 'vlan',
+            act: 'modifyvlan',
+            dellist: '',
+            trunkname: 'None',
+            trunkmap: 0,
+            vname: vlan.alias,
+        };
+
+        vlan.getPortList().forEach((port) => {
+            const name = port.port.portName;
+            const portNo = parseInt(name);
+            if (portNo === 1) {
+                return;
+            }
+
+            params[`p${portNo}`] = 'on';
+        });
+
+        const res = await this.api.get('/sess-bin/timepro.cgi', {
+            params: params,
+        });
     }
 }
