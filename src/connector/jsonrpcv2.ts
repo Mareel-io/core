@@ -159,7 +159,7 @@ export class RPCProvider extends EventEmitter {
 
             this.sendResponse(chunk, null, new MethodNotAvailableError('Method not available'));
         } catch(e) {
-            this.sendResponse(chunk, null, e);
+            this.sendResponse(chunk, null, e as Error);
         }
     }
 

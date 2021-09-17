@@ -198,7 +198,7 @@ export class ConnectorClient {
                 await switchReqHandler.init();
                 this.rpc.addRequestHandler(switchReqHandler.getRPCHandler());
             } catch(e) {
-                this.handleDriverInitError(id, 'switch', e);
+                this.handleDriverInitError(id, 'switch', e as Error);
             }
 
             // SwitchQoS
@@ -207,7 +207,7 @@ export class ConnectorClient {
                 await switchQoSReqHandler.init();
                 this.rpc.addRequestHandler(switchQoSReqHandler.getRPCHandler());
             } catch(e) {
-                this.handleDriverInitError(id, 'SwithcQoS', e);
+                this.handleDriverInitError(id, 'SwithcQoS', e as Error);
             }
 
             // WLAN
@@ -216,7 +216,7 @@ export class ConnectorClient {
                 await wlanReqHandler.init();
                 this.rpc.addRequestHandler(wlanReqHandler.getRPCHandler());
             } catch(e) {
-                this.handleDriverInitError(id, 'WLAN', e);
+                this.handleDriverInitError(id, 'WLAN', e as Error);
             }
 
             // Firewall
@@ -225,7 +225,7 @@ export class ConnectorClient {
                 await firewallReqHandler.init();
                 this.rpc.addRequestHandler(firewallReqHandler.getRPCHandler());
             } catch(e) {
-                this.handleDriverInitError(id, 'firewall', e);
+                this.handleDriverInitError(id, 'firewall', e as Error);
             }
 
             // Logman
@@ -234,7 +234,7 @@ export class ConnectorClient {
                 await logmanReqHandler.init();
                 this.rpc.addRequestHandler(logmanReqHandler.getRPCHandler());
             } catch(e) {
-                this.handleDriverInitError(id, 'logman', e);
+                this.handleDriverInitError(id, 'logman', e as Error);
             }
 
             // WLANUserDeviceStat
@@ -243,7 +243,7 @@ export class ConnectorClient {
                 await wlanUserDeviceStatReqHandler.init();
                 this.rpc.addRequestHandler(wlanUserDeviceStatReqHandler.getRPCHandler());
             } catch(e) {
-                this.handleDriverInitError(id, 'WLANUserDeviceStat', e);
+                this.handleDriverInitError(id, 'WLANUserDeviceStat', e as Error);
             }
 
             // Route
@@ -252,7 +252,7 @@ export class ConnectorClient {
                 await routeReqHandler.init();
                 this.rpc.addRequestHandler(routeReqHandler.getRPCHandler());
             } catch(e) {
-                this.handleDriverInitError(id, 'RouteConfigurator', e);
+                this.handleDriverInitError(id, 'RouteConfigurator', e as Error);
             }
         }
     }
