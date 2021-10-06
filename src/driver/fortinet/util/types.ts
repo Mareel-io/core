@@ -1,4 +1,10 @@
-import { StringMappingType } from "typescript";
+// Fortigate-specific types
+
+export interface FortiAuthToken {
+    type: 'token' | 'pki',
+    ca: string,
+    credential: string | {cert: string, key: string},
+}
 
 export interface FortigateElement {
     name?: string,
