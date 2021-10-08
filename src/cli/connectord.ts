@@ -5,7 +5,6 @@ import { ControllerFactory as DummyControllerFactory } from '../driver/dummy/lib
 import WebSocket from 'ws'
 import arg from 'arg';
 
-import { MIBLoader } from '../util/snmp/mibloader';
 import { CiscoTFTPServer } from '../util/tftp';
 import { SvcRunner } from '../util/svcrunner';
 import path from 'path';
@@ -16,8 +15,6 @@ import YAML from 'yaml';
 import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from '../connector/jsonrpcv2';
 import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/SwitchConfigurator';
 import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
-import { collapseTextChangeRangesAcrossMultipleVersions, createImmediatelyInvokedArrowFunction, parseJsonConfigFileContent } from 'typescript';
-import { SwitchConfigurator } from '../driver/generic/SwitchConfigurator';
 import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
 import { LogmanReqHandler } from '../connector/requesthandler/Logman';
 import { MarilError, MethodNotImplementedError } from '../error/MarilError';
@@ -25,7 +22,6 @@ import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUs
 import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
 import { RouteConfiguratorReqHandler } from '../connector/requesthandler/RouteConfigurator';
 import { ConnectorClientConfig, ConnectorDevice } from '../types/lib';
-import { json } from 'express';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
@@ -44,10 +40,6 @@ function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
         }
     }
     return true;
-}
-
-function setupCleanup() {
-    //
 }
 
 export async function svcmain() {
