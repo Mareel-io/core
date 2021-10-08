@@ -14,9 +14,14 @@ import { SwitchQoS } from '../generic/SwitchQoS';
 import { AuthError, UnsupportedFeatureError, MethodNotImplementedError } from '../../error/MarilError';
 import { RouteConfigurator } from '../generic/RouteConfigurator';
 
+export interface EFMCredential {
+    id: string,
+    pass: string,
+}
+
 export class ControllerFactory extends GenericControllerFactory {
     protected api: AxiosInstance;
-    protected login: {id: string, pass: string} | null = null;
+    protected login: EFMCredential | null = null;
     /**
      * EFMControllerFactory constructor
      * 
@@ -63,7 +68,7 @@ export class ControllerFactory extends GenericControllerFactory {
      * @param credential - authentication credential of ipTIME router
      * @param captcha - CAPTCHA login support. You must supply captcha filename and challenge response
      */
-    public async authenticate(credential: {id: string, pass: string}, captcha: EFMCaptcha | null = null): Promise<void> {
+    public async authenticate(credential: EFMCredential, captcha: EFMCaptcha | null = null): Promise<void> {
         this.login = credential;
         const formbase = {
             init_status: 1,

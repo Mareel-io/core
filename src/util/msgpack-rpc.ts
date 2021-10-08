@@ -1,10 +1,12 @@
 import msgpack, { DecodeStream } from 'msgpack-lite';
 import { Socket } from 'net';
+import { MarilRPCTimeoutError } from '../error/MarilError';
 
 export class MsgpackRPC {
     private port: number;
     private callId = 0;
     private msgpackDecodeStream: DecodeStream | null = null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private rpcCbTable: {[key: number]: (msg: unknown, err: any) => void} = {};
     private socket: Socket | undefined;
 
@@ -12,10 +14,15 @@ export class MsgpackRPC {
         this.port = port;
     }
 
-    public async connect(): Promise<void> {
+    public async connect(timeout = 30000): Promise<void> {
         this.socket = new Socket();
-        await new Promise((ful, _rej) => {
+        await new Promise((ful, rej) => {
+            const timer = setTimeout(() => {
+                rej(new MarilRPCTimeoutError('Timed out!'));
+            }, timeout);
+
             this.socket?.connect(this.port, '127.0.0.1', () => {
+                clearTimeout(timer);
                 ful(null);
             });
         });
@@ -24,7 +31,12 @@ export class MsgpackRPC {
         this.socket.pipe(this.msgpackDecodeStream);
 
         return new Promise((ful, rej) => {
+            const timer = setTimeout(() => {
+                rej(new MarilRPCTimeoutError('Timed out!'));
+            }, timeout);
+
             this.msgpackDecodeStream?.on('data', (msg: [number, number|string, unknown, unknown]) => {
+                clearTimeout(timer);
                 const msgArr: [number, number|string, unknown, unknown] = msg;
                 const type = msgArr[0];
                 const msgid = msgArr[1];
@@ -44,7 +56,7 @@ export class MsgpackRPC {
                     }
                 }
             });
-        })
+        });
     }
 
     protected getCallID(): number {
@@ -70,7 +82,12 @@ export class MsgpackRPC {
         ];
 
         const retprom = new Promise((ful, rej) => {
+            const timeout = 30000;
+            const timer = setTimeout(() => {
+                rej(new MarilRPCTimeoutError('Timed out!'));
+            }, timeout);
             this.rpcCbTable[callId] = (msg, err) => {
+                clearTimeout(timer);
                 if (err != null) {
                     rej(err);
                 } else {

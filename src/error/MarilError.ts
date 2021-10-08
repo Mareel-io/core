@@ -13,3 +13,9 @@ export class MarilRPCError extends MarilError {
         Object.defineProperty(this, 'name', { value: name });
     }
 }
+
+export class MarilRPCTimeoutError extends MarilRPCError {
+    constructor(msg: string) {
+        super(msg, 'MarilRPCTimeoutError');
+    }
+}
