@@ -25,6 +25,7 @@ import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUs
 import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
 import { RouteConfiguratorReqHandler } from '../connector/requesthandler/RouteConfigurator';
 import { ConnectorClientConfig, ConnectorDevice } from '../types/lib';
+import { json } from 'express';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
@@ -112,6 +113,7 @@ export class ConnectorClient {
     private rpc: RPCProvider | null = null;
     private client: WebSocket | null = null;
     private deviceMap: {[key: string]: ConnectorDevice} = {};
+    private needDeviceUpdate = false;
 
     constructor(config: ConnectorClientConfig, devicedb: string | null) {
         this.config = config;
@@ -185,14 +187,20 @@ export class ConnectorClient {
                 }, {} as {[key: string]: any});
 
                 if (!compareObject(this.deviceMap, newMap)) {
+                    // TODO: Save to the file
+                    const deviceFile = JSON.stringify(configs);
+
+                    if (this.devicedb != null) {
+                        await fs.promises.writeFile(this.devicedb, deviceFile);
+                        this.needDeviceUpdate = true;
+                    }
+
                     return {
                         handled: true,
                         result: {
                             reboot: true,
                         }
                     }
-
-                    // TODO: Implement reboot
                 }
 
                 return {
@@ -210,6 +218,11 @@ export class ConnectorClient {
             method: 'clientInit',
             params: [],
         });
+
+        if (this.needDeviceUpdate) {
+            // End daemon. Let the OpenWRT subsystem respawn this daemon
+            process.exit(0);
+        }
     }
 
     public async registerRPCHandlers(): Promise<void> {
