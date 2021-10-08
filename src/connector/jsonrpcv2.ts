@@ -66,7 +66,7 @@ export class RPCProvider extends EventEmitter {
         });
     }
 
-    public async remoteCall(payload: RPCv2Request, timeout: number = 30000): Promise<unknown> {
+    public async remoteCall(payload: RPCv2Request, timeout = 30000): Promise<unknown> {
         const curCallId = this.callId;
         this.callId += 1;
         if (this.callId > 0xFFFFFFFF) {

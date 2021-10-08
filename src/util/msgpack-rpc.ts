@@ -5,6 +5,7 @@ export class MsgpackRPC {
     private port: number;
     private callId = 0;
     private msgpackDecodeStream: DecodeStream | null = null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private rpcCbTable: {[key: number]: (msg: unknown, err: any) => void} = {};
     private socket: Socket | undefined;
 
