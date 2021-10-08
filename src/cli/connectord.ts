@@ -179,7 +179,6 @@ export class ConnectorClient {
                 }, {} as {[key: string]: any});
 
                 if (!compareObject(this.deviceMap, newMap)) {
-                    // TODO: Save to the file
                     const deviceFile = JSON.stringify(configs);
 
                     if (this.devicedb != null) {

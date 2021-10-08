@@ -85,6 +85,23 @@ export class RPCControllerFactory extends GenericControllerFactory {
     }
 
     /**
+     * Update available devices in Mareel Key
+     * 
+     * @param devices - Update device with credential
+     * @returns - true if daemon restart is required, false if not
+     */
+    public async updateDevices(devices: ConnectorDevice[]): Promise<boolean> {
+        const resp = (await this.rpc.remoteCall({
+            jsonrpc: '2.0',
+            class: 'hwconfig',
+            method: 'updateConfig',
+            params: [devices],
+        })) as {reboot: boolean};
+
+        return resp.reboot;
+    }
+
+    /**
      * Fetch available devices in given Mareel Key
      * 
      * @returns Device list
