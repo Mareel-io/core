@@ -1,7 +1,7 @@
 import { Duplex, EventEmitter } from 'stream';
 import {Parser, parser} from 'stream-json';
 import WebSocket from 'ws';
-import { MarilError, MarilRPCError } from '../error/MarilError';
+import { MarilError, MarilRPCError, MarilRPCTimeoutError } from '../error/MarilError';
 
 export interface RPCv2Request {
     jsonrpc: '2.0',

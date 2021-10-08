@@ -3,6 +3,7 @@ import WebSocket from 'ws';
 import { GenericControllerFactory } from "../..";
 import { NetTester } from '../../driver/efm/monitor/NetTester';
 import { MarilRPCTimeoutError } from '../../error/MarilError';
+import { ConnectorDevice } from '../../types/lib';
 import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCFirewallConfigurator } from './FireallConfigurator';
 import { RPCLogman } from './Logman';
@@ -16,11 +17,13 @@ export class RPCControllerFactory extends GenericControllerFactory {
     private ws: WebSocket;
     private rpc: RPCProvider;
     private devices: {id: string, type: string}[] | null = null;
+    private deviceConfigs: ConnectorDevice[];
 
-    constructor(ws: WebSocket) {
+    constructor(ws: WebSocket, devices: ConnectorDevice[]) {
         super('');
         this.ws = ws;
         this.rpc = new RPCProvider(this.ws);
+        this.deviceConfigs = devices;
     }
 
     /**
@@ -50,6 +53,12 @@ export class RPCControllerFactory extends GenericControllerFactory {
         });
 
         // TODO: Send configuration update
+        await this.rpc.remoteCall({
+            jsonrpc: '2.0',
+            class: 'config',
+            method: 'update',
+            params: [this.deviceConfigs],
+        });
 
         // If we don't cancel below, it will float the world forever.
         await new Promise((ful, rej) => {
@@ -66,6 +75,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
             }
             this.rpc.addNotifyHandler(cb);
         });
+
         console.log('Pong received.');
         this.devices = (await this.rpc.remoteCall({
             jsonrpc: '2.0',

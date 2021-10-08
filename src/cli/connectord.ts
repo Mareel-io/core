@@ -24,33 +24,7 @@ import { MarilError, MethodNotImplementedError } from '../error/MarilError';
 import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUserDeviceStat';
 import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
 import { RouteConfiguratorReqHandler } from '../connector/requesthandler/RouteConfigurator';
-
-interface EFMCredential {
-    id: string,
-    pass: string,
-}
-
-interface ConnectorDevice {
-    id: string,
-    addr: string,
-    type: 'efm' | 'cisco' | 'dummy',
-    credential: EFMCredential | CiscoCredential,
-}
-
-interface ConnectorClientConfig {
-    client: {
-        disableCiscoConfigDaemon?: boolean,
-        disableTFTPDaemon?: boolean,
-    },
-    remote: {
-        token: string,
-        url: string,
-    },
-    tftpserver: {
-        hostip: string,
-    },
-    devices: ConnectorDevice[],
-}
+import { ConnectorClientConfig, ConnectorDevice } from '../types/lib';
 
 function setupCleanup() {
     //
