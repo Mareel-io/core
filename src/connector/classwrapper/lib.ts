@@ -2,6 +2,7 @@ import WebSocket from 'ws';
 
 import { GenericControllerFactory } from "../..";
 import { NetTester } from '../../driver/efm/monitor/NetTester';
+import { MarilRPCTimeoutError } from '../../error/MarilError';
 import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCFirewallConfigurator } from './FireallConfigurator';
 import { RPCLogman } from './Logman';
@@ -55,7 +56,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
             const cb = async (notify: RPCv2Request): Promise<void> => {
                 const timeout = setTimeout(() => {
                     this.rpc.removeNotifyHandler(cb);
-                    rej(new Error('Timed out!'));
+                    rej(new MarilRPCTimeoutError('Timed out!'));
                 }, 30000); // TODO: Make it configurable timeout
                 if (notify.method == 'clientInit') {
                     clearTimeout(timeout);

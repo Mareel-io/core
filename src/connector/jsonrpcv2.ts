@@ -76,7 +76,7 @@ export class RPCProvider extends EventEmitter {
         const ret: Promise<unknown> = new Promise((ful, rej) => {
             const timer = setTimeout(() => {
                 this.callHandlerTable[curCallId] = undefined;
-                rej(new Error('Timed out!'));
+                rej(new MarilRPCTimeoutError('Timed out!'));
             }, timeout);
             this.callHandlerTable[curCallId] = (res, err) => {
                 clearTimeout(timer);
