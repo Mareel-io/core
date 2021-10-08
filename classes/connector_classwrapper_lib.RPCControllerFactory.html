@@ -95,6 +95,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="connector_classwrapper_lib.RPCControllerFactory.html#credential" class="tsd-kind-icon">credential</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_classwrapper_lib.RPCControllerFactory.html#deviceConfigs" class="tsd-kind-icon">device<wbr>Configs</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="connector_classwrapper_lib.RPCControllerFactory.html#deviceaddress" class="tsd-kind-icon">deviceaddress</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_classwrapper_lib.RPCControllerFactory.html#devices" class="tsd-kind-icon">devices</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_classwrapper_lib.RPCControllerFactory.html#rpc" class="tsd-kind-icon">rpc</a></li>
@@ -119,6 +120,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="connector_classwrapper_lib.RPCControllerFactory.html#ping" class="tsd-kind-icon">ping</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_lib.RPCControllerFactory.html#refreshAuth" class="tsd-kind-icon">refresh<wbr>Auth</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="connector_classwrapper_lib.RPCControllerFactory.html#updateCredential" class="tsd-kind-icon">update<wbr>Credential</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="connector_classwrapper_lib.RPCControllerFactory.html#updateDevices" class="tsd-kind-icon">update<wbr>Devices</a></li>
 							</ul>
 						</section>
 					</div>
@@ -130,20 +132,23 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new RPCController<wbr>Factory<span class="tsd-signature-symbol">(</span>ws<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="connector_classwrapper_lib.RPCControllerFactory.html" class="tsd-signature-type" data-tsd-kind="Class">RPCControllerFactory</a></li>
+						<li class="tsd-signature tsd-kind-icon">new RPCController<wbr>Factory<span class="tsd-signature-symbol">(</span>ws<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span>, devices<span class="tsd-signature-symbol">: </span><a href="../interfaces/types_lib.ConnectorDevice.html" class="tsd-signature-type" data-tsd-kind="Interface">ConnectorDevice</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="connector_classwrapper_lib.RPCControllerFactory.html" class="tsd-signature-type" data-tsd-kind="Class">RPCControllerFactory</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L19">src/connector/classwrapper/lib.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L22">src/connector/classwrapper/lib.ts:22</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>ws: <span class="tsd-signature-type">WebSocket</span></h5>
+								</li>
+								<li>
+									<h5>devices: <a href="../interfaces/types_lib.ConnectorDevice.html" class="tsd-signature-type" data-tsd-kind="Interface">ConnectorDevice</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="connector_classwrapper_lib.RPCControllerFactory.html" class="tsd-signature-type" data-tsd-kind="Class">RPCControllerFactory</a></h4>
@@ -160,7 +165,17 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#credential">credential</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/driver/generic/lib.ts#L13">src/driver/generic/lib.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/driver/generic/lib.ts#L13">src/driver/generic/lib.ts:13</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="deviceConfigs" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> device<wbr>Configs</h3>
+					<div class="tsd-signature tsd-kind-icon">device<wbr>Configs<span class="tsd-signature-symbol">:</span> <a href="../interfaces/types_lib.ConnectorDevice.html" class="tsd-signature-type" data-tsd-kind="Interface">ConnectorDevice</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L20">src/connector/classwrapper/lib.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -171,7 +186,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#deviceaddress">deviceaddress</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/driver/generic/lib.ts#L11">src/driver/generic/lib.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/driver/generic/lib.ts#L11">src/driver/generic/lib.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -181,7 +196,7 @@
 					<div class="tsd-signature tsd-kind-icon">devices<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L17">src/connector/classwrapper/lib.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L19">src/connector/classwrapper/lib.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -191,7 +206,7 @@
 					<div class="tsd-signature tsd-kind-icon">rpc<span class="tsd-signature-symbol">:</span> <a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L16">src/connector/classwrapper/lib.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L18">src/connector/classwrapper/lib.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -201,7 +216,7 @@
 					<div class="tsd-signature tsd-kind-icon">ws<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WebSocket</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L15">src/connector/classwrapper/lib.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L17">src/connector/classwrapper/lib.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -219,7 +234,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#authenticate">authenticate</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L29">src/connector/classwrapper/lib.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L33">src/connector/classwrapper/lib.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -242,7 +257,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L95">src/connector/classwrapper/lib.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L132">src/connector/classwrapper/lib.ts:132</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -264,7 +279,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L72">src/connector/classwrapper/lib.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L109">src/connector/classwrapper/lib.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -288,7 +303,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#getFirewallConfigurator">getFirewallConfigurator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L162">src/connector/classwrapper/lib.ts:162</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L199">src/connector/classwrapper/lib.ts:199</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -321,7 +336,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#getLogman">getLogman</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L152">src/connector/classwrapper/lib.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L189">src/connector/classwrapper/lib.ts:189</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -354,7 +369,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#getNetTester">getNetTester</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L166">src/connector/classwrapper/lib.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L203">src/connector/classwrapper/lib.ts:203</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -378,7 +393,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#getRouteConfigurator">getRouteConfigurator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L170">src/connector/classwrapper/lib.ts:170</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L207">src/connector/classwrapper/lib.ts:207</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -402,7 +417,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#getSwitchConfigurator">getSwitchConfigurator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L110">src/connector/classwrapper/lib.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L147">src/connector/classwrapper/lib.ts:147</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -435,7 +450,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#getSwitchQoS">getSwitchQoS</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L121">src/connector/classwrapper/lib.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L158">src/connector/classwrapper/lib.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -468,7 +483,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#getWLANConfigurator">getWLANConfigurator</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L132">src/connector/classwrapper/lib.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L169">src/connector/classwrapper/lib.ts:169</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -501,7 +516,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#getWLANUserDeviceStat">getWLANUserDeviceStat</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L142">src/connector/classwrapper/lib.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L179">src/connector/classwrapper/lib.ts:179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -534,7 +549,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#init">init</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L44">src/connector/classwrapper/lib.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L48">src/connector/classwrapper/lib.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -556,7 +571,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L83">src/connector/classwrapper/lib.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L120">src/connector/classwrapper/lib.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -579,7 +594,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#refreshAuth">refreshAuth</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/connector/classwrapper/lib.ts#L37">src/connector/classwrapper/lib.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L41">src/connector/classwrapper/lib.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -603,7 +618,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="driver_generic_lib.ControllerFactory.html">ControllerFactory</a>.<a href="driver_generic_lib.ControllerFactory.html#updateCredential">updateCredential</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/93246e8/src/driver/generic/lib.ts#L19">src/driver/generic/lib.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/driver/generic/lib.ts#L19">src/driver/generic/lib.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -613,6 +628,40 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateDevices" class="tsd-anchor"></a>
+					<h3>update<wbr>Devices</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Devices<span class="tsd-signature-symbol">(</span>devices<span class="tsd-signature-symbol">: </span><a href="../interfaces/types_lib.ConnectorDevice.html" class="tsd-signature-type" data-tsd-kind="Interface">ConnectorDevice</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/05378b9/src/connector/classwrapper/lib.ts#L93">src/connector/classwrapper/lib.ts:93</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update available devices in Mareel Key</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>devices: <a href="../interfaces/types_lib.ConnectorDevice.html" class="tsd-signature-type" data-tsd-kind="Interface">ConnectorDevice</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Update device with credential</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li>true if daemon restart is required, false if not</li>
+							</ul>
 						</li>
 					</ul>
 				</section>
@@ -641,6 +690,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="connector_classwrapper_lib.RPCControllerFactory.html#credential" class="tsd-kind-icon">credential</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="connector_classwrapper_lib.RPCControllerFactory.html#deviceConfigs" class="tsd-kind-icon">device<wbr>Configs</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="connector_classwrapper_lib.RPCControllerFactory.html#deviceaddress" class="tsd-kind-icon">deviceaddress</a>
@@ -698,6 +750,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="connector_classwrapper_lib.RPCControllerFactory.html#updateCredential" class="tsd-kind-icon">update<wbr>Credential</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="connector_classwrapper_lib.RPCControllerFactory.html#updateDevices" class="tsd-kind-icon">update<wbr>Devices</a>
 							</li>
 						</ul>
 					</li>
