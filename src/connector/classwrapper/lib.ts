@@ -47,11 +47,20 @@ export class RPCControllerFactory extends GenericControllerFactory {
             method: 'serverInit',
             params: [],
         });
-        await new Promise((ful, _rej) => {
+
+        // TODO: Send configuration update
+
+        // If we don't cancel below, it will float the world forever.
+        await new Promise((ful, rej) => {
             const cb = async (notify: RPCv2Request): Promise<void> => {
-                if (notify.method == 'clientInit') {
-                    ful(null);
+                const timeout = setTimeout(() => {
                     this.rpc.removeNotifyHandler(cb);
+                    rej(new Error('Timed out!'));
+                }, 30000); // TODO: Make it configurable timeout
+                if (notify.method == 'clientInit') {
+                    clearTimeout(timeout);
+                    this.rpc.removeNotifyHandler(cb);
+                    ful(null);
                 }
             }
             this.rpc.addNotifyHandler(cb);

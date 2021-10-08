@@ -33,11 +33,17 @@ export class RPCProvider extends EventEmitter {
     private stream: WebSocket;
     private requestHandlers: ((req: RPCv2Request) => Promise<RPCReturnType<unknown>>)[] = [];
     private notifyHandlers: ((req: RPCv2Request) => Promise<void>)[] = [];
-    private callHandlerTable: {[key: number]: (res: unknown | null | undefined, err?: Error) => void} = {};
+    private callHandlerTable: {[key: number]: undefined | ((res: unknown | null | undefined, err?: Error) => void)} = {};
     private callId = 0;
 
     constructor(stream: WebSocket) {
         super();
+        this.stream = stream;
+
+        this.replaceSocket(stream);
+    }
+
+    public replaceSocket(stream: WebSocket) {
         this.stream = stream;
 
         this.stream.on('message', (msg: Buffer) => {
@@ -60,7 +66,7 @@ export class RPCProvider extends EventEmitter {
         });
     }
 
-    public async remoteCall(payload: RPCv2Request): Promise<unknown> {
+    public async remoteCall(payload: RPCv2Request, timeout: number = 30000): Promise<unknown> {
         const curCallId = this.callId;
         this.callId += 1;
         if (this.callId > 0xFFFFFFFF) {
@@ -68,7 +74,13 @@ export class RPCProvider extends EventEmitter {
         }
 
         const ret: Promise<unknown> = new Promise((ful, rej) => {
+            const timer = setTimeout(() => {
+                this.callHandlerTable[curCallId] = undefined;
+                rej(new Error('Timed out!'));
+            }, timeout);
             this.callHandlerTable[curCallId] = (res, err) => {
+                clearTimeout(timer);
+                this.callHandlerTable[curCallId] = undefined;
                 if (err) {
                     rej(err);
                 } else {
