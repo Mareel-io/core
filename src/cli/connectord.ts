@@ -16,7 +16,7 @@ import YAML from 'yaml';
 import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from '../connector/jsonrpcv2';
 import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/SwitchConfigurator';
 import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
-import { collapseTextChangeRangesAcrossMultipleVersions, parseJsonConfigFileContent } from 'typescript';
+import { collapseTextChangeRangesAcrossMultipleVersions, createImmediatelyInvokedArrowFunction, parseJsonConfigFileContent } from 'typescript';
 import { SwitchConfigurator } from '../driver/generic/SwitchConfigurator';
 import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
 import { LogmanReqHandler } from '../connector/requesthandler/Logman';
@@ -25,6 +25,25 @@ import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUs
 import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
 import { RouteConfiguratorReqHandler } from '../connector/requesthandler/RouteConfigurator';
 import { ConnectorClientConfig, ConnectorDevice } from '../types/lib';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
+    for(const p in o1){
+        if(Object.prototype.hasOwnProperty.call(o1, p)){
+            if(o1[p] !== o2[p]){
+                return false;
+            }
+        }
+    }
+    for(const p in o2){
+        if(Object.prototype.hasOwnProperty.call(o2, p)){
+            if(o1[p] !== o2[p]){
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
 function setupCleanup() {
     //
@@ -92,11 +111,19 @@ export class ConnectorClient {
     private controllerFactoryTable: {[key: string]: {device: ConnectorDevice, controllerFactory: GenericControllerFactory}} = {};
     private rpc: RPCProvider | null = null;
     private client: WebSocket | null = null;
+    private deviceMap: {[key: string]: ConnectorDevice} = {};
 
     constructor(config: ConnectorClientConfig, devicedb: string | null) {
         this.config = config;
         this.devicedb = devicedb;
         if (config.client == null) config.client = {};
+
+        // Convert devices into map
+        this.deviceMap = config.devices.reduce((obj, elem) => {
+            obj[elem.id] = elem;
+            return obj;
+        }, {} as {[key: string]: any});
+
         // Essential services
         this.tftp = new CiscoTFTPServer(config.tftpserver.hostip);
         const launcherPath = path.join(__dirname, '../../ciscocfg/launcher.sh');
@@ -138,13 +165,45 @@ export class ConnectorClient {
             }
         });
 
-        await new Promise((ful) => {
+        this.rpc = await (new Promise((ful) => {
             this.client?.on('open', () => {
                 this.client?.removeAllListeners('open');
-                ful(null);
+                ful(rpc);
             });
-        });
-        this.rpc = new RPCProvider(this.client);
+            const rpc = new RPCProvider(this.client!);
+
+            rpc.addRequestHandler(async (req: RPCv2Request): Promise<RPCReturnType<any>> => {
+                if (req.class != 'hwconfig' || req.method != 'updateConfig') {
+                    return {handled: false, result: null};
+                }
+
+                const configs = (req.params as unknown[])[0] as ConnectorDevice[];
+
+                const newMap = configs.reduce((obj, elem) => {
+                    obj[elem.id] = elem;
+                    return obj;
+                }, {} as {[key: string]: any});
+
+                if (!compareObject(this.deviceMap, newMap)) {
+                    return {
+                        handled: true,
+                        result: {
+                            reboot: true,
+                        }
+                    }
+
+                    // TODO: Implement reboot
+                }
+
+                return {
+                    handled: true,
+                    result: {
+                        reboot: false
+                    },
+                };
+            });
+        }) as Promise<RPCProvider>);
+
         await this.registerRPCHandlers();
         this.rpc.remoteNotify({
             jsonrpc: '2.0',
