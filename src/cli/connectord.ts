@@ -212,7 +212,7 @@ export class ConnectorClient {
 
         if (this.needDeviceUpdate) {
             // End daemon. Let the OpenWRT subsystem respawn this daemon
-            process.exit(0);
+            //process.exit(0);
         }
     }
 

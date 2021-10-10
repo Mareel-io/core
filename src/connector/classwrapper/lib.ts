@@ -52,13 +52,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
             params: [],
         });
 
-        // TODO: Send configuration update
-        await this.rpc.remoteCall({
-            jsonrpc: '2.0',
-            class: 'config',
-            method: 'update',
-            params: [this.deviceConfigs],
-        });
+        this.updateDevices(this.deviceConfigs);
 
         // If we don't cancel below, it will float the world forever.
         await new Promise((ful, rej) => {
