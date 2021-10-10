@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 
 import { GenericControllerFactory } from "../..";
 import { NetTester } from '../../driver/efm/monitor/NetTester';
-import { MarilRPCTimeoutError } from '../../error/MarilError';
+import { MarilError, MarilRPCTimeoutError } from '../../error/MarilError';
 import { ConnectorDevice } from '../../types/lib';
 import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCFirewallConfigurator } from './FireallConfigurator';
@@ -52,13 +52,9 @@ export class RPCControllerFactory extends GenericControllerFactory {
             params: [],
         });
 
-        // TODO: Send configuration update
-        await this.rpc.remoteCall({
-            jsonrpc: '2.0',
-            class: 'config',
-            method: 'update',
-            params: [this.deviceConfigs],
-        });
+        if(await this.updateDevices(this.deviceConfigs)) {
+            throw new MarilError("Reboot required");
+        }
 
         // If we don't cancel below, it will float the world forever.
         await new Promise((ful, rej) => {
