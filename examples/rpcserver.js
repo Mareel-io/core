@@ -15,7 +15,14 @@ wss.on('connection', async function connection(ws) {
     await rpcControllerFactory.authenticate();
   
     console.log('Authenticated.');
-    await rpcControllerFactory.init();
+    // NOTE: this may throw exception when the configuration is differ from
+    // cached one
+    try {
+        await rpcControllerFactory.init();
+    } catch(e) {
+        console.log(e);
+        return;
+    }
     console.log('Initialized.');
 
     const devices = rpcControllerFactory.getDevices();
