@@ -6,11 +6,23 @@ const wss = new WebSocket.Server({ port: 3000 });
 wss.on('connection', async function connection(ws) {
     console.log('connected.');
 
-    const rpcControllerFactory = new maril.RPCControllerFactory(ws);
+    const rpcControllerFactory = new maril.RPCControllerFactory(ws, [{
+        id: '1e24ee29-7284-42a8-962b-2365e113a69b',
+        addr: '0.0.0.0',
+        type: 'dummy',
+        Credential: null,
+    }]);
     await rpcControllerFactory.authenticate();
   
     console.log('Authenticated.');
-    await rpcControllerFactory.init();
+    // NOTE: this may throw exception when the configuration is differ from
+    // cached one
+    try {
+        await rpcControllerFactory.init();
+    } catch(e) {
+        console.log(e);
+        return;
+    }
     console.log('Initialized.');
 
     const devices = rpcControllerFactory.getDevices();
