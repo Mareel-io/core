@@ -17,7 +17,7 @@ import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/Switch
 import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
 import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
 import { LogmanReqHandler } from '../connector/requesthandler/Logman';
-import { MarilError, MethodNotImplementedError } from '../error/MarilError';
+import { MarilError, MarilRPCTimeoutError, MethodNotImplementedError } from '../error/MarilError';
 import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUserDeviceStat';
 import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
 import { RouteConfiguratorReqHandler } from '../connector/requesthandler/RouteConfigurator';
@@ -27,6 +27,8 @@ import { ConnectorClientConfig, ConnectorDevice } from '../types/lib';
 function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
     for(const p in o1){
         if(Object.prototype.hasOwnProperty.call(o1, p)){
+            console.log(o1);
+            console.log(o2);
             if(o1[p] !== o2[p]){
                 return false;
             }
@@ -34,11 +36,28 @@ function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
     }
     for(const p in o2){
         if(Object.prototype.hasOwnProperty.call(o2, p)){
+            console.log(o1);
+            console.log(o2);
             if(o1[p] !== o2[p]){
                 return false;
             }
         }
     }
+    return true;
+}
+
+function compareConfig (c1: {[key: string]: ConnectorDevice}, c2: {[key: string]: ConnectorDevice}) {
+    const k1 = Object.keys(c1);
+    const k2 = Object.keys(c2);
+
+    const maxlen = k1.length > k2.length ? k1.length : k2.length;
+
+    for(let i = 0; i < maxlen; i++) {
+        if (k1[i] !== k2[i]) {
+            return false;
+        }
+    }
+
     return true;
 }
 
@@ -112,7 +131,13 @@ export class ConnectorClient {
         this.devicedb = devicedb;
         if (config.client == null) config.client = {};
 
+        if (devicedb != null) {
+            const configFile = fs.readFileSync(devicedb).toString('utf-8');
+            this.config.devices = JSON.parse(configFile);
+        }
+
         // Convert devices into map
+        if (config.devices == null) config.devices = [];
         this.deviceMap = config.devices.reduce((obj, elem) => {
             obj[elem.id] = elem;
             return obj;
@@ -165,20 +190,29 @@ export class ConnectorClient {
                 ful(rpc);
             });
             const rpc = new RPCProvider(this.client!);
+        }) as Promise<RPCProvider>);
 
-            rpc.addRequestHandler(async (req: RPCv2Request): Promise<RPCReturnType<any>> => {
+
+        await (new Promise((ful, rej) => {
+            const timer = setTimeout(() => {
+                rej(new MarilRPCTimeoutError('Timed out!'));
+            }, 30000);
+            this.rpc?.addRequestHandler(async (req: RPCv2Request): Promise<RPCReturnType<any>> => {
+                clearTimeout(timer);
                 if (req.class != 'hwconfig' || req.method != 'updateConfig') {
                     return {handled: false, result: null};
                 }
 
                 const configs = (req.params as unknown[])[0] as ConnectorDevice[];
 
-                const newMap = configs.reduce((obj, elem) => {
+                const oldMap = this.deviceMap;
+                this.config.devices = configs;
+                this.deviceMap = configs.reduce((obj, elem) => {
                     obj[elem.id] = elem;
                     return obj;
                 }, {} as {[key: string]: any});
 
-                if (!compareObject(this.deviceMap, newMap)) {
+                if (!compareConfig(oldMap, this.deviceMap)) {
                     const deviceFile = JSON.stringify(configs);
 
                     if (this.devicedb != null) {
@@ -186,6 +220,10 @@ export class ConnectorClient {
                         this.needDeviceUpdate = true;
                     }
 
+                    // TODO: Fix this ugly solution
+                    setTimeout(() => {
+                        ful(null);
+                    }, 1000);
                     return {
                         handled: true,
                         result: {
@@ -194,6 +232,7 @@ export class ConnectorClient {
                     }
                 }
 
+                ful(null);
                 return {
                     handled: true,
                     result: {
@@ -201,7 +240,13 @@ export class ConnectorClient {
                     },
                 };
             });
-        }) as Promise<RPCProvider>);
+        }))
+
+        if (this.needDeviceUpdate) {
+            // End daemon. Let the OpenWRT subsystem respawn this daemon
+            console.log('EXIT!!');
+            process.exit(0);
+        }
 
         await this.registerRPCHandlers();
         this.rpc.remoteNotify({
@@ -209,11 +254,6 @@ export class ConnectorClient {
             method: 'clientInit',
             params: [],
         });
-
-        if (this.needDeviceUpdate) {
-            // End daemon. Let the OpenWRT subsystem respawn this daemon
-            //process.exit(0);
-        }
     }
 
     public async registerRPCHandlers(): Promise<void> {
