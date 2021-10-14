@@ -12,6 +12,7 @@ export class FortiTrafficStatMonitor extends TrafficStatMonitor
     }
 
     public async getTrafficStat(): Promise<TrafficStat[]> {
+        // TODO: Polish me
         const result = await this.api.get('/api/v2/monitor/fortiview/statistics', {
             params: {
                 vdom: 'root',
@@ -20,7 +21,7 @@ export class FortiTrafficStatMonitor extends TrafficStatMonitor
                 filter: JSON.stringify({}),
                 ip_version: 'ipboth',
                 realtime: true,
-                report_by: 'source',
+                report_by: 'destination',
                 sort_by: 'bytes',
             }
         });
