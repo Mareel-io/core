@@ -14,6 +14,7 @@ import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { AuthError, MethodNotImplementedError } from '../../error/MarilError';
 import { SwitchQoS as CiscoSwitchQoS } from './SwitchQoS';
 import { RouteConfigurator } from '../generic/RouteConfigurator';
+import { TrafficStatMonitor } from '../generic/monitor/TrafficStatMonitor';
 
 export interface CiscoCredential {
     snmpCredential: SNMPClientConfig,
@@ -100,6 +101,10 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getRouteConfigurator(): RouteConfigurator {
+        throw new MethodNotImplementedError();
+    }
+    
+    public getTrafficStatMonitor(): TrafficStatMonitor {
         throw new MethodNotImplementedError();
     }
 }
