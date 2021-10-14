@@ -186,20 +186,15 @@ export class ConnectorClient {
             }
         });
 
-        this.rpc = await (new Promise((ful) => {
+        this.rpc = await (new Promise((ful, rej) => {
             this.client?.on('open', () => {
                 this.client?.removeAllListeners('open');
-                ful(rpc);
             });
             const rpc = new RPCProvider(this.client!);
-        }) as Promise<RPCProvider>);
-
-
-        await (new Promise((ful, rej) => {
             const timer = setTimeout(() => {
                 rej(new MarilRPCTimeoutError('Timed out!'));
             }, 30000);
-            this.rpc?.addRequestHandler(async (req: RPCv2Request): Promise<RPCReturnType<any>> => {
+            rpc.addRequestHandler(async (req: RPCv2Request): Promise<RPCReturnType<any>> => {
                 clearTimeout(timer);
                 if (req.class != 'hwconfig' || req.method != 'updateConfig') {
                     return {handled: false, result: null};
@@ -224,7 +219,7 @@ export class ConnectorClient {
 
                     // TODO: Fix this ugly solution
                     setTimeout(() => {
-                        ful(null);
+                        ful(rpc);
                     }, 1000);
                     return {
                         handled: true,
@@ -234,7 +229,6 @@ export class ConnectorClient {
                     }
                 }
 
-                ful(null);
                 return {
                     handled: true,
                     result: {
@@ -242,7 +236,8 @@ export class ConnectorClient {
                     },
                 };
             });
-        }));
+        }) as Promise<RPCProvider>);
+
         console.log('Connected!');
 
         if (this.needDeviceUpdate) {
