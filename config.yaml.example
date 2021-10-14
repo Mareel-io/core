@@ -1,6 +1,9 @@
 client:
   disableTFTPDaemon: true
   disableCiscoConfigDaemon: true
+  timeout:
+    callTimeout: 30000
+    pingTimeout: 10000
 remote:
   token: 'Authentication token here'
   url: 'http://localhost:3000'
