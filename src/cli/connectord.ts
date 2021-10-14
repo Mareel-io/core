@@ -152,7 +152,9 @@ export class ConnectorClient {
 
     public async connect(): Promise<void> {
         if (this.client != null) return;
+        console.log(`Connecting to target: ${this.config.remote.url}`);
         this.client = new WebSocket(this.config.remote.url, {
+            handshakeTimeout: 10000, // Hardcoded 10-sec timeout
             headers: {
                 // TODO: FIXME: Follow server-side auth
                 Authorization: ` Token ${this.config.remote.token}`
@@ -202,6 +204,7 @@ export class ConnectorClient {
                 };
             });
         }) as Promise<RPCProvider>);
+        console.log('Connected!');
 
         await this.registerRPCHandlers();
         this.rpc.remoteNotify({
