@@ -96,6 +96,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_jsonrpcv2.RPCProvider.html#callHandlerTable" class="tsd-kind-icon">call<wbr>Handler<wbr>Table</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_jsonrpcv2.RPCProvider.html#callId" class="tsd-kind-icon">call<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_jsonrpcv2.RPCProvider.html#defaultTimeout" class="tsd-kind-icon">default<wbr>Timeout</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_jsonrpcv2.RPCProvider.html#notifyHandlers" class="tsd-kind-icon">notify<wbr>Handlers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_jsonrpcv2.RPCProvider.html#requestHandlers" class="tsd-kind-icon">request<wbr>Handlers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_jsonrpcv2.RPCProvider.html#stream" class="tsd-kind-icon">stream</a></li>
@@ -149,20 +150,23 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new RPCProvider<span class="tsd-signature-symbol">(</span>stream<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a></li>
+						<li class="tsd-signature tsd-kind-icon">new RPCProvider<span class="tsd-signature-symbol">(</span>stream<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">WebSocket</span>, defaultTimeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L39">src/connector/jsonrpcv2.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L40">src/connector/jsonrpcv2.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>stream: <span class="tsd-signature-type">WebSocket</span></h5>
+								</li>
+								<li>
+									<h5>defaultTimeout: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 30000</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a></h4>
@@ -178,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">call<wbr>Handler<wbr>Table<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> = {}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L36">src/connector/jsonrpcv2.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L36">src/connector/jsonrpcv2.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -196,7 +200,17 @@
 					<div class="tsd-signature tsd-kind-icon">call<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L37">src/connector/jsonrpcv2.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L37">src/connector/jsonrpcv2.ts:37</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="defaultTimeout" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> default<wbr>Timeout</h3>
+					<div class="tsd-signature tsd-kind-icon">default<wbr>Timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L38">src/connector/jsonrpcv2.ts:38</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -206,7 +220,7 @@
 					<div class="tsd-signature tsd-kind-icon">notify<wbr>Handlers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="../interfaces/connector_jsonrpcv2.RPCv2Request.html" class="tsd-signature-type" data-tsd-kind="Interface">RPCv2Request</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L35">src/connector/jsonrpcv2.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L35">src/connector/jsonrpcv2.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -216,7 +230,7 @@
 					<div class="tsd-signature tsd-kind-icon">request<wbr>Handlers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><a href="../interfaces/connector_jsonrpcv2.RPCv2Request.html" class="tsd-signature-type" data-tsd-kind="Interface">RPCv2Request</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/connector_jsonrpcv2.RPCReturnType.html" class="tsd-signature-type" data-tsd-kind="Interface">RPCReturnType</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L34">src/connector/jsonrpcv2.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L34">src/connector/jsonrpcv2.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -226,7 +240,7 @@
 					<div class="tsd-signature tsd-kind-icon">stream<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WebSocket</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L33">src/connector/jsonrpcv2.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L33">src/connector/jsonrpcv2.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -357,7 +371,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L208">src/connector/jsonrpcv2.ts:208</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L210">src/connector/jsonrpcv2.ts:210</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -398,7 +412,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L196">src/connector/jsonrpcv2.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L198">src/connector/jsonrpcv2.ts:198</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -655,7 +669,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L133">src/connector/jsonrpcv2.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L135">src/connector/jsonrpcv2.ts:135</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1082,7 +1096,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L69">src/connector/jsonrpcv2.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L71">src/connector/jsonrpcv2.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1091,7 +1105,7 @@
 									<h5>payload: <a href="../interfaces/connector_jsonrpcv2.RPCv2Request.html" class="tsd-signature-type" data-tsd-kind="Interface">RPCv2Request</a></h5>
 								</li>
 								<li>
-									<h5>timeout: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 30000</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> timeout: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1108,7 +1122,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L98">src/connector/jsonrpcv2.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L100">src/connector/jsonrpcv2.ts:100</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1288,7 +1302,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L212">src/connector/jsonrpcv2.ts:212</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L214">src/connector/jsonrpcv2.ts:214</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1329,7 +1343,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L200">src/connector/jsonrpcv2.ts:200</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L202">src/connector/jsonrpcv2.ts:202</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1370,7 +1384,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L46">src/connector/jsonrpcv2.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L48">src/connector/jsonrpcv2.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1393,7 +1407,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L139">src/connector/jsonrpcv2.ts:139</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L141">src/connector/jsonrpcv2.ts:141</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1416,7 +1430,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L178">src/connector/jsonrpcv2.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L180">src/connector/jsonrpcv2.ts:180</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1439,7 +1453,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/connector/jsonrpcv2.ts#L104">src/connector/jsonrpcv2.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/connector/jsonrpcv2.ts#L106">src/connector/jsonrpcv2.ts:106</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1859,6 +1873,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="connector_jsonrpcv2.RPCProvider.html#callId" class="tsd-kind-icon">call<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="connector_jsonrpcv2.RPCProvider.html#defaultTimeout" class="tsd-kind-icon">default<wbr>Timeout</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="connector_jsonrpcv2.RPCProvider.html#notifyHandlers" class="tsd-kind-icon">notify<wbr>Handlers</a>

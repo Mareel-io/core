@@ -84,7 +84,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="types_lib.ConnectorClientConfig.html#client" class="tsd-kind-icon">client</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="types_lib.ConnectorClientConfig.html#devices" class="tsd-kind-icon">devices</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="types_lib.ConnectorClientConfig.html#devicedb" class="tsd-kind-icon">devicedb</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="types_lib.ConnectorClientConfig.html#remote" class="tsd-kind-icon">remote</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="types_lib.ConnectorClientConfig.html#tftpserver" class="tsd-kind-icon">tftpserver</a></li>
 							</ul>
@@ -97,10 +97,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="client" class="tsd-anchor"></a>
 					<h3>client</h3>
-					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>disableCiscoConfigDaemon<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>disableTFTPDaemon<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> }</span></div>
+					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>disableCiscoConfigDaemon<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>disableTFTPDaemon<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>callTimeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>pingTimeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/types/lib.ts#L12">src/types/lib.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/types/lib.ts#L12">src/types/lib.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -112,16 +112,27 @@
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> disableTFTPDaemon<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
 							</li>
+							<li class="tsd-parameter">
+								<h5>timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>callTimeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>pingTimeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></h5>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter">
+										<h5>call<wbr>Timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+									</li>
+									<li class="tsd-parameter">
+										<h5>ping<wbr>Timeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+									</li>
+								</ul>
+							</li>
 						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="devices" class="tsd-anchor"></a>
-					<h3>devices</h3>
-					<div class="tsd-signature tsd-kind-icon">devices<span class="tsd-signature-symbol">:</span> <a href="types_lib.ConnectorDevice.html" class="tsd-signature-type" data-tsd-kind="Interface">ConnectorDevice</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="devicedb" class="tsd-anchor"></a>
+					<h3>devicedb</h3>
+					<div class="tsd-signature tsd-kind-icon">devicedb<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/types/lib.ts#L23">src/types/lib.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/types/lib.ts#L27">src/types/lib.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -131,7 +142,7 @@
 					<div class="tsd-signature tsd-kind-icon">remote<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/types/lib.ts#L16">src/types/lib.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/types/lib.ts#L20">src/types/lib.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -152,7 +163,7 @@
 					<div class="tsd-signature tsd-kind-icon">tftpserver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>hostip<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/5121988/src/types/lib.ts#L20">src/types/lib.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/fdf99e9/src/types/lib.ts#L24">src/types/lib.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -188,7 +199,7 @@
 								<a href="types_lib.ConnectorClientConfig.html#client" class="tsd-kind-icon">client</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="types_lib.ConnectorClientConfig.html#devices" class="tsd-kind-icon">devices</a>
+								<a href="types_lib.ConnectorClientConfig.html#devicedb" class="tsd-kind-icon">devicedb</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="types_lib.ConnectorClientConfig.html#remote" class="tsd-kind-icon">remote</a>
