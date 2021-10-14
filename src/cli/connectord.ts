@@ -189,6 +189,7 @@ export class ConnectorClient {
         this.rpc = await (new Promise((ful, rej) => {
             this.client?.on('open', () => {
                 this.client?.removeAllListeners('open');
+                //ful(rpc);
             });
             const rpc = new RPCProvider(this.client!);
             const timer = setTimeout(() => {
@@ -229,6 +230,7 @@ export class ConnectorClient {
                     }
                 }
 
+                ful(rpc);
                 return {
                     handled: true,
                     result: {
