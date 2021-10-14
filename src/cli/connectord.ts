@@ -69,7 +69,7 @@ export async function svcmain() {
 
     const config = args['--config'] ? args['--config'] : '/etc/mareel/connectord.yaml';
     const configFile = YAML.parse(fs.readFileSync(config).toString('utf-8'));
-    const deviceDB = args['--devicedb'] ? args['--devicedb'] : null;
+    const deviceDB = args['--devicedb'] ? args['--devicedb'] : configFile.devicedb;
 
     if (deviceDB != null) {
         // Separated devicedb file, if not exist, create one.
@@ -124,11 +124,14 @@ export class ConnectorClient {
     private rpc: RPCProvider | null = null;
     private client: WebSocket | null = null;
     private deviceMap: {[key: string]: ConnectorDevice} = {};
+    private devices: ConnectorDevice[];
     private needDeviceUpdate = false;
 
     constructor(config: ConnectorClientConfig, devicedb: string | null) {
         this.config = config;
         this.devicedb = devicedb;
+        this.devices = [];
+
         if (config.client == null) config.client = {
             timeout: {
                 callTimeout: 30000,
@@ -137,13 +140,13 @@ export class ConnectorClient {
         };
 
         if (devicedb != null) {
-            const configFile = fs.readFileSync(devicedb).toString('utf-8');
-            this.config.devices = JSON.parse(configFile);
+            const deviceDbFile = fs.readFileSync(devicedb).toString('utf-8');
+            this.devices = JSON.parse(deviceDbFile);
         }
 
         // Convert devices into map
-        if (config.devices == null) config.devices = [];
-        this.deviceMap = config.devices.reduce((obj, elem) => {
+        if (this.devices == null) this.devices = [];
+        this.deviceMap = this.devices.reduce((obj, elem) => {
             obj[elem.id] = elem;
             return obj;
         }, {} as {[key: string]: any});
@@ -209,7 +212,7 @@ export class ConnectorClient {
                 const configs = (req.params as unknown[])[0] as ConnectorDevice[];
 
                 const oldMap = this.deviceMap;
-                this.config.devices = configs;
+                this.devices = configs;
                 this.deviceMap = configs.reduce((obj, elem) => {
                     obj[elem.id] = elem;
                     return obj;
@@ -393,7 +396,7 @@ export class ConnectorClient {
     }
     
     public async initializeConfigurator(): Promise<void> {
-        for (const device of this.config.devices) {
+        for (const device of this.devices) {
             let controllerfactory: GenericControllerFactory | null = null;
 
             try {

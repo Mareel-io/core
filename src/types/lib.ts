@@ -24,5 +24,5 @@ export interface ConnectorClientConfig {
     tftpserver: {
         hostip: string,
     },
-    devices: ConnectorDevice[],
+    devicedb: string,
 }
