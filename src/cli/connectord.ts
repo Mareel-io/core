@@ -261,7 +261,7 @@ export class ConnectorClient {
                     params: [],
                 }, 5000);
             } catch(e) {
-                // Heart stopped!
+                console.error('Heart stopped!!!');
                 process.exit(1);
             }
         }, 10000)
