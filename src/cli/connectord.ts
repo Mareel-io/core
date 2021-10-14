@@ -69,7 +69,7 @@ export async function svcmain() {
 
     const config = args['--config'] ? args['--config'] : '/etc/mareel/connectord.yaml';
     const configFile = YAML.parse(fs.readFileSync(config).toString('utf-8'));
-    const deviceDB = args['--devicedb'] ? args['--devicedb'] : null;
+    const deviceDB = args['--devicedb'] ? args['--devicedb'] : configFile.devicedb;
 
     if (deviceDB != null) {
         // Separated devicedb file, if not exist, create one.
@@ -124,21 +124,29 @@ export class ConnectorClient {
     private rpc: RPCProvider | null = null;
     private client: WebSocket | null = null;
     private deviceMap: {[key: string]: ConnectorDevice} = {};
+    private devices: ConnectorDevice[];
     private needDeviceUpdate = false;
 
     constructor(config: ConnectorClientConfig, devicedb: string | null) {
         this.config = config;
         this.devicedb = devicedb;
-        if (config.client == null) config.client = {};
+        this.devices = [];
+
+        if (config.client == null) config.client = {
+            timeout: {
+                callTimeout: 30000,
+                pingTimeout: 10000,
+            }
+        };
 
         if (devicedb != null) {
-            const configFile = fs.readFileSync(devicedb).toString('utf-8');
-            this.config.devices = JSON.parse(configFile);
+            const deviceDbFile = fs.readFileSync(devicedb).toString('utf-8');
+            this.devices = JSON.parse(deviceDbFile);
         }
 
         // Convert devices into map
-        if (config.devices == null) config.devices = [];
-        this.deviceMap = config.devices.reduce((obj, elem) => {
+        if (this.devices == null) this.devices = [];
+        this.deviceMap = this.devices.reduce((obj, elem) => {
             obj[elem.id] = elem;
             return obj;
         }, {} as {[key: string]: any});
@@ -179,27 +187,23 @@ export class ConnectorClient {
         if (this.client != null) return;
         console.log(`Connecting to target: ${this.config.remote.url}`);
         this.client = new WebSocket(this.config.remote.url, {
-            handshakeTimeout: 10000, // Hardcoded 10-sec timeout
+            handshakeTimeout: this.config.client.timeout.pingTimeout,
             headers: {
                 // TODO: FIXME: Follow server-side auth
                 Authorization: ` Token ${this.config.remote.token}`
             }
         });
 
-        this.rpc = await (new Promise((ful) => {
+        this.rpc = await (new Promise((ful, rej) => {
             this.client?.on('open', () => {
                 this.client?.removeAllListeners('open');
-                ful(rpc);
+                //ful(rpc);
             });
-            const rpc = new RPCProvider(this.client!);
-        }) as Promise<RPCProvider>);
-
-
-        await (new Promise((ful, rej) => {
+            const rpc = new RPCProvider(this.client!, this.config.client.timeout.callTimeout);
             const timer = setTimeout(() => {
                 rej(new MarilRPCTimeoutError('Timed out!'));
-            }, 30000);
-            this.rpc?.addRequestHandler(async (req: RPCv2Request): Promise<RPCReturnType<any>> => {
+            }, this.config.client.timeout.callTimeout);
+            rpc.addRequestHandler(async (req: RPCv2Request): Promise<RPCReturnType<any>> => {
                 clearTimeout(timer);
                 if (req.class != 'hwconfig' || req.method != 'updateConfig') {
                     return {handled: false, result: null};
@@ -208,7 +212,7 @@ export class ConnectorClient {
                 const configs = (req.params as unknown[])[0] as ConnectorDevice[];
 
                 const oldMap = this.deviceMap;
-                this.config.devices = configs;
+                this.devices = configs;
                 this.deviceMap = configs.reduce((obj, elem) => {
                     obj[elem.id] = elem;
                     return obj;
@@ -224,7 +228,7 @@ export class ConnectorClient {
 
                     // TODO: Fix this ugly solution
                     setTimeout(() => {
-                        ful(null);
+                        ful(rpc);
                     }, 1000);
                     return {
                         handled: true,
@@ -234,7 +238,7 @@ export class ConnectorClient {
                     }
                 }
 
-                ful(null);
+                ful(rpc);
                 return {
                     handled: true,
                     result: {
@@ -242,7 +246,8 @@ export class ConnectorClient {
                     },
                 };
             });
-        }));
+        }) as Promise<RPCProvider>);
+
         console.log('Connected!');
 
         if (this.needDeviceUpdate) {
@@ -250,6 +255,21 @@ export class ConnectorClient {
             console.log('EXIT!!');
             process.exit(0);
         }
+
+        // Heartbeat
+        setInterval(async () => {
+            try {
+                await this.rpc?.remoteCall({
+                    jsonrpc: '2.0',
+                    class: 'base',
+                    method: 'ping',
+                    params: [],
+                }, 5000);
+            } catch(e) {
+                console.error('Heart stopped!!!');
+                process.exit(1);
+            }
+        }, this.config.client.timeout.pingTimeout)
 
         await this.registerRPCHandlers();
         this.rpc.remoteNotify({
@@ -376,7 +396,7 @@ export class ConnectorClient {
     }
     
     public async initializeConfigurator(): Promise<void> {
-        for (const device of this.config.devices) {
+        for (const device of this.devices) {
             let controllerfactory: GenericControllerFactory | null = null;
 
             try {

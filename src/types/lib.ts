@@ -12,6 +12,10 @@ export interface ConnectorClientConfig {
     client: {
         disableCiscoConfigDaemon?: boolean,
         disableTFTPDaemon?: boolean,
+        timeout: {
+            callTimeout: number,
+            pingTimeout: number,
+        }
     },
     remote: {
         token: string,
@@ -20,5 +24,5 @@ export interface ConnectorClientConfig {
     tftpserver: {
         hostip: string,
     },
-    devices: ConnectorDevice[],
+    devicedb: string,
 }

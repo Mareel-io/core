@@ -1,25 +1,12 @@
 client:
   disableTFTPDaemon: true
   disableCiscoConfigDaemon: true
+  timeout:
+    callTimeout: 30000
+    pingTimeout: 10000
 remote:
   token: 'Authentication token here'
   url: 'http://localhost:3000'
 tftpserver:
   hostip: '10.64.48.11'
-devices:
-#  - id: 'f265a9b2-13cd-43a7-85d2-2f6ac24d0963'
-#    addr: '192.168.1.3'
-#    type: 'cisco'
-#    credential:
-#      snmpCredential:
-#        authProtocol: 'sha512'
-#        authKey: '4f5ACmTA9aT3rQ7!'
-#        privacyProtocol: 'aes'
-#        privacyKey: '4f5ACmTA9aT3rQ7!'
-#      sshCredential:
-#        user: 'admin'
-#        password: '4f5ACmTA9aT3rQ7!'
-  - id: '1e24ee29-7284-42a8-962b-2365e113a69b'
-    addr: '0.0.0.0'
-    type: 'dummy'
-    credential: null
+devicedb: './devicedb.json'
