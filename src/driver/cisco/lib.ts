@@ -42,7 +42,11 @@ export class ControllerFactory extends GenericControllerFactory {
         this.snmp.connect();
         this.sshClient = new CiscoSSHClient(this.deviceaddress, 22, credential.sshCredential, {
             algorithms: {
-                kex: ['diffie-hellman-group-exchange-sha1']
+                kex: [
+                    'diffie-hellman-group-exchange-sha1',
+                    'diffie-hellman-group1-sha1',
+                    'diffie-hellman-group14-sha1'
+                ],
             },
         });
     }
