@@ -251,6 +251,21 @@ export class ConnectorClient {
             process.exit(0);
         }
 
+        // Heartbeat
+        setInterval(async () => {
+            try {
+                await this.rpc?.remoteCall({
+                    jsonrpc: '2.0',
+                    class: 'base',
+                    method: 'ping',
+                    params: [],
+                }, 5000);
+            } catch(e) {
+                // Heart stopped!
+                process.exit(1);
+            }
+        }, 10000)
+
         await this.registerRPCHandlers();
         this.rpc.remoteNotify({
             jsonrpc: '2.0',
