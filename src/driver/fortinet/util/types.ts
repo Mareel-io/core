@@ -255,7 +255,50 @@ export interface FortigateRoute {
     "bfd": 'enable' | 'disable',
 }
 
-// Future common types
+// Response types
+
+export interface FortiResponse<PayloadType> {
+    http_method: string,
+    results: PayloadType,
+    vdom: string,
+    path: string,
+    name: string,
+    status: string,
+    serial: string,
+    version: string,
+    build: number,
+}
+
+export interface FortiTrafficStat {
+    details: {
+        sessions: number,
+        resolved?: string,
+        srcaddr: string,
+        dstaddr: string,
+        country: string,
+        country_id: number,
+        dst_port: number,
+        protocol: number,
+        srcintf: string,
+        dstintf: string,
+        apps: {
+            id: number,
+            count: number,
+            protocol: number,
+            port: number,
+            protocol_str: string,
+            name: string,
+        }[],
+        sentbyte: number,
+        rcvdbyte: number,
+        tx_packets: number,
+        rx_packets: number,
+        tx_shaper_drops: number,
+        rx_shaper_drops: number,
+        tx_bandwidth: number,
+        rx_bandwidth: number,
+    }[],
+}
 
 
 // Intended to abstract OpenConnect VPNs (Cisco, Juniper, Fortigate, etc..)

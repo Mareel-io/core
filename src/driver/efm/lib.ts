@@ -13,6 +13,7 @@ import { NetTester } from './monitor/NetTester';
 import { SwitchQoS } from '../generic/SwitchQoS';
 import { AuthError, UnsupportedFeatureError, MethodNotImplementedError } from '../../error/MarilError';
 import { RouteConfigurator } from '../generic/RouteConfigurator';
+import { TrafficStatMonitor } from '../generic/monitor/TrafficStatMonitor';
 
 export interface EFMCredential {
     id: string,
@@ -183,5 +184,9 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getRouteConfigurator(): RouteConfigurator {
         throw new MethodNotImplementedError();
+    }
+
+    public getTrafficStatMonitor(): TrafficStatMonitor {
+        throw new UnsupportedFeatureError();
     }
 }

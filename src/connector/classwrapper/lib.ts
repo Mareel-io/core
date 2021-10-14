@@ -10,6 +10,7 @@ import { RPCLogman } from './Logman';
 import { RPCRouteConfigurator } from './RouteConfigurator';
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
 import { RPCSwitchQoS } from './SwitchQoS';
+import { RPCTrafficStatMonitor } from './TrafficStatMonitor';
 import { RPCWLANConfigurator } from './WLANConfigurator';
 import { RPCWLANUserDeviceStat } from './WLANUserDeviceStat';
 
@@ -202,5 +203,9 @@ export class RPCControllerFactory extends GenericControllerFactory {
 
     public getRouteConfigurator(targetId: string): RPCRouteConfigurator {
         return new RPCRouteConfigurator(this.rpc, targetId);
+    }
+
+    public getTrafficStatMonitor(targetId: string): RPCTrafficStatMonitor {
+        return new RPCTrafficStatMonitor(this.rpc, targetId);
     }
 }
