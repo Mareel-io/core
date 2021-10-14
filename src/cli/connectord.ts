@@ -129,7 +129,12 @@ export class ConnectorClient {
     constructor(config: ConnectorClientConfig, devicedb: string | null) {
         this.config = config;
         this.devicedb = devicedb;
-        if (config.client == null) config.client = {};
+        if (config.client == null) config.client = {
+            timeout: {
+                callTimeout: 30000,
+                pingTimeout: 10000,
+            }
+        };
 
         if (devicedb != null) {
             const configFile = fs.readFileSync(devicedb).toString('utf-8');
@@ -179,7 +184,7 @@ export class ConnectorClient {
         if (this.client != null) return;
         console.log(`Connecting to target: ${this.config.remote.url}`);
         this.client = new WebSocket(this.config.remote.url, {
-            handshakeTimeout: 10000, // Hardcoded 10-sec timeout
+            handshakeTimeout: this.config.client.timeout.pingTimeout,
             headers: {
                 // TODO: FIXME: Follow server-side auth
                 Authorization: ` Token ${this.config.remote.token}`
@@ -191,10 +196,10 @@ export class ConnectorClient {
                 this.client?.removeAllListeners('open');
                 //ful(rpc);
             });
-            const rpc = new RPCProvider(this.client!);
+            const rpc = new RPCProvider(this.client!, this.config.client.timeout.callTimeout);
             const timer = setTimeout(() => {
                 rej(new MarilRPCTimeoutError('Timed out!'));
-            }, 30000);
+            }, this.config.client.timeout.callTimeout);
             rpc.addRequestHandler(async (req: RPCv2Request): Promise<RPCReturnType<any>> => {
                 clearTimeout(timer);
                 if (req.class != 'hwconfig' || req.method != 'updateConfig') {
@@ -261,7 +266,7 @@ export class ConnectorClient {
                 console.error('Heart stopped!!!');
                 process.exit(1);
             }
-        }, 10000)
+        }, this.config.client.timeout.pingTimeout)
 
         await this.registerRPCHandlers();
         this.rpc.remoteNotify({

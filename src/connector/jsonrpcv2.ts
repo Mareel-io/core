@@ -35,10 +35,12 @@ export class RPCProvider extends EventEmitter {
     private notifyHandlers: ((req: RPCv2Request) => Promise<void>)[] = [];
     private callHandlerTable: {[key: number]: undefined | ((res: unknown | null | undefined, err?: Error) => void)} = {};
     private callId = 0;
+    private defaultTimeout: number;
 
-    constructor(stream: WebSocket) {
+    constructor(stream: WebSocket, defaultTimeout = 30000) {
         super();
         this.stream = stream;
+        this.defaultTimeout = defaultTimeout;
 
         this.replaceSocket(stream);
     }
@@ -66,7 +68,7 @@ export class RPCProvider extends EventEmitter {
         });
     }
 
-    public async remoteCall(payload: RPCv2Request, timeout = 30000): Promise<unknown> {
+    public async remoteCall(payload: RPCv2Request, timeout?: number): Promise<unknown> {
         const curCallId = this.callId;
         this.callId += 1;
         if (this.callId > 0xFFFFFFFF) {
@@ -77,7 +79,7 @@ export class RPCProvider extends EventEmitter {
             const timer = setTimeout(() => {
                 this.callHandlerTable[curCallId] = undefined;
                 rej(new MarilRPCTimeoutError('Timed out!'));
-            }, timeout);
+            }, timeout != null ? timeout : this.defaultTimeout);
             this.callHandlerTable[curCallId] = (res, err) => {
                 clearTimeout(timer);
                 this.callHandlerTable[curCallId] = undefined;

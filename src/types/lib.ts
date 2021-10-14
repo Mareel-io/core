@@ -12,6 +12,10 @@ export interface ConnectorClientConfig {
     client: {
         disableCiscoConfigDaemon?: boolean,
         disableTFTPDaemon?: boolean,
+        timeout: {
+            callTimeout: number,
+            pingTimeout: number,
+        }
     },
     remote: {
         token: string,
