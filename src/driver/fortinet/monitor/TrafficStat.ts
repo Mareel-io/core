@@ -21,7 +21,7 @@ export class FortiTrafficStatMonitor extends TrafficStatMonitor
                 ip_version: 'ipboth',
                 realtime: true,
                 report_by: 'source',
-                sort_by='bytes',
+                sort_by: 'bytes',
             }
         });
 

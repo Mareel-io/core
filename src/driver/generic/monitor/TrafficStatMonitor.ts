@@ -1,5 +1,4 @@
-
-export type TrafficStat {
+export interface TrafficStat {
     srcip: string,
     dstip: string,
     apps: {
@@ -15,4 +14,8 @@ export type TrafficStat {
 
 export abstract class TrafficStatMonitor {
     public abstract getTrafficStat(): Promise<TrafficStat[]>;
+
+    public async init(): Promise<void> {
+        // Do nothing
+    }
 }

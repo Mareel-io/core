@@ -10,6 +10,7 @@ import { FortigateQoS } from './FortigateQoS';
 import { RouteConfigurator as FortigateRouteConfigurator } from './RouteConfigurator';
 import { SwitchQoS } from '../generic/SwitchQoS';
 import { FirewallConfigurator } from './FirewallConfigurator';
+import { FortiTrafficStatMonitor } from './monitor/TrafficStat';
 
 export class ControllerFactory extends GenericControllerFactory {
     private api: AxiosInstance;
@@ -73,5 +74,9 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getRouteConfigurator(): FortigateRouteConfigurator {
         return new FortigateRouteConfigurator(this.api);
+    }
+
+    public getTrafficStatMonitor(): FortiTrafficStatMonitor {
+        return new FortiTrafficStatMonitor(this.api);
     }
 }
