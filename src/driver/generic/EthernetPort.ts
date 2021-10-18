@@ -1,4 +1,5 @@
 import { InvalidParameterError, UnsupportedFeatureError } from "../../error/MarilError";
+import { logger } from "../../util/logger";
 
 /**
  * Ethernet port config object
@@ -68,7 +69,7 @@ export abstract class EthernetPort {
      * @param speed - linkspeed in following format: [0-9]+[KMGTP]bps
      */
     public set linkSpeed(speed: string) {
-        console.log(speed)
+        logger.debug(speed)
         const split = speed.match(/([0-9]+)([KMGTP]bps)/);
         if (split == null) {
             throw new InvalidParameterError('Invalid linkspeed');

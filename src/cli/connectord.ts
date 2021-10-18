@@ -22,13 +22,12 @@ import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUs
 import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
 import { RouteConfiguratorReqHandler } from '../connector/requesthandler/RouteConfigurator';
 import { ConnectorClientConfig, ConnectorDevice } from '../types/lib';
+import { logger } from '../util/logger';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
     for(const p in o1){
         if(Object.prototype.hasOwnProperty.call(o1, p)){
-            console.log(o1);
-            console.log(o2);
             if(o1[p] !== o2[p]){
                 return false;
             }
@@ -36,8 +35,6 @@ function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
     }
     for(const p in o2){
         if(Object.prototype.hasOwnProperty.call(o2, p)){
-            console.log(o1);
-            console.log(o2);
             if(o1[p] !== o2[p]){
                 return false;
             }
@@ -81,12 +78,12 @@ export async function svcmain() {
     }
 
     // Initialize essential services
-    console.log('Main process started');
+    logger.info('Main process started');
     const connectorClient = new ConnectorClient(configFile, deviceDB);
 
     process.on('uncaughtException', (e) => {
-        console.error('Uncaught exception occured');
-        console.error(e);
+        logger.crit('Uncaught exception occured');
+        logger.crit(e);
 
         connectorClient.stopSvcs();
         // TODO: Handle error and use proper exit code
@@ -94,8 +91,8 @@ export async function svcmain() {
     });
 
     process.on('unhandledRejection', (e) => {
-        console.error('Unhandled rejection occured');
-        console.error(e);
+        logger.crit('Unhandled rejection occured');
+        logger.crit(e);
 
         connectorClient.stopSvcs();
         // TODO: Handle error and use proper exit code
@@ -107,12 +104,12 @@ export async function svcmain() {
     });
 
     await connectorClient.startSvcs();
-    console.log('Service started.');
+    logger.info('Service started.');
 
     await connectorClient.initializeConfigurator();
-    console.log('Configurator initialized');
+    logger.info('Configurator initialized');
     await connectorClient.connect();
-    console.log('Connected.');
+    logger.info('Connected.');
 }
 
 export class ConnectorClient {
@@ -159,7 +156,7 @@ export class ConnectorClient {
 
     private handleDriverInitError(device: string, feature: string, e: MethodNotImplementedError | Error): void {
         if (e instanceof MethodNotImplementedError) {
-            console.log(`Device ${device} does not support feature: ${feature}`);
+            logger.info(`Device ${device} does not support feature: ${feature}`);
         } else {
             throw e;
         }
@@ -185,7 +182,7 @@ export class ConnectorClient {
 
     public async connect(): Promise<void> {
         if (this.client != null) return;
-        console.log(`Connecting to target: ${this.config.remote.url}`);
+        logger.info(`Connecting to target: ${this.config.remote.url}`);
         this.client = new WebSocket(this.config.remote.url, {
             handshakeTimeout: this.config.client.timeout.pingTimeout,
             headers: {
@@ -248,11 +245,11 @@ export class ConnectorClient {
             });
         }) as Promise<RPCProvider>);
 
-        console.log('Connected!');
+        logger.info('Connected!');
 
         if (this.needDeviceUpdate) {
             // End daemon. Let the OpenWRT subsystem respawn this daemon
-            console.log('EXIT!!');
+            logger.info('EXIT!!');
             process.exit(0);
         }
 
@@ -266,7 +263,7 @@ export class ConnectorClient {
                     params: [],
                 }, 5000);
             } catch(e) {
-                console.error('Heart stopped!!!');
+                logger.error('Heart stopped!!!');
                 process.exit(1);
             }
         }, this.config.client.timeout.pingTimeout)
@@ -400,7 +397,7 @@ export class ConnectorClient {
             let controllerfactory: GenericControllerFactory | null = null;
 
             try {
-                console.log(`Initializing device ${device.type} - ${device.id}`);
+                logger.info(`Initializing device ${device.type} - ${device.id}`);
                 switch (device.type) {
                     case 'efm':
                     controllerfactory = new EFMControllerFactory(device.addr);
@@ -422,10 +419,10 @@ export class ConnectorClient {
                 await controllerfactory.init();
                 // Let's test-authenticate it
                 await controllerfactory.authenticate(device.credential);
-                console.log('Device successfully initialized');
+                logger.info('Device successfully initialized');
             } catch (e) {
-                console.warn(`Failed to initialize device ${device.id}`);
-                console.warn(e);
+                logger.warn(`Failed to initialize device ${device.id}`);
+                logger.warn(e);
             }
 
             this.controllerFactoryTable[device.id] = {

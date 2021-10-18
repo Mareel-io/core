@@ -1,4 +1,5 @@
 import { NodeSSH } from 'node-ssh';
+import { logger } from './logger';
 
 export interface SSHCredential {
     user: string,
@@ -88,7 +89,7 @@ export class CiscoSSHClient {
         }
         this.sshStream.removeAllListeners('error');
         this.sshStream.on('error', e => {
-            console.error(e);
+            logger.warn(e);
         }); // Eat up the error. Bad bad cisco
         // TODO: FIXME
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

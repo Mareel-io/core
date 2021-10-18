@@ -4,6 +4,7 @@ import { GenericControllerFactory } from "../..";
 import { NetTester } from '../../driver/efm/monitor/NetTester';
 import { MarilError, MarilRPCTimeoutError } from '../../error/MarilError';
 import { ConnectorDevice } from '../../types/lib';
+import { logger } from '../../util/logger';
 import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCFirewallConfigurator } from './FireallConfigurator';
 import { RPCLogman } from './Logman';
@@ -73,7 +74,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
             this.rpc.addNotifyHandler(cb);
         });
 
-        console.log('Pong received.');
+        logger.debug('Pong received.');
         this.devices = (await this.rpc.remoteCall({
             jsonrpc: '2.0',
             method: 'getRegisteredDevices',

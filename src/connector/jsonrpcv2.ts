@@ -2,6 +2,7 @@ import { Duplex, EventEmitter } from 'stream';
 import {Parser, parser} from 'stream-json';
 import WebSocket from 'ws';
 import { MarilError, MarilRPCError, MarilRPCTimeoutError } from '../error/MarilError';
+import { logger } from '../util/logger';
 
 export interface RPCv2Request {
     jsonrpc: '2.0',
@@ -27,8 +28,6 @@ export interface RPCReturnType<T> {
 export class MethodNotAvailableError extends Error {
 }
 
-const debug = true;
-
 export class RPCProvider extends EventEmitter {
     private stream: WebSocket;
     private requestHandlers: ((req: RPCv2Request) => Promise<RPCReturnType<unknown>>)[] = [];
@@ -51,7 +50,8 @@ export class RPCProvider extends EventEmitter {
         this.stream.on('message', (msg: Buffer) => {
             const json = msg.toString('utf-8');
             const chunk = JSON.parse(json);
-            if (debug) { console.log('RECV'); console.log(chunk); }
+            logger.debug('RECV');
+            logger.debug(chunk);
 
             if (chunk.jsonrpc != '2.0') {
                 // Not a JSON-RPC v2 packet
@@ -92,14 +92,16 @@ export class RPCProvider extends EventEmitter {
         });
 
         payload.id = curCallId;
-        if (debug) { console.log('SEND'); console.log(payload); }
+        logger.debug('SEND');
+        logger.debug(payload);
         this.stream.send(JSON.stringify(payload));
         return await ret;
     }
 
     public remoteNotify(payload: RPCv2Request): void {
         delete payload.id;
-        if (debug) { console.log('SEND'); console.log(payload); }
+        logger.debug('SEND');
+        logger.debug(payload);
         this.stream.send(JSON.stringify(payload));
     }
 
@@ -115,7 +117,8 @@ export class RPCProvider extends EventEmitter {
                 id: request.id!,
             };
 
-            if (debug) { console.log('SEND'); console.log(response); }
+            logger.debug('SEND');
+            logger.debug(response);
             this.stream.send(JSON.stringify(response));
         } else {
             const response: RPCv2Response = {
@@ -127,7 +130,8 @@ export class RPCProvider extends EventEmitter {
                 id: request.id!,
             };
 
-            if (debug) { console.log('SEND'); console.log(response); }
+            logger.debug('SEND');
+            logger.debug(response);
             this.stream.send(JSON.stringify(response));
         }
     }
@@ -155,15 +159,15 @@ export class RPCProvider extends EventEmitter {
             for(const handler of this.requestHandlers) {
                 try {
                     const res = await (handler(chunk));
-                    console.log('handler result');
-                    console.log(res);
+                    logger.debug('handler result');
+                    logger.debug(res);
                     if (res.handled) {
                         this.sendResponse(chunk, res.result);
                         return;
                     }
                 } catch(e) {
                     if (e instanceof MethodNotAvailableError) {
-                        console.log(e);
+                        logger.debug(e);
                         // Eat up
                     } else {
                         throw e;
