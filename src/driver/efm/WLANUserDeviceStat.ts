@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { JSDOM } from 'jsdom';
 import { InvalidParameterError } from '../../error/MarilError';
+import { logger } from '../../util/logger';
 import { WLANUserDeviceStat as GenericWLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { ResponseChecker } from './ResponseChecker';
 import { User80211Device } from './User80211Device';
@@ -72,7 +73,7 @@ export class WLANUserDeviceStat extends GenericWLANUserDeviceStat {
                 ip: cols[3].innerHTML,
             };
 
-            console.log(entry);
+            logger.debug(entry);
 
             list.push(entry);
         }

@@ -8,6 +8,7 @@ import { CiscoTFTPServer } from '../../util/tftp';
 import { MarilError, ResourceNotAvailableError } from '../../error/MarilError';
 import { MethodNotAvailableError } from '../../connector/jsonrpcv2';
 import { CiscoConfigUtil } from './util/ConfigUtil';
+import { logger } from '../../util/logger';
 
 // Possible OID table
 // iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) cisco(9) ciscoMgmt(9) ciscoCdpMIB(23)
@@ -96,7 +97,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      */
     private async getIFProperties(): Promise<{[key: number]: IFProperties}> {
         const resps = await this.snmp.subtree('1.3.6.1.2.1.2', 100);
-        console.log(resps);
+        logger.debug(resps);
 
         const ret: {[key: number]: IFProperties} = {};
 
@@ -124,7 +125,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
                         break;
                     case 3:
                         // ifType
-                        //console.log(elem.value);
+                        //logger.debug(elem.value);
                         break;
                     case 4:
                         // ifMtu
@@ -148,7 +149,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
                         break;
                     case 9:
                         // ifLastChange
-                        console.log(elem.value);
+                        logger.debug(elem.value);
                         break;
                     case 10:
                         // ifInOctets
@@ -191,7 +192,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
                         // ifSpecific
                         break;
                     default:
-                        console.log(`${propSubOID} => ${propSub}`);
+                        logger.debug(`${propSubOID} => ${propSub}`);
                 }
             } else {
                 throw new MarilError(`Error: Unknown OID ${elem.oid}, ${elem.oidIRI}`);
@@ -271,7 +272,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         }
 
         for(const vid of vlanRange) {
-            console.log(vid)
+            logger.debug(vid)
             const vlanEnt = new VLAN('802.1q');
             vlanEnt.vid = vid;
             if(vlanAliasMap[vid] != null) {
