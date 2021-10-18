@@ -8,6 +8,7 @@ import * as EFMFirewallGrammar from '../../grammar/efm/firewall';
 import FormData from 'form-data';
 import { MethodNotAvailableError } from '../../connector/jsonrpcv2';
 import qs from 'qs';
+import { logger } from '../../util/logger';
 
 interface ParserEntry {
     type: string,
@@ -113,7 +114,7 @@ export class FirewallConfigurator extends GenericFirewallConfigurator {
             elem.src_port = map.port;
         } else {
             // TODO: Handle this
-            console.error('[WARN] both direction is not supported yet...');
+            logger.warn('both direction is not supported yet...');
             return [];
         }
 

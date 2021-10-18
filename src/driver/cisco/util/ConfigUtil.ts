@@ -1,3 +1,4 @@
+import { logger } from "../../../util/logger";
 import { CiscoSSHClient } from "../../../util/ssh";
 import { CiscoTFTPServer } from "../../../util/tftp";
 import { CiscoConfigEditor } from "../configedit/configeditor";
@@ -30,7 +31,7 @@ export class CiscoConfigUtil {
         const configFile = await this.tftpUtil.fetchFile('running-config')
         const config = configFile.toString('utf-8');
         await this.configedit.loadCfg(config);
-        console.log('config loaded.');
+        logger.info('config loaded.');
     }
 
     /**
@@ -39,7 +40,7 @@ export class CiscoConfigUtil {
     public async applyConfig(): Promise<void> {
         const configFile = Buffer.from(await this.configedit.extractCfg());
         await this.tftpUtil.putFile('running-config', configFile);
-        console.log('Configuration uploaded to device.');
+        logger.info('Configuration uploaded to device.');
     }
    
     /**

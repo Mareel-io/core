@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { JSDOM } from 'jsdom';
 import qs from 'qs';
+import { logger } from '../../util/logger';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../generic/SwitchConfigurator';
 import { EthernetPort } from './EthernetPort';
 import { ResponseChecker } from './ResponseChecker';
@@ -36,7 +37,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         const ports = [] as EthernetPort[];
         for (let i = 0; i < portTable.length; i++) {
             const row = portTable[i].childNodes;
-            console.log(row.item(0).textContent)
+            logger.debug(row.item(0).textContent)
 
             for (let i = 1; i < row.length; i++) {
                 if (ports[i - 1] == null) {

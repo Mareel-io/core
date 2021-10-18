@@ -9,6 +9,7 @@ import { WLANConfigurator } from '../generic/wlan';
 import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { SwitchConfigurator as DummySwitchConfigurator } from './SwitchConfigurator';
 import { TrafficStatMonitor } from '../generic/monitor/TrafficStatMonitor';
+import { logger } from '../../util/logger';
 
 export class ControllerFactory extends GenericControllerFactory {
     constructor(deviceaddress = 'nowhere') {
@@ -17,11 +18,11 @@ export class ControllerFactory extends GenericControllerFactory {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public async authenticate(credential: any): Promise<void> {
-        console.log('DummyControllerFactory: Auth OK');
+        logger.debug('DummyControllerFactory: Auth OK');
     }
 
     public async refreshAuth(): Promise<void> {
-        console.log('DummyControllerFactory: Auth OK');
+        logger.debug('DummyControllerFactory: Auth OK');
     }
 
     public getSwitchConfigurator(): DummySwitchConfigurator {
