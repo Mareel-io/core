@@ -33,12 +33,12 @@ const logger = winston.createLogger({
                 winston.format.timestamp({format: timestampFormat}),
                 winston.format.printf((msg) => {
                     const {timestamp, level, message} = msg;
-                    const prefix = colorizer.colorize(level, level.toUpperCase());
+                    const prefix = colorizer.colorize(level, `Mareel:core:${level.toUpperCase()}`);
                     return `${prefix} ${timestamp}: ${message}`;
                 }),
-                ),
-            }),
-        ],
-    });
-    
-    export { logger };
+            ),
+        }),
+    ],
+});
+
+export { logger };
