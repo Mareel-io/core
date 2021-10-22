@@ -48,5 +48,12 @@ wss.on('connection', async function connection(ws) {
     const switchConfigurator = rpcControllerFactory.getSwitchConfigurator(devices[0].id);
     await switchConfigurator.loadConfig();
     const ports = await switchConfigurator.getSwitchPorts();
+    const p = ports[10];
+    p.isActive = false;
+    console.log('Hello!');
+    await switchConfigurator.setSwitchPort(p);
+    console.log('Port configured!');
+    await switchConfigurator.applyConfig();
+    console.log('Config applied!');
     console.log(ports);
 });
