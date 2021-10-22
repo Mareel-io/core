@@ -150,8 +150,10 @@ export class ConnectorClient {
 
         // Essential services
         this.tftp = new CiscoTFTPServer(config.tftpserver.hostip);
+        logger.debug('TFTP server started.');
         const launcherPath = path.join(__dirname, '../../ciscocfg/launcher.sh');
         this.ciscoCfgSvcRunner = new SvcRunner(launcherPath);
+        logger.debug('CiscoCFG server started.');
     }
 
     private handleDriverInitError(device: string, feature: string, e: MethodNotImplementedError | Error): void {
