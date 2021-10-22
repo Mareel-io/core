@@ -1,6 +1,7 @@
 import msgpack, { DecodeStream } from 'msgpack-lite';
 import { Socket } from 'net';
 import { MarilRPCTimeoutError } from '../error/MarilError';
+import { logger } from './logger';
 
 export class MsgpackRPC {
     private port: number;
@@ -72,6 +73,8 @@ export class MsgpackRPC {
         if (this.socket == null) {
             throw new Error('RPC not connected!');
         }
+        logger.debug(`Calling ${method} through Msgpack-RPC`);
+        logger.debug(`Payload: ${JSON.stringify(params)}`);
 
         const callId = this.getCallID();
         const cmd: [number, number, string, unknown[]] = [
