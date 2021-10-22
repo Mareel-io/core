@@ -126,6 +126,7 @@ export class RPCProvider extends EventEmitter {
                 error: {
                     message: error.message,
                     name: error.name,
+                    stack: error.stack,
                 },
                 id: request.id!,
             };
@@ -188,8 +189,8 @@ export class RPCProvider extends EventEmitter {
                 if (typeof chunk.error === 'string') {
                     handler(null, new MarilRPCError(chunk.error));
                 } else if (typeof chunk.error === 'object') {
-                    const errorObj = chunk.error as {message: string, name?: string};
-                    handler(null, new MarilRPCError(errorObj.message, errorObj.name));
+                    const errorObj = chunk.error as {message: string, name?: string, stack?: string};
+                    handler(null, new MarilRPCError(errorObj.message, errorObj.name, errorObj.stack));
                 } else {
                     handler(null, new MarilRPCError(chunk.error + ''));
                 }

@@ -8,9 +8,18 @@ export class ResourceNotAvailableError extends MarilError {}
 export class MethodNotImplementedError extends MarilError {}
 
 export class MarilRPCError extends MarilError {
-    constructor(msg: string, name = 'MarilRPCError') {
+    private remoteStackTrace = 'unknown';
+
+    constructor(msg: string, name = 'MarilRPCError', stack?: string) {
         super(msg);
         Object.defineProperty(this, 'name', { value: name });
+        if (stack != null) {
+            this.remoteStackTrace = stack;
+        }
+    }
+
+    public getRemoteStackTrace(): string {
+        return this.remoteStackTrace;
     }
 }
 
