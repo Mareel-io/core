@@ -51,6 +51,9 @@ export class SNMPClient {
             case 'des':
                 privProtocol = snmp.PrivProtocols.des;
                 break;
+            case 'aes':
+                privProtocol = snmp.PrivProtocols.aes;
+                break;
         }
 
         this.snmpSession = snmp.createV3Session(this.target, {
