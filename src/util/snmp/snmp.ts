@@ -1,4 +1,5 @@
 import snmp from 'net-snmp';
+import { MarilError } from '../../error/MarilError';
 import { MIBLoader } from './mibloader';
 
 export interface SNMPClientConfig {
@@ -42,18 +43,28 @@ export class SNMPClient {
         }
 
         switch(this.cfg.authProtocol) {
+            case undefined:
+            case null:
+                break;
             case 'sha':
                 authProtocol = snmp.AuthProtocols.sha;
                 break;
+            default:
+                throw new MarilError(`Unknown auth protocol: ${this.cfg.authProtocol}`);
         }
 
         switch(this.cfg.privacyProtocol) {
+            case undefined:
+            case null:
+                break;
             case 'des':
                 privProtocol = snmp.PrivProtocols.des;
                 break;
             case 'aes':
                 privProtocol = snmp.PrivProtocols.aes;
                 break;
+            default:
+                throw new MarilError(`Unknown privacy protocol: ${this.cfg.authProtocol}`);
         }
 
         this.snmpSession = snmp.createV3Session(this.target, {
