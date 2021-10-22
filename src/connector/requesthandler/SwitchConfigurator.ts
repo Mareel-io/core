@@ -29,7 +29,7 @@ export class SwitchConfiguratorReqHandler extends RPCRequestHandler {
                 return elem.serialize();
             });
         },
-        setSwtichPort: async (port: {[key: string]: any}, portIdx: number) => {
+        setSwitchPort: async (port: {[key: string]: any}, portIdx: number) => {
             const ethernetPort = new EthernetPort();
             ethernetPort.restore(port);
             return await this.switchConfigurator.setSwitchPort(ethernetPort, portIdx);
