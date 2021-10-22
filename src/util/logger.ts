@@ -6,6 +6,7 @@ const level = process.env.DEBUG != null ? 'debug' : 'info';
 const timestampFormat = () => moment().format();
 const colorizer = winston.format.colorize();
 const logger = winston.createLogger({
+    levels: winston.config.syslog.levels,
     format: winston.format((info) => {
         if ((info.message as any) instanceof Error) {
             const error = info.message as unknown as Error;
@@ -33,12 +34,12 @@ const logger = winston.createLogger({
                 winston.format.timestamp({format: timestampFormat}),
                 winston.format.printf((msg) => {
                     const {timestamp, level, message} = msg;
-                    const prefix = colorizer.colorize(level, level.toUpperCase());
+                    const prefix = colorizer.colorize(level, `Mareel:core:${level.toUpperCase()}`);
                     return `${prefix} ${timestamp}: ${message}`;
                 }),
-                ),
-            }),
-        ],
-    });
-    
-    export { logger };
+            ),
+        }),
+    ],
+});
+
+export { logger };

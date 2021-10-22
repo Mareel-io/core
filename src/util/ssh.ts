@@ -21,6 +21,7 @@ class CiscoSSHStreamWrapper {
 
     // TODO: Implement proper locking
     async runCommand(cmd: string): Promise<string> {
+        logger.debug(`Running command: ${cmd}`);
         this.stream.read(); // Discard the stream
         this.stream.write(`${cmd}\n`);
         return new Promise((ful, rej) => {
@@ -71,6 +72,7 @@ export class CiscoSSHClient {
             password: this.credential.password,
             ...this.sshopts,
         });
+        logger.debug('SSH connected');
 
         this.sshStream = await this.sshclient.requestShell()
         if (this.sshStream == null) {

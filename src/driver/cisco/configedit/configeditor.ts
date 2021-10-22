@@ -1,4 +1,5 @@
 import { MsgpackRPC } from '../../../util/msgpack-rpc';
+import { EthernetPort } from '../../generic/EthernetPort';
 import { CoSMap, DSCPMap } from '../../generic/SwitchQoS';
 
 export type CiscoPort = {
@@ -169,5 +170,15 @@ export class CiscoConfigEditor extends MsgpackRPC {
 
     public async setStrictPriorityQ(prio: number): Promise<void> {
         return await this.runRPCCommand('setStrictPriorityQ', prio);
+    }
+
+    public async setPort(port: EthernetPort): Promise<void> {
+        await this.runRPCCommand('setPort', {
+            portName: port.portName,
+            isActive: port.isActive,
+            autoneg: port.autoneg,
+            duplex: port.duplex,
+            speed: port.linkSpeedAsNumeric,
+        });
     }
 }

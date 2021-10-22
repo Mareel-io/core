@@ -1,4 +1,4 @@
-const maril = require('../');
+const maril = require('../../dist');
 const WebSocket = require('ws');
 
 const wss = new WebSocket.Server({ port: 3000 });
@@ -31,7 +31,6 @@ wss.on('connection', async function connection(ws) {
     const switchConfigurator = rpcControllerFactory.getSwitchConfigurator(devices[0].id);
     console.log('foobar');
     await switchConfigurator.loadConfig();
-    console.log('foo');
     const vlans = await switchConfigurator.getAllVLAN();
     console.log(vlans);
 });

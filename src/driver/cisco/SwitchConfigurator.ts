@@ -250,8 +250,8 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
      * @param port Ethernet port object
      * @param portIdx Port index
      */
-    public setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
-        throw new MethodNotAvailableError();
+    public async setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
+        await this.configUtil.configEditor.setPort(port);
     }
 
     /**
@@ -311,7 +311,7 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
             }
 
             for(const taggedEnt of (port.taggedList || [])) {
-                // TODO: ImplementMe
+                logger.debug(taggedEnt);
             }
         }
 
