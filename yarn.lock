@@ -323,6 +323,14 @@
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.1.tgz#1a32969cf8f0364b3d8c8af9cc3555b7805df14f"
   integrity sha512-Y2mHTRAbqfFkpjldbkHGY8JIzRN6XqYRliG8/24FcHm2D2PwW24fl5xMRTVGdrb7iMrwCaIEbLWerGIkXuFWVg==
 
+"@types/winston-syslog@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@types/winston-syslog/-/winston-syslog-2.0.4.tgz#65adb852652c6eb2b403e8026cc8e0a337e4328a"
+  integrity sha512-R+xQkPxHOSeAFF0rvWKgqauERgM/qnM+NDbK6YrwgxdiWymUgDA84pgKH0VWhlzFJySrAt2jcEoMh17iAetdOw==
+  dependencies:
+    "@types/node" "*"
+    winston "^3.0.0"
+
 "@types/ws@^7.4.4":
   version "7.4.7"
   resolved "https://registry.yarnpkg.com/@types/ws/-/ws-7.4.7.tgz#f7c390a36f7a0679aa69de2d501319f4f8d9b702"
@@ -637,6 +645,13 @@ binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
+
+bindings@^1.3.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.5.0.tgz#10353c9e945334bc0511a6d90b38fbc7c9c504df"
+  integrity sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==
+  dependencies:
+    file-uri-to-path "1.0.0"
 
 body-parser@1.19.0:
   version "1.19.0"
@@ -1350,6 +1365,11 @@ file-entry-cache@^6.0.1:
   dependencies:
     flat-cache "^3.0.4"
 
+file-uri-to-path@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"
+  integrity sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==
+
 fill-range@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.0.1.tgz#1919a6a7c75fe38b2c7c77e5198535da9acdda40"
@@ -1510,6 +1530,11 @@ globby@^11.0.3:
     ignore "^5.1.4"
     merge2 "^1.3.0"
     slash "^3.0.0"
+
+glossy@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/glossy/-/glossy-0.1.7.tgz#769b5984a96f6066ab9ea758224825ee6c210f0b"
+  integrity sha1-dptZhKlvYGarnqdYIkgl7mwhDws=
 
 graceful-fs@^4.2.4:
   version "4.2.8"
@@ -2142,7 +2167,7 @@ msgpack-lite@^0.1.26:
     int64-buffer "^0.1.9"
     isarray "^1.0.0"
 
-nan@^2.14.1, nan@^2.15.0:
+nan@^2.13.2, nan@^2.14.1, nan@^2.15.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.15.0.tgz#3f34a473ff18e15c1b5626b62903b5ad6e665fee"
   integrity sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==
@@ -3082,6 +3107,14 @@ universalify@^0.1.2:
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
 
+unix-dgram@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/unix-dgram/-/unix-dgram-2.0.3.tgz#511fc1f8ed94ffe40e0dfeacdae1bf8b06533296"
+  integrity sha512-Bay5CkSLcdypcBCsxvHEvaG3mftzT5FlUnRToPWEAVxwYI8NI/8zSJ/Gknlp86MPhV6hBA8I8TBsETj2tssoHQ==
+  dependencies:
+    bindings "^1.3.0"
+    nan "^2.13.2"
+
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
@@ -3183,6 +3216,15 @@ wide-align@1.1.3:
   dependencies:
     string-width "^1.0.2 || 2"
 
+winston-syslog@^2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/winston-syslog/-/winston-syslog-2.4.4.tgz#855a518851c42cb7ebc54b67f5b44a3cde161e4a"
+  integrity sha512-zDjoKO932Yszvzq8WtbIFMXHwAT2MOxpWC9s6djw2tvjdRESWw3au6l+0xDMatMhNWVoVaVNkDXF+r/eyoBUVA==
+  dependencies:
+    glossy "^0.1.7"
+  optionalDependencies:
+    unix-dgram "2.0.3"
+
 winston-transport@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/winston-transport/-/winston-transport-4.4.0.tgz#17af518daa690d5b2ecccaa7acf7b20ca7925e59"
@@ -3191,7 +3233,7 @@ winston-transport@^4.4.0:
     readable-stream "^2.3.7"
     triple-beam "^1.2.0"
 
-winston@^3.3.3:
+winston@^3.0.0, winston@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/winston/-/winston-3.3.3.tgz#ae6172042cafb29786afa3d09c8ff833ab7c9170"
   integrity sha512-oEXTISQnC8VlSAKf1KYSSd7J6IWuRPQqDdo8eoRNaYKLvwSb5+79Z3Yi1lrl6KDpU6/VWaxpakDAtb1oQ4n9aw==

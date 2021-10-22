@@ -6,6 +6,7 @@ const level = process.env.DEBUG != null ? 'debug' : 'info';
 const timestampFormat = () => moment().format();
 const colorizer = winston.format.colorize();
 const logger = winston.createLogger({
+    levels: winston.config.syslog.levels,
     format: winston.format((info) => {
         if ((info.message as any) instanceof Error) {
             const error = info.message as unknown as Error;
