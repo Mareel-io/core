@@ -1,5 +1,7 @@
 const mareel = require('../../dist');
 const WebSocket = require('ws');
+const foo = require('../common/errorhandler');
+console.log(foo);
 
 // It is implementor's duty to implement proper authentication
 // and identification on WebSocket server.
