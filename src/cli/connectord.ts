@@ -82,8 +82,8 @@ export async function svcmain() {
     const connectorClient = new ConnectorClient(configFile, deviceDB);
 
     process.on('uncaughtException', (e) => {
-        logger.crit('Uncaught exception occured');
-        logger.crit(e);
+        logger.log('crit', 'Uncaught exception occured');
+        logger.log('crit', e);
 
         connectorClient.stopSvcs();
         // TODO: Handle error and use proper exit code
@@ -91,8 +91,8 @@ export async function svcmain() {
     });
 
     process.on('unhandledRejection', (e) => {
-        logger.crit('Unhandled rejection occured');
-        logger.crit(e);
+        logger.log('crit', 'Unhandled rejection occured');
+        logger.log('crit', e);
 
         connectorClient.stopSvcs();
         // TODO: Handle error and use proper exit code
