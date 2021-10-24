@@ -31,7 +31,16 @@ export class FortigateQoS {
     }
 
     public async createQoSPolicy(): Promise<void> {
-        //
+        const policy: FortigateShapingPolicy = {
+            comment: "foobar",
+            status: 'enable',
+            'ip-version': '4',
+            'srcaddr': [],
+            'dstaddr': [],
+            srcaddr6: [],
+            dstaddr6: [],
+             
+        }
     }
 
     public async updateQoSPolicy(): Promise<void> {
