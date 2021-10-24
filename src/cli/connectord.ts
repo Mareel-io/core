@@ -2,6 +2,7 @@ import { ControllerFactory as EFMControllerFactory } from '../driver/efm/lib';
 import { CiscoCredential, ControllerFactory as CiscoControllerFactory } from '../driver/cisco/lib';
 import { ControllerFactory as GenericControllerFactory } from '../driver/generic/lib';
 import { ControllerFactory as DummyControllerFactory } from '../driver/dummy/lib';
+import { ControllerFactory as FortiControllerFactory } from '../driver/fortinet/lib';
 import WebSocket from 'ws'
 import arg from 'arg';
 
@@ -410,6 +411,9 @@ export class ConnectorClient {
                         './mibjson/cisco.json',
                         this.tftp,
                     );
+                    break;
+                    case 'fortinet':
+                    controllerfactory = new FortiControllerFactory(device.addr);
                     break;
                     case 'dummy':
                         controllerfactory = new DummyControllerFactory(device.addr);

@@ -4,7 +4,7 @@ import { EFMCredential } from "../driver/efm/lib";
 export interface ConnectorDevice {
     id: string,
     addr: string,
-    type: 'efm' | 'cisco' | 'dummy',
+    type: 'efm' | 'cisco' | 'fortinet' | 'dummy',
     credential: EFMCredential | CiscoCredential,
 }
 

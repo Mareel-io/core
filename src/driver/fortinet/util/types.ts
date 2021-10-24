@@ -2,7 +2,8 @@
 
 export interface FortiAuthToken {
     type: 'token' | 'pki',
-    ca: string,
+    allowInvalidCertificate: boolean,
+    ca?: string,
     credential: string | {cert: string, key: string},
 }
 
