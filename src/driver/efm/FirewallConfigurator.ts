@@ -114,7 +114,7 @@ export class FirewallConfigurator extends GenericFirewallConfigurator {
             elem.src_port = map.port;
         } else {
             // TODO: Handle this
-            logger.warn('both direction is not supported yet...');
+            logger.warning('both direction is not supported yet...');
             return [];
         }
 

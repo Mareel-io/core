@@ -427,8 +427,8 @@ export class ConnectorClient {
                 await controllerfactory.authenticate(device.credential);
                 logger.info('Device successfully initialized');
             } catch (e) {
-                logger.warn(`Failed to initialize device ${device.id}`);
-                logger.warn(e);
+                logger.warning(`Failed to initialize device ${device.id}`);
+                logger.warning(e);
             }
 
             this.controllerFactoryTable[device.id] = {
