@@ -13,6 +13,7 @@ import { SwitchQoS } from '../generic/SwitchQoS';
 import { FirewallConfigurator } from './FirewallConfigurator';
 import { FortiTrafficStatMonitor } from './monitor/TrafficStat';
 import { FortiAuthToken } from './util/types';
+import { logger } from '../../util/logger';
 
 export class ControllerFactory extends GenericControllerFactory {
     private api: AxiosInstance;
@@ -64,6 +65,8 @@ export class ControllerFactory extends GenericControllerFactory {
         try {
             await this.api.get('/api/v2/monitor/system/debug');
         } catch(e) {
+            logger.warning('Auth rejected.');
+            logger.warning(e);
             // Failed to auth. :(
             throw new AuthError('Token rejected.');
         }
