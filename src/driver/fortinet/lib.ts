@@ -39,7 +39,7 @@ export class ControllerFactory extends GenericControllerFactory {
                     baseURL: this.baseURL,
                     httpsAgent: new https.Agent({
                         ca: this.apiToken.ca,
-                        rejectUnauthorized: this.apiToken.allowInvalidCertificate,
+                        rejectUnauthorized: !this.apiToken.allowInvalidCertificate,
                     }),
                 });
                 this.api.defaults.headers['Authorization'] = `Bearer ${this.apiToken.credential as string}`;
@@ -63,7 +63,7 @@ export class ControllerFactory extends GenericControllerFactory {
         }
 
         try {
-            await this.api.get('/api/v2/monitor/system/debug');
+            await this.api.get('/api/v2/monitor/web-ui/extend-session');
         } catch(e) {
             logger.warning('Auth rejected.');
             logger.warning(e);
