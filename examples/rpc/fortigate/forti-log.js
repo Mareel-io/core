@@ -9,7 +9,7 @@ wss.on('connection', async function connection(ws) {
     console.log('Connected.');
     const rpcControllerFactory = new mareel.RPCControllerFactory(ws, [{
         id: 'e0716e17-23b9-448d-8de9-3fa5c8b95967',
-        addr: 'https://127.0.0.1:3000',
+        addr: 'https://127.0.0.1:8443',
         type: 'fortinet',
         credential: {
             type: 'token',
