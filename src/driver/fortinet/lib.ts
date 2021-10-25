@@ -1,6 +1,6 @@
 import https from 'https';
 import axios, { AxiosInstance } from 'axios';
-import { AuthError, InvalidParameterError, UnsupportedFeatureError } from '../../error/MarilError';
+import { AuthError, InvalidParameterError, MethodNotImplementedError, UnsupportedFeatureError } from '../../error/MarilError';
 import { NetTester } from '../efm/monitor/NetTester';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
 import { Logman } from './Logman';
@@ -77,11 +77,11 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getWLANConfigurator(deviceId?: string): WLANConfigurator {
-        throw new Error('Feature not supported');
+        throw new UnsupportedFeatureError('Feature not supported');
     }
 
     public getWLANUserDeviceStat(deviceId?: string): WLANUserDeviceStat {
-        throw new Error('Feature not supported');
+        throw new UnsupportedFeatureError('Feature not supported');
     }
 
     public getSwitchConfigurator(deviceId?: string): SwitchConfigurator {
@@ -97,7 +97,7 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getNetTester(deviceId?: string): NetTester {
-        throw new Error('Feature not supported');
+        throw new UnsupportedFeatureError('Feature not supported');
     }
 
     public getSwitchQoS(deviceId?: string): SwitchQoS {
@@ -105,7 +105,7 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getQoSConfigurator(): FortigateQoS {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError('Method not implemented.');
     }
 
     public getRouteConfigurator(): FortigateRouteConfigurator {
