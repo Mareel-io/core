@@ -30,7 +30,9 @@ wss.on('connection', async function connection(ws) {
     }
     console.log('Initialized.');
 
-    const logman = rpcControllerFactory.getLogman();
+    const devices = rpcControllerFactory.getDevices();
+
+    const logman = rpcControllerFactory.getLogman(devices[0].id);
     const logs = await logman.queryLog('system');
     console.log(logs);
 });
