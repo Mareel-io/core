@@ -2,6 +2,7 @@ import { ControllerFactory as EFMControllerFactory } from '../driver/efm/lib';
 import { CiscoCredential, ControllerFactory as CiscoControllerFactory } from '../driver/cisco/lib';
 import { ControllerFactory as GenericControllerFactory } from '../driver/generic/lib';
 import { ControllerFactory as DummyControllerFactory } from '../driver/dummy/lib';
+import { ControllerFactory as FortiControllerFactory } from '../driver/fortinet/lib';
 import WebSocket from 'ws'
 import arg from 'arg';
 
@@ -17,7 +18,7 @@ import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/Switch
 import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
 import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
 import { LogmanReqHandler } from '../connector/requesthandler/Logman';
-import { MarilError, MarilRPCTimeoutError, MethodNotImplementedError } from '../error/MarilError';
+import { MarilError, MarilRPCTimeoutError, MethodNotImplementedError, UnsupportedFeatureError } from '../error/MarilError';
 import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUserDeviceStat';
 import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
 import { RouteConfiguratorReqHandler } from '../connector/requesthandler/RouteConfigurator';
@@ -158,6 +159,8 @@ export class ConnectorClient {
 
     private handleDriverInitError(device: string, feature: string, e: MethodNotImplementedError | Error): void {
         if (e instanceof MethodNotImplementedError) {
+            logger.warn(`Device ${device} feature: ${feature} is work in progress.`);
+        } if (e instanceof UnsupportedFeatureError) {
             logger.info(`Device ${device} does not support feature: ${feature}`);
         } else {
             throw e;
@@ -411,6 +414,9 @@ export class ConnectorClient {
                         this.tftp,
                     );
                     break;
+                    case 'fortinet':
+                    controllerfactory = new FortiControllerFactory(device.addr);
+                    break;
                     case 'dummy':
                         controllerfactory = new DummyControllerFactory(device.addr);
                         break;
@@ -423,8 +429,8 @@ export class ConnectorClient {
                 await controllerfactory.authenticate(device.credential);
                 logger.info('Device successfully initialized');
             } catch (e) {
-                logger.warn(`Failed to initialize device ${device.id}`);
-                logger.warn(e);
+                logger.warning(`Failed to initialize device ${device.id}`);
+                logger.warning(e);
             }
 
             this.controllerFactoryTable[device.id] = {

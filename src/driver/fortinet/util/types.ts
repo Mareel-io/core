@@ -1,4 +1,11 @@
-import { StringMappingType } from "typescript";
+// Fortigate-specific types
+
+export interface FortiAuthToken {
+    type: 'token' | 'pki',
+    allowInvalidCertificate: boolean,
+    ca?: string,
+    credential: string | {cert: string, key: string},
+}
 
 export interface FortigateElement {
     name?: string,
@@ -143,7 +150,7 @@ export interface FortigateShaper extends FortigateElement {
 }
 
 export interface FortigateShapingPolicy extends FortigateElement {
-    id: number,
+    id?: number,
     comment: string,
     status: 'enable' | 'disable',
     "ip-version": '4' | '6',
@@ -255,6 +262,166 @@ export interface FortigateRoute {
     "bfd": 'enable' | 'disable',
 }
 
+export interface FortigateFirewall {
+    "policyid"?: number,
+    "q_origin_key"?: number,
+    "status": 'enable' | 'disable',
+    "name": string,
+    "uuid"?: string,
+    "uuid-idx"?: number,
+    "srcintf": FortigateElement[],
+    "dstintf": FortigateElement[],
+    "action": 'accept' | 'deny',
+    "nat64": 'enable' | 'disable',
+    "nat46": 'enable' | 'disable',
+    "srcaddr"?: FortigateElement[],
+    "dstaddr"?: FortigateElement[],
+    "srcaddr6"?: FortigateElement[],
+    "dstaddr6"?: FortigateElement[],
+    "service": FortigateElement[],
+    "ztna-status"?: 'enable' | 'disable',
+    "ztna-ems-tag"?:[
+    ],
+    "ztna-geo-tag"?:[
+    ],
+    "internet-service"?: 'enable' | 'disable',
+    "internet-service-name"?:[
+    ],
+    "internet-service-group"?:[
+    ],
+    "internet-service-custom"?:[
+    ],
+    "internet-service-custom-group"?:[
+    ],
+    "internet-service-src"?: 'enable' | 'disable',
+    "internet-service-src-name"?:[
+    ],
+    "internet-service-src-group"?:[
+    ],
+    "internet-service-src-custom"?:[
+    ],
+    "internet-service-src-custom-group"?:[
+    ],
+    "reputation-minimum"?:0,
+    "reputation-direction"?:"destination",
+    "src-vendor-mac"?:[
+    ],
+    "rtp-nat"?: 'enable' | 'disable',
+    "rtp-addr"?:[
+    ],
+    "send-deny-packet"?: 'enable' | 'disable',
+    "firewall-session-dirty"?:"check-all",
+    "schedule"?: 'always',
+    "schedule-timeout"?: 'enable' | 'disable',
+    "tos"?: string,
+    "tos-mask"?: string,
+    "tos-negate"?: 'enable' | 'disable',
+    "anti-replay"?: 'enable' | 'disable',
+    "tcp-session-without-syn"?: 'enable' | 'disable',
+    "geoip-anycast"?: 'enable' | 'disable',
+    "geoip-match"?:"physical-location",
+    "dynamic-shaping"?: 'enable' | 'disable',
+    "passive-wan-health-measurement"?: 'enable' | 'disable',
+    "utm-status"?: 'enable' | 'disable',
+    "inspection-mode"?: string,
+    "http-policy-redirect"?: 'enable' | 'disable',
+    "ssh-policy-redirect"?: 'enable' | 'disable',
+    "webproxy-profile"?: string,
+    "profile-type"?: string,
+    "profile-group"?: string,
+    "profile-protocol-options"?: 'string',
+    "ssl-ssh-profile"?: 'string',
+    "av-profile"?: string,
+    "webfilter-profile"?: string,
+    "dnsfilter-profile"?: string,
+    "emailfilter-profile"?: string,
+    "dlp-sensor"?: string,
+    "file-filter-profile"?: string,
+    "ips-sensor"?: string,
+    "application-list"?: string,
+    "voip-profile"?: string,
+    "sctp-filter-profile"?: string,
+    "icap-profile"?: string,
+    "cifs-profile"?: string,
+    "videofilter-profile"?: string,
+    "waf-profile"?: string,
+    "ssh-filter-profile"?: string,
+    "logtraffic"?: string,
+    "logtraffic-start"?: 'enable' | 'disable',
+    "auto-asic-offload"?: 'enable' | 'disable',
+    "np-acceleration"?: 'enable' | 'disable',
+    "webproxy-forward-server"?: string,
+    "traffic-shaper"?: string,
+    "traffic-shaper-reverse"?: string,
+    "per-ip-shaper"?: string,
+    "nat"?: 'enable' | 'disable',
+    "permit-any-host"?: 'enable' | 'disable',
+    "permit-stun-host"?: 'enable' | 'disable',
+    "fixedport"?: 'enable' | 'disable',
+    "ippool"?: 'enable' | 'disable',
+    "poolname"?:[
+    ],
+    "poolname6"?:[
+    ],
+    "session-ttl"?: string,
+    "vlan-cos-fwd"?: number,
+    "vlan-cos-rev"?: number,
+    "inbound"?: 'enable' | 'disable',
+    "outbound"?: 'enable' | 'disable',
+    "natinbound"?: 'enable' | 'disable',
+    "natoutbound"?: 'enable' | 'disable',
+    "wccp"?: 'enable' | 'disable',
+    "ntlm"?: 'enable' | 'disable',
+    "ntlm-guest"?: 'enable' | 'disable',
+    "ntlm-enabled-browsers"?:[
+    ],
+    "fsso-agent-for-ntlm"?:"",
+    "groups"?: FortigateElement[],
+    "users"?: FortigateElement[],
+    "fsso-groups"?: FortigateElement[],
+    "auth-path"?: 'enable' | 'disable',
+    "disclaimer"?: 'enable' | 'disable',
+    "email-collect"?: 'enable' | 'disable',
+    "vpntunnel"?: string,
+    "natip"?: string,
+    "match-vip"?: 'enable' | 'disable',
+    "match-vip-only"?: 'enable' | 'disable',
+    "diffserv-forward"?: 'enable' | 'disable',
+    "diffserv-reverse"?: 'enable' | 'disable',
+    "diffservcode-forward"?: string,
+    "diffservcode-rev"?: string,
+    "tcp-mss-sender"?:0,
+    "tcp-mss-receiver"?:0,
+    "comments"?: string,
+    "label"?: string,
+    "global-label"?: string,
+    "auth-cert"?: string,
+    "auth-redirect-addr"?: string,
+    "redirect-url"?: string,
+    "identity-based-route"?: string,
+    "block-notification"?: 'enable' | 'disable',
+    "custom-log-fields"?:[
+    ],
+    "replacemsg-override-group"?: string,
+    "srcaddr-negate"?: 'enable' | 'disable',
+    "dstaddr-negate"?: 'enable' | 'disable',
+    "service-negate"?: 'enable' | 'disable',
+    "internet-service-negate"?: 'enable' | 'disable',
+    "internet-service-src-negate"?: 'enable' | 'disable',
+    "timeout-send-rst"?: 'enable' | 'disable',
+    "captive-portal-exempt"?: 'enable' | 'disable',
+    "decrypted-traffic-mirror"?: string,
+    "dsri"?: 'enable' | 'disable',
+    "radius-mac-auth-bypass"?: 'enable' | 'disable',
+    "delay-tcp-npu-session"?: 'enable' | 'disable',
+    "vlan-filter"?: string,
+    "sgt-check"?: 'enable' | 'disable',
+    "sgt"?:[
+    ]
+}
+
+// Future common types
+
 // Response types
 
 export interface FortiResponse<PayloadType> {
@@ -300,7 +467,6 @@ export interface FortiTrafficStat {
     }[],
 }
 
-
 // Intended to abstract OpenConnect VPNs (Cisco, Juniper, Fortigate, etc..)
 export interface OpenConnectVPN {
     minTLSProtocol?: 'tls1.0' | 'tls1.1' | 'tls1.2' | 'tls1.3'
@@ -309,7 +475,7 @@ export interface OpenConnectVPN {
     bannedCipher?: string,
     sessionTTL: number,
     listenPort: number,
-
+    
     // Below is prone to change, stay tuned!
     authServerId: {
         serverId: string,

@@ -1,5 +1,6 @@
+import https from 'https';
 import axios, { AxiosInstance } from 'axios';
-import { AuthError, UnsupportedFeatureError } from '../../error/MarilError';
+import { AuthError, InvalidParameterError, MethodNotImplementedError, UnsupportedFeatureError } from '../../error/MarilError';
 import { NetTester } from '../efm/monitor/NetTester';
 import { ControllerFactory as GenericControllerFactory } from '../generic/lib';
 import { Logman } from './Logman';
@@ -11,26 +12,61 @@ import { RouteConfigurator as FortigateRouteConfigurator } from './RouteConfigur
 import { SwitchQoS } from '../generic/SwitchQoS';
 import { FirewallConfigurator } from './FirewallConfigurator';
 import { FortiTrafficStatMonitor } from './monitor/TrafficStat';
+import { FortiAuthToken } from './util/types';
+import { logger } from '../../util/logger';
 
 export class ControllerFactory extends GenericControllerFactory {
     private api: AxiosInstance;
-    private apiToken: string | undefined;
+    private apiToken: FortiAuthToken | undefined;
+    private baseURL: string;
 
     constructor(deviceaddress: string) {
         super(deviceaddress);
-        
-        this.api = axios.create({
-            baseURL: deviceaddress,
-        });
+        this.baseURL = deviceaddress;
+        this.api = axios.create(); // Dummy.
     }
 
-    public async authenticate(token: string): Promise<void> {
+    public async authenticate(token: FortiAuthToken): Promise<void> {
         this.apiToken = token;
-        this.api.defaults.headers['Authorization'] = `Bearer ${this.apiToken}`
+
+        switch(this.apiToken.type) {
+            case 'token':
+                if (typeof this.apiToken.credential !== 'string') {
+                    throw new InvalidParameterError('Bad credential type');
+                }
+
+                this.api = axios.create({
+                    baseURL: this.baseURL,
+                    httpsAgent: new https.Agent({
+                        ca: this.apiToken.ca,
+                        rejectUnauthorized: !this.apiToken.allowInvalidCertificate,
+                    }),
+                });
+                this.api.defaults.headers['Authorization'] = `Bearer ${this.apiToken.credential as string}`;
+                break;
+            case 'pki':
+                if (typeof this.apiToken.credential === 'string') {
+                    throw new InvalidParameterError('Bad credential type');
+                }
+
+                this.api = axios.create({
+                    baseURL: this.baseURL,
+                    httpsAgent: new https.Agent({
+                        ca: this.apiToken.ca,
+                        cert: this.apiToken.credential.cert,
+                        key: this.apiToken.credential.key,
+                    }),
+                });
+                break;
+            default:
+                throw new UnsupportedFeatureError(`Unsupproted token type ${this.apiToken.type}`);
+        }
 
         try {
-            await this.api.get('/api/v2/monitor/system/debug');
+            await this.api.get('/api/v2/monitor/web-ui/extend-session');
         } catch(e) {
+            logger.warning('Auth rejected.');
+            logger.warning(e);
             // Failed to auth. :(
             throw new AuthError('Token rejected.');
         }
@@ -41,11 +77,11 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getWLANConfigurator(deviceId?: string): WLANConfigurator {
-        throw new Error('Feature not supported');
+        throw new UnsupportedFeatureError('Feature not supported');
     }
 
     public getWLANUserDeviceStat(deviceId?: string): WLANUserDeviceStat {
-        throw new Error('Feature not supported');
+        throw new UnsupportedFeatureError('Feature not supported');
     }
 
     public getSwitchConfigurator(deviceId?: string): SwitchConfigurator {
@@ -61,7 +97,7 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getNetTester(deviceId?: string): NetTester {
-        throw new Error('Feature not supported');
+        throw new UnsupportedFeatureError('Feature not supported');
     }
 
     public getSwitchQoS(deviceId?: string): SwitchQoS {
@@ -69,7 +105,7 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getQoSConfigurator(): FortigateQoS {
-        throw new Error('Method not implemented.');
+        throw new MethodNotImplementedError('Method not implemented.');
     }
 
     public getRouteConfigurator(): FortigateRouteConfigurator {

@@ -91,7 +91,7 @@ export class CiscoSSHClient {
         }
         this.sshStream.removeAllListeners('error');
         this.sshStream.on('error', e => {
-            logger.warn(e);
+            logger.warning(e);
         }); // Eat up the error. Bad bad cisco
         // TODO: FIXME
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
