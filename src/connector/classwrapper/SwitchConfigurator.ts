@@ -1,9 +1,7 @@
 import { EthernetPort as CiscoEthernetPort } from '../../driver/cisco/EthernetPort';
-import { EthernetPort as EFMEthernetPort } from '../../driver/efm/EthernetPort';
 import { EthernetPort as GenericEthernetPort } from '../../driver/generic/EthernetPort';
 import { VLAN as GenericVLAN } from '../../driver/generic/VLAN';
 import { VLAN as CiscoVLAN } from '../../driver/cisco/VLAN';
-import { VLAN as EFMVLAN } from '../../driver/efm/VLAN';
 import { SwitchConfigurator as GenericSwitchConfigurator } from '../../driver/generic/SwitchConfigurator';
 import { RPCProvider } from '../jsonrpcv2';
 
@@ -127,6 +125,7 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
             class: 'SwitchConfigurator',
             method: 'getVLAN',
             params: [vid],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         })) as {[key: string]: any} | null;
 
         if (ret != null) {

@@ -76,31 +76,31 @@ export class ControllerFactory extends GenericControllerFactory {
         // Do nothing.
     }
 
-    public getWLANConfigurator(deviceId?: string): WLANConfigurator {
+    public getWLANConfigurator(): WLANConfigurator {
         throw new UnsupportedFeatureError('Feature not supported');
     }
 
-    public getWLANUserDeviceStat(deviceId?: string): WLANUserDeviceStat {
+    public getWLANUserDeviceStat(): WLANUserDeviceStat {
         throw new UnsupportedFeatureError('Feature not supported');
     }
 
-    public getSwitchConfigurator(deviceId?: string): SwitchConfigurator {
+    public getSwitchConfigurator(): SwitchConfigurator {
         return new SwitchConfigurator(this.api);
     }
 
-    public getLogman(deviceId?: string): Logman {
+    public getLogman(): Logman {
         return new Logman(this.api);
     }
 
-    public getFirewallConfigurator(deviceId?: string): FirewallConfigurator {
+    public getFirewallConfigurator(): FirewallConfigurator {
         return new FirewallConfigurator(this.api);
     }
 
-    public getNetTester(deviceId?: string): NetTester {
+    public getNetTester(): NetTester {
         throw new UnsupportedFeatureError('Feature not supported');
     }
 
-    public getSwitchQoS(deviceId?: string): SwitchQoS {
+    public getSwitchQoS(): SwitchQoS {
         throw new UnsupportedFeatureError('Feature not supported');
     }
 

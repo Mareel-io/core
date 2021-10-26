@@ -13,7 +13,7 @@ import path from 'path';
 import fs from 'fs';
 
 import YAML from 'yaml';
-import { MethodNotAvailableError, RPCProvider, RPCReturnType, RPCv2Request } from '../connector/jsonrpcv2';
+import { RPCProvider, RPCReturnType, RPCv2Request } from '../connector/jsonrpcv2';
 import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/SwitchConfigurator';
 import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
 import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
@@ -26,23 +26,23 @@ import { ConnectorClientConfig, ConnectorDevice } from '../types/lib';
 import { logger } from '../util/logger';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
-    for(const p in o1){
-        if(Object.prototype.hasOwnProperty.call(o1, p)){
-            if(o1[p] !== o2[p]){
-                return false;
-            }
-        }
-    }
-    for(const p in o2){
-        if(Object.prototype.hasOwnProperty.call(o2, p)){
-            if(o1[p] !== o2[p]){
-                return false;
-            }
-        }
-    }
-    return true;
-}
+//function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
+//    for(const p in o1){
+//        if(Object.prototype.hasOwnProperty.call(o1, p)){
+//            if(o1[p] !== o2[p]){
+//                return false;
+//            }
+//        }
+//    }
+//    for(const p in o2){
+//        if(Object.prototype.hasOwnProperty.call(o2, p)){
+//            if(o1[p] !== o2[p]){
+//                return false;
+//            }
+//        }
+//    }
+//    return true;
+//}
 
 function compareConfig (c1: {[key: string]: ConnectorDevice}, c2: {[key: string]: ConnectorDevice}) {
     const k1 = Object.keys(c1);
@@ -59,7 +59,7 @@ function compareConfig (c1: {[key: string]: ConnectorDevice}, c2: {[key: string]
     return true;
 }
 
-export async function svcmain() {
+export async function svcmain(): Promise<void> {
     const args = arg({
         '--config': String,
         '--devicedb': String,
@@ -100,7 +100,7 @@ export async function svcmain() {
         process.exit(-1);
     });
 
-    process.on('exit', (e) => {
+    process.on('exit', () => {
         connectorClient.stopSvcs();
     });
 
@@ -147,6 +147,7 @@ export class ConnectorClient {
         this.deviceMap = this.devices.reduce((obj, elem) => {
             obj[elem.id] = elem;
             return obj;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         }, {} as {[key: string]: any});
 
         // Essential services
@@ -201,10 +202,12 @@ export class ConnectorClient {
                 this.client?.removeAllListeners('open');
                 //ful(rpc);
             });
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const rpc = new RPCProvider(this.client!, this.config.client.timeout.callTimeout);
             const timer = setTimeout(() => {
                 rej(new MarilRPCTimeoutError('Timed out!'));
             }, this.config.client.timeout.callTimeout);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             rpc.addRequestHandler(async (req: RPCv2Request): Promise<RPCReturnType<any>> => {
                 clearTimeout(timer);
                 if (req.class != 'hwconfig' || req.method != 'updateConfig') {
@@ -218,6 +221,7 @@ export class ConnectorClient {
                 this.deviceMap = configs.reduce((obj, elem) => {
                     obj[elem.id] = elem;
                     return obj;
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 }, {} as {[key: string]: any});
 
                 if (!compareConfig(oldMap, this.deviceMap)) {

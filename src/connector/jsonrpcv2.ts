@@ -1,5 +1,4 @@
-import { Duplex, EventEmitter } from 'stream';
-import {Parser, parser} from 'stream-json';
+import { EventEmitter } from 'stream';
 import WebSocket from 'ws';
 import { MarilError, MarilRPCError, MarilRPCTimeoutError } from '../error/MarilError';
 import { logger } from '../util/logger';

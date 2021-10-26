@@ -55,7 +55,7 @@ export class RPCSwitchQoS extends GenericSwitchQoS {
             target: this.targetId,
             class: 'SwitchQoS',
             method: 'setQueuePriority',
-            params: [],
+            params: [wrr],
         });
     }
 
@@ -69,7 +69,7 @@ export class RPCSwitchQoS extends GenericSwitchQoS {
             target: this.targetId,
             class: 'SwitchQoS',
             method: 'setStrictPriorityQ',
-            params: [],
+            params: [idx],
         });
     }
 
