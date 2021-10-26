@@ -32,7 +32,7 @@ export class RPCWLANConfigurator extends WLANConfigurator {
     /**
      * Get WLAN device configuration
      * 
-     * @param devname WLAN device name
+     * @param devname - WLAN device name
      * @returns WLAN device configuration
      */
     public async getDeviceCfg(devname: string): Promise<WLANDevConfiguration> {
@@ -52,8 +52,8 @@ export class RPCWLANConfigurator extends WLANConfigurator {
     /**
      * Apply WLAN device configuration to specific WLAN device
      * 
-     * @param devname WLAN device name
-     * @param cfg WLAN device configuration
+     * @param devname - WLAN device name
+     * @param cfg - WLAN device configuration
      */
     public async setDeviceCfg(devname: string, cfg: WLANDevConfiguration): Promise<void> {
         await this.rpc.remoteCall({
@@ -68,8 +68,8 @@ export class RPCWLANConfigurator extends WLANConfigurator {
     /**
      * Get specific interface configuration using wlan devname and ifname
      * 
-     * @param devname WLAN device which holds given interface
-     * @param ifname WLAN interface which belongs to given WLAN device
+     * @param devname - WLAN device which holds given interface
+     * @param ifname - WLAN interface which belongs to given WLAN device
      * @returns WLAN interface configuration
      */
     public async getIFaceCfg(devname: string, ifname: string): Promise<WLANIFaceCfg> {
@@ -89,9 +89,9 @@ export class RPCWLANConfigurator extends WLANConfigurator {
     /**
      * Apply given config to given WLAN interface.
      * 
-     * @param devname WLAN device which holds given interface
-     * @param ifname WLAN interface which belongs to given WLAN device
-     * @param cfg WLAN interface configuration
+     * @param devname - WLAN device which holds given interface
+     * @param ifname - WLAN interface which belongs to given WLAN device
+     * @param cfg - WLAN interface configuration
      */
     public async setIFaceCfg(devname: string, ifname: string, cfg: WLANIFaceCfg): Promise<void> {
         await this.rpc.remoteCall({

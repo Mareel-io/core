@@ -47,7 +47,7 @@ export class RPCSwitchQoS extends GenericSwitchQoS {
 
     /**
      * Set Queue priority
-     * @param wrr WRR numbers. array length should not exceed 8
+     * @param wrr - WRR numbers. array length should not exceed 8
      */
     public async setQueuePriority(wrr: number[]): Promise<void> {
         await this.rpc.remoteCall({
@@ -61,7 +61,7 @@ export class RPCSwitchQoS extends GenericSwitchQoS {
 
     /**
      * Set strict priority mode for 
-     * @param idx Queue index
+     * @param idx - Queue index
      */
     public async setStrictPriorityQ(idx: number): Promise<void> {
         await this.rpc.remoteCall({
@@ -104,7 +104,7 @@ export class RPCSwitchQoS extends GenericSwitchQoS {
 
     /**
      * Set DSCP to Q Map
-     * @param map DSCP Map
+     * @param map - DSCP Map
      */
     public async setDSCPMap(map: DSCPMap): Promise<void> {
         await this.rpc.remoteCall({
@@ -118,7 +118,7 @@ export class RPCSwitchQoS extends GenericSwitchQoS {
 
     /**
      * Set CoS to Q Map
-     * @param map CoS Map
+     * @param map - CoS Map
      */
     public async setCoSMap(map: CoSMap): Promise<void> {
         await this.rpc.remoteCall({

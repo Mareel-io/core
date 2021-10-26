@@ -77,8 +77,8 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     /**
      * Configure specific switch port
      * 
-     * @param port Configured EthernetPort object
-     * @param portIdx Target port which EthernetPort configuration applied.
+     * @param port - Configured EthernetPort object
+     * @param portIdx - Target port which EthernetPort configuration applied.
      * @returns 
      */
     public async setSwitchPort(port: GenericEthernetPort, portIdx: number): Promise<void> {
@@ -117,7 +117,7 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     /**
      * Get specific VLAN using VID
      * 
-     * @param vid VLAN ID
+     * @param vid - VLAN ID
      * @returns VLAN or NULL if there is no VLAN available in given VID
      */
     public async getVLAN(vid: number): Promise<GenericVLAN | null> {
@@ -141,7 +141,7 @@ export class RPCSwitchConfigurator extends GenericSwitchConfigurator {
     /**
      * Set specific vlan using VLAN object
      * 
-     * @param vlan VLAN object want to modify/create
+     * @param vlan - VLAN object want to modify/create
      */
     public async setVLAN(vlan: GenericVLAN): Promise<void> {
         return (await this.rpc.remoteCall({

@@ -16,8 +16,8 @@ export class RPCWLANUserDeviceStat extends WLANUserDeviceStat {
     /**
      * Get STAs connected to given WLAN interface
      * 
-     * @param devname WLAN device name
-     * @param ifname WLAN interface name
+     * @param devname - WLAN device name
+     * @param ifname - WLAN interface name
      * @returns List of currently connected STAs
      */
     public async getUserDevices(devname: string, ifname: string): Promise<User80211Device[]> {

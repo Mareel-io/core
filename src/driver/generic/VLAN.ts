@@ -30,7 +30,7 @@ export class VLAN {
     /**
      * Restores its state into object.
      * Do not fiddle with this. Not guaranteed to be stable
-     * @param restoreData state from serialize()
+     * @param restoreData - state from serialize()
      */
     public restore(restoreData: {[key: string]: any}) {
         this.members = restoreData.members;

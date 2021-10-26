@@ -11,8 +11,14 @@ export class SwitchConfigurator extends GenericSwitchConfigurator {
         this.api = api;
     }
 
-    public getSwitchPorts(): Promise<EthernetPort[]> {
-        throw new Error("Method not implemented.");
+    public async getInterfaces(): Promise<void> {
+        const apiResult = await this.api.get('/api/v2/cmdb/system/interface');
+        //
+    }
+
+    public async getSwitchPorts(): Promise<EthernetPort[]> {
+        const apiResult = await this.api.get('/api/v2/cmdb/system/virtual-switch');
+        throw new Error('WIP');
     }
 
     public setSwitchPort(port: EthernetPort, portIdx: number): Promise<void> {
