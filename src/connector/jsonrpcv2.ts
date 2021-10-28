@@ -2,6 +2,7 @@ import { EventEmitter } from 'stream';
 import WebSocket from 'ws';
 import { MarilError, MarilRPCError, MarilRPCTimeoutError } from '../error/MarilError';
 import { logger } from '../util/logger';
+import R from 'ramda';
 
 export interface RPCv2Request {
     jsonrpc: '2.0',
@@ -48,7 +49,13 @@ export class RPCProvider extends EventEmitter {
 
         this.stream.on('message', (msg: Buffer) => {
             const json = msg.toString('utf-8');
-            const chunk = JSON.parse(json);
+            const chunk = R.tryCatch(() => {
+                return JSON.parse(json);
+            }, (e) => {
+                logger.crit('Failed to parse the command');
+                logger.crit(json);
+                this.emit('error', new MarilRPCError('Invalid payload format'));
+            })();
             logger.debug('RECV');
             logger.debug(chunk);
 
