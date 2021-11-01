@@ -2778,10 +2778,10 @@ ssh2@^0.8.9:
   dependencies:
     ssh2-streams "~0.4.10"
 
-ssh2@^1.1.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/ssh2/-/ssh2-1.4.0.tgz#e32e8343394364c922bad915a5a7fecd67d0f5c5"
-  integrity sha512-XvXwcXKvS452DyQvCa6Ct+chpucwc/UyxgliYz+rWXJ3jDHdtBb9xgmxJdMmnIn5bpgGAEV3KaEsH98ZGPHqwg==
+ssh2@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/ssh2/-/ssh2-1.5.0.tgz#4dc559ba98a1cbb420e8d42998dfe35d0eda92bc"
+  integrity sha512-iUmRkhH9KGeszQwDW7YyyqjsMTf4z+0o48Cp4xOwlY5LjtbIAvyd3fwnsoUZW/hXmTCRA3yt7S/Jb9uVjErVlA==
   dependencies:
     asn1 "^0.2.4"
     bcrypt-pbkdf "^1.0.2"
