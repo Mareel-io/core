@@ -39,13 +39,18 @@ export class CiscoTFTPUtil {
         }
     }
 
-    public async fetchFile(path: string): Promise<Buffer> {
+    public async fetchFile(path: string, type?: string): Promise<Buffer> {
         const filename = `${uuidv4()}`;
         await this.ssh.connect();
         const retprom: Promise<Buffer> = this.waitForFile(filename);
         const tftpURL: string = this.tftpServer.getCiscoTFTPURL(filename);
         try {
-            await this.ssh.runCiscoCommand(`copy ${path} ${tftpURL}`);
+            let cmd = 'copy ';
+            if (type != null) {
+                cmd += `${type} `;
+            }
+            cmd += `${path} ${tftpURL}`;
+            await this.ssh.runCiscoCommand(cmd);
             return await retprom;
         } finally {
             await this.ssh.disconnect();

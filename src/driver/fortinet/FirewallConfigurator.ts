@@ -14,12 +14,18 @@ export class FirewallConfigurator extends GenericFirewallConfigurator {
         const res = await this.api.get('/api/v2/cmdb/firewall/policy');
         const fortigateElement: FortigateFirewall[] = res.data.results;
 
-        //return fortigateElement.map((elem) => {
-        //    if (elem.srcaddr == null)
-        //    return {
-        //        //
-        //    }
-        //});
+//        return fortigateElement.map((elem) => {
+//            if (elem.srcaddr == null) {
+//                //
+//            }
+//
+//            if (elem.dstaddr == null) {
+//                //
+//            }
+//            return {
+//                elem
+//            }
+//        });
         throw new Error("Method not implemented.");
     }
 

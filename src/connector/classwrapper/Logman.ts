@@ -44,7 +44,7 @@ export class RPCLogman extends GenericLogman {
             class: 'Logman',
             method: 'queryLog',
             params: [source, from, to],
-        }) as {[key: string]: string}[];
+        }, 600000) as {[key: string]: string}[];
 
         return result.map((ent): LogEntry => {
             const ln = new LogEntry(new Date(), '');

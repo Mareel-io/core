@@ -58,13 +58,11 @@ export class Logman extends GenericLogman {
                     // TODO: Implement me.
                     return new LogEntry(new Date('1970-01-01T00:00:00Z'), elem);
                 });
-                break;
             case 'ram':
                 return (await this.getRAMLog()).map((elem) => {
                     // TODO: Implement me.
                     return new LogEntry(new Date('1970-01-01T00:00:00Z'), elem);
                 });
-                break;
             default:
                 throw new InvalidParameterError(`Log storage ${source} is not supported.`);
         }

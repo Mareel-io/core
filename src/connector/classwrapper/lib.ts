@@ -139,7 +139,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
     /**
      * Get SwitchConfigurator using device ID.
      * 
-     * @param targetId device ID
+     * @param targetId - device ID
      * @returns SwitchConfigurator of given target
      */
     public getSwitchConfigurator(targetId: string): RPCSwitchConfigurator {
@@ -150,7 +150,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
     /**
      * Get SwitchQoS using device ID.
      * 
-     * @param targetId device ID
+     * @param targetId - device ID
      * @returns SwitchQoS of given target
      */
     public getSwitchQoS(targetId: string): RPCSwitchQoS {
@@ -161,7 +161,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
     /**
      * Get WLANConfigurator using device ID.
      * 
-     * @param targetId device ID
+     * @param targetId - device ID
      * @returns WLANConfigurator of given target
      */
     public getWLANConfigurator(targetId: string): RPCWLANConfigurator {
@@ -171,7 +171,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
     /**
      * Get WLANUserDeviceStat using device ID.
      * 
-     * @param targetId device ID
+     * @param targetId - device ID
      * @returns WLANUserDeviceStat of given target
      */
     public getWLANUserDeviceStat(targetId: string): RPCWLANUserDeviceStat {
@@ -181,7 +181,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
     /**
      * Get Logman using device ID.
      * 
-     * @param targetId device ID
+     * @param targetId - device ID
      * @returns Logman of given target
      */
     public getLogman(targetId: string): RPCLogman {
@@ -191,7 +191,7 @@ export class RPCControllerFactory extends GenericControllerFactory {
     /**
      * Get FirewallConfigurator using device ID.
      * 
-     * @param targetId device ID
+     * @param targetId - device ID
      * @returns FirewallConfigurator of given target
      */
     public getFirewallConfigurator(targetId: string): RPCFirewallConfigurator {

@@ -24,7 +24,7 @@ export class VLANTag {
     /**
      * Restore its state from k-v pair from. Intended for internal use.
      *
-     * @param restoreData State snapshotted using serialize()
+     * @param restoreData - State snapshotted using serialize()
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public restore(restoreData: {[key: string]: any}) {
@@ -53,9 +53,9 @@ export class VLANTag {
     /**
      * Set VLAN alias name
      * 
-     * @param alias 
+     * @param alias - alias name
      */
-    public setAlias(alias: string) {
+    public setAlias(alias: string): void {
         this.alias = alias;
     }
 }

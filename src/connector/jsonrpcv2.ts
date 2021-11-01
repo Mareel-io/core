@@ -1,8 +1,8 @@
-import { Duplex, EventEmitter } from 'stream';
-import {Parser, parser} from 'stream-json';
+import { EventEmitter } from 'stream';
 import WebSocket from 'ws';
 import { MarilError, MarilRPCError, MarilRPCTimeoutError } from '../error/MarilError';
 import { logger } from '../util/logger';
+import R from 'ramda';
 
 export interface RPCv2Request {
     jsonrpc: '2.0',
@@ -49,7 +49,13 @@ export class RPCProvider extends EventEmitter {
 
         this.stream.on('message', (msg: Buffer) => {
             const json = msg.toString('utf-8');
-            const chunk = JSON.parse(json);
+            const chunk = R.tryCatch(() => {
+                return JSON.parse(json);
+            }, (e) => {
+                logger.crit('Failed to parse the command');
+                logger.crit(json);
+                this.emit('error', new MarilRPCError('Invalid payload format'));
+            })();
             logger.debug('RECV');
             logger.debug(chunk);
 
@@ -75,11 +81,15 @@ export class RPCProvider extends EventEmitter {
             this.callId = 0;
         }
 
+
+        const timerValue = timeout != null ? timeout : this.defaultTimeout;
+        logger.info('DEBUG: Timeout is '+ timeout);
+        logger.info('DEBUG: Final timeout value is '+ timerValue);
         const ret: Promise<unknown> = new Promise((ful, rej) => {
             const timer = setTimeout(() => {
                 this.callHandlerTable[curCallId] = undefined;
                 rej(new MarilRPCTimeoutError('Timed out!'));
-            }, timeout != null ? timeout : this.defaultTimeout);
+            }, timerValue);
             this.callHandlerTable[curCallId] = (res, err) => {
                 clearTimeout(timer);
                 this.callHandlerTable[curCallId] = undefined;
