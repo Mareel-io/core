@@ -160,7 +160,7 @@ export class ConnectorClient {
 
     private handleDriverInitError(device: string, feature: string, e: MethodNotImplementedError | Error): void {
         if (e instanceof MethodNotImplementedError) {
-            logger.warn(`Device ${device} feature: ${feature} is work in progress.`);
+            logger.warning(`Device ${device} feature: ${feature} is work in progress.`);
         } if (e instanceof UnsupportedFeatureError) {
             logger.info(`Device ${device} does not support feature: ${feature}`);
         } else {
