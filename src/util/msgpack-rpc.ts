@@ -69,7 +69,7 @@ export class MsgpackRPC {
         return this.callId;
     }
 
-    protected async runRPCCommand(method: string, ...params: unknown[]): Promise<any> {
+    protected async runRPCCommandWithTimeout(method: string, timeout: number, ...params: unknown[]): Promise<any> {
         if (this.socket == null) {
             throw new Error('RPC not connected!');
         }
@@ -85,7 +85,6 @@ export class MsgpackRPC {
         ];
 
         const retprom = new Promise((ful, rej) => {
-            const timeout = 30000;
             const timer = setTimeout(() => {
                 rej(new MarilRPCTimeoutError('Timed out!'));
             }, timeout);
@@ -101,5 +100,9 @@ export class MsgpackRPC {
 
         this.socket.write(msgpack.encode(cmd));
         return retprom;
+    }
+
+    protected async runRPCCommand(method: string, ...params: unknown[]): Promise<any> {
+        return await this.runRPCCommandWithTimeout(method, 30000, ...params);
     }
 }

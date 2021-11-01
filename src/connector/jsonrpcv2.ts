@@ -81,11 +81,15 @@ export class RPCProvider extends EventEmitter {
             this.callId = 0;
         }
 
+
+        const timerValue = timeout != null ? timeout : this.defaultTimeout;
+        logger.info('DEBUG: Timeout is '+ timeout);
+        logger.info('DEBUG: Final timeout value is '+ timerValue);
         const ret: Promise<unknown> = new Promise((ful, rej) => {
             const timer = setTimeout(() => {
                 this.callHandlerTable[curCallId] = undefined;
                 rej(new MarilRPCTimeoutError('Timed out!'));
-            }, timeout != null ? timeout : this.defaultTimeout);
+            }, timerValue);
             this.callHandlerTable[curCallId] = (res, err) => {
                 clearTimeout(timer);
                 this.callHandlerTable[curCallId] = undefined;
