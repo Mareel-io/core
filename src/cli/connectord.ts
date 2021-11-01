@@ -164,6 +164,8 @@ export class ConnectorClient {
         } if (e instanceof UnsupportedFeatureError) {
             logger.info(`Device ${device} does not support feature: ${feature}`);
         } else {
+            logger.error(`Unhandled error occured in device ${device}`);
+            logger.error(e);
             throw e;
         }
     }
