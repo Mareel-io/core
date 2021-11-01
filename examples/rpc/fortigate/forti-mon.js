@@ -9,8 +9,7 @@ wss.on('connection', async function connection(ws) {
     console.log('Connected.');
     const rpcControllerFactory = new mareel.RPCControllerFactory(ws, [{
         id: 'e0716e17-23b9-448d-8de9-3fa5c8b95967',
-        addr: 'https://192.168.1.99:443',
-        //addr: 'https://192.168.1.99:443',
+        addr: 'https://127.0.0.1:8443',
         type: 'fortinet',
         credential: {
             type: 'token',
@@ -33,7 +32,7 @@ wss.on('connection', async function connection(ws) {
 
     const devices = rpcControllerFactory.getDevices();
 
-    const logman = rpcControllerFactory.getLogman(devices[0].id);
-    const logs = await logman.queryLog('system');
-    console.log(logs);
+    const trafficstat = rpcControllerFactory.getTrafficStatMonitor(devices[0].id);
+    const res = await trafficstat.getTrafficStat();
+    console.log(res);
 });

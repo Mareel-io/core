@@ -48,6 +48,6 @@ wss.on('connection', async function connection(ws) {
     const logman = rpcControllerFactory.getLogman(devices[0].id);
     const logsrc = await logman.getAvailableSources();
     console.log(logsrc);
-    const log = logman.queryLog('flash');
+    const log = await logman.queryLog('ram');
     console.log(log);
 });
