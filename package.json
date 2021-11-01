@@ -80,7 +80,7 @@
     "qs": "^6.9.4",
     "ramda": "^0.27.1",
     "source-map-support": "^0.5.19",
-    "ssh2": "^1.1.0",
+    "ssh2": "^1.5.0",
     "stream-json": "^1.7.1",
     "tftp": "git://github.com/Mareel-io/node-tftp.git#staging",
     "ts-custom-error": "^3.2.0",
