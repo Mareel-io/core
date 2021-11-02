@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { InvalidParameterError } from "../../../error/MarilError";
 import { TrafficStat, TrafficStatMonitor } from "../../generic/monitor/TrafficStatMonitor";
 import { FortiResponse, FortiTrafficStat } from "../util/types";
 
@@ -11,17 +12,20 @@ export class FortiTrafficStatMonitor extends TrafficStatMonitor
         this.api = api;
     }
 
-    public async getTrafficStat(): Promise<TrafficStat[]> {
-        // TODO: Polish me
+    public async getTrafficStat(direction = 'in'): Promise<TrafficStat[]> {
+        if (direction != 'in' && direction != 'out') {
+            throw new InvalidParameterError(`Unknown direction: ${direction}`)
+        }
+        const repby = direction === 'in' ? 'source' : 'destination';
         const result = await this.api.get('/api/v2/monitor/fortiview/statistics', {
             params: {
                 vdom: 'root',
                 count: 300,
                 device: 'disk',
-                filter: JSON.stringify({}),
+                filter: JSON.stringify({"srcintfrole":["lan","dmz","undefined"]}),
                 ip_version: 'ipboth',
                 realtime: true,
-                report_by: 'destination',
+                report_by: repby,
                 sort_by: 'bytes',
             }
         });
