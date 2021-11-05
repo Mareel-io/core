@@ -18,7 +18,7 @@ import { SwitchConfiguratorReqHandler } from '../connector/requesthandler/Switch
 import { WLANConfiguratorReqHandler } from '../connector/requesthandler/WLANConfigurator';
 import { FirewallConfiguratorReqHandler } from '../connector/requesthandler/FirewallConfigurator';
 import { LogmanReqHandler } from '../connector/requesthandler/Logman';
-import { MarilError, MarilRPCTimeoutError, MethodNotImplementedError, UnsupportedFeatureError } from '../error/MarilError';
+import { AuthError, MarilError, MarilRPCTimeoutError, MethodNotImplementedError, UnsupportedFeatureError } from '../error/MarilError';
 import { WLANUserDeviceStatReqHandler } from '../connector/requesthandler/WLANUserDeviceStat';
 import { SwitchQoSReqHandler } from '../connector/requesthandler/SwitchQoS';
 import { RouteConfiguratorReqHandler } from '../connector/requesthandler/RouteConfigurator';
@@ -164,10 +164,12 @@ export class ConnectorClient {
             logger.warning(`Device ${device} feature: ${feature} is work in progress.`);
         } else if (e instanceof UnsupportedFeatureError) {
             logger.info(`Device ${device} does not support feature: ${feature}`);
+        } else if (e instanceof AuthError) {
+            logger.warning(`Device ${device} failed to authenticate. Please check credential.`);
         } else {
             logger.error(`Unhandled error occured in device ${device}`);
             logger.error(e);
-            throw e;
+            //throw e;
         }
     }
 
