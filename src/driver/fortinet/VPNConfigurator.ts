@@ -7,7 +7,7 @@ import { VPNConfigurator as GenericVPNConfigurator } from "../generic/VPNConfigu
 // https://192.168.1.99/api/v2/cmdb/vpn.ssl/settings
 // /api/v2/cmdb/vpn.ssl.web/portal
 
-export class VPNConfigurator extends GenericVPNConfigurator {
+export class FortiVPNConfigurator extends GenericVPNConfigurator {
     private api: AxiosInstance;
     constructor(api: AxiosInstance) {
         super();

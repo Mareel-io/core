@@ -6,6 +6,7 @@ import { TrafficStatMonitor } from "./monitor/TrafficStatMonitor";
 import { RouteConfigurator } from "./RouteConfigurator";
 import { SwitchConfigurator } from "./SwitchConfigurator";
 import { SwitchQoS } from "./SwitchQoS";
+import { VPNConfigurator } from "./VPNConfigurator";
 import { WLANConfigurator } from "./wlan";
 import { WLANUserDeviceStat } from "./WLANUserDeviceStat";
 
@@ -42,4 +43,5 @@ export abstract class ControllerFactory {
     public abstract getRouteConfigurator(deviceId?: string): RouteConfigurator;
     public abstract getTrafficStatMonitor(deviceId?: string): TrafficStatMonitor;
     public abstract getAuthConfigurator(deviceId?: string): GenericAuthConfigurator;
+    public abstract getVPNConfigurator(deviceId?: string): VPNConfigurator;
 }

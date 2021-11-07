@@ -26,6 +26,7 @@ import { ConnectorClientConfig, ConnectorDevice } from '../types/lib';
 import { logger } from '../util/logger';
 import { TrafficStatMonitorReqHandler } from '../connector/requesthandler/TrafficStatMonitor';
 import { AuthConfiguratorReqHandler } from '../connector/requesthandler/AuthConfiguratorRequestHandler';
+import { VPNConfiguratorReqHandler } from '../connector/requesthandler/VPNConfigurator';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 //function compareObject (o1: {[key: string]: any}, o2: {[key: string]: any}){
@@ -381,6 +382,14 @@ export class ConnectorClient {
                 this.rpc.addRequestHandler(authConfiguratorReqHandler.getRPCHandler());
             } catch(e) {
                 this.handleDriverInitError(id, 'AuthConfiguratorReqHandler', e as Error);
+            }
+
+            try {
+                const vpnConfiguratorReqHandler = new VPNConfiguratorReqHandler(id, genericControllerFactory.getVPNConfigurator());
+                await vpnConfiguratorReqHandler.init();
+                this.rpc.addRequestHandler(vpnConfiguratorReqHandler.getRPCHandler());
+            } catch(e) {
+                this.handleDriverInitError(id, 'VPNConfiguratorReqHandler', e as Error);
             }
         }
     }

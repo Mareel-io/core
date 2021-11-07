@@ -16,6 +16,7 @@ import { SwitchQoS as CiscoSwitchQoS } from './SwitchQoS';
 import { RouteConfigurator } from '../generic/RouteConfigurator';
 import { TrafficStatMonitor } from '../generic/monitor/TrafficStatMonitor';
 import { GenericAuthConfigurator } from '../generic/AuthConfigurator';
+import { VPNConfigurator } from '../generic/VPNConfigurator';
 
 export interface CiscoCredential {
     snmpCredential: SNMPClientConfig,
@@ -110,6 +111,10 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getAuthConfigurator(): GenericAuthConfigurator{
+        throw new MethodNotImplementedError();
+    }
+
+    public getVPNConfigurator(): VPNConfigurator {
         throw new MethodNotImplementedError();
     }
 }
