@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AuthConfigurator | @mareel/core</title>
+	<title>RPCAuthConfigurator | @mareel/core</title>
 	<meta name="description" content="Documentation for @mareel/core">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">@mareel/core</a>
 				</li>
 				<li>
-					<a href="../modules/driver_fortinet_AuthConfigurator.html">driver/fortinet/AuthConfigurator</a>
+					<a href="../modules/connector_classwrapper_AuthConfigurator.html">connector/classwrapper/AuthConfigurator</a>
 				</li>
 				<li>
-					<a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html">AuthConfigurator</a>
+					<a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html">RPCAuthConfigurator</a>
 				</li>
 			</ul>
-			<h1>Class AuthConfigurator</h1>
+			<h1>Class RPCAuthConfigurator</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">AuthConfigurator</span>
+						<a href="driver_generic_AuthConfigurator.GenericAuthConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">GenericAuthConfigurator</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">RPCAuthConfigurator</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -83,21 +88,22 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#api" class="tsd-kind-icon">api</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#rpc" class="tsd-kind-icon">rpc</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#targetId" class="tsd-kind-icon">target<wbr>Id</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#addRADIUSServer" class="tsd-kind-icon">addRADIUSServer</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#deleteRADIUSServer" class="tsd-kind-icon">deleteRADIUSServer</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#getRADIUSServers" class="tsd-kind-icon">getRADIUSServers</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#addRADIUSServer" class="tsd-kind-icon">addRADIUSServer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#deleteRADIUSServer" class="tsd-kind-icon">deleteRADIUSServer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#getRADIUSServers" class="tsd-kind-icon">getRADIUSServers</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,26 +111,30 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Auth<wbr>Configurator<span class="tsd-signature-symbol">(</span>api<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AxiosInstance</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">AuthConfigurator</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new RPCAuth<wbr>Configurator<span class="tsd-signature-symbol">(</span>rpc<span class="tsd-signature-symbol">: </span><a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a>, targetId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">RPCAuthConfigurator</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="driver_generic_AuthConfigurator.GenericAuthConfigurator.html">GenericAuthConfigurator</a>.<a href="driver_generic_AuthConfigurator.GenericAuthConfigurator.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6713f93/src/driver/fortinet/AuthConfigurator.ts#L15">src/driver/fortinet/AuthConfigurator.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/4e605f4/src/connector/classwrapper/AuthConfigurator.ts#L9">src/connector/classwrapper/AuthConfigurator.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>api: <span class="tsd-signature-type">AxiosInstance</span></h5>
+									<h5>rpc: <a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a></h5>
+								</li>
+								<li>
+									<h5>targetId: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">AuthConfigurator</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">RPCAuthConfigurator</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -132,29 +142,40 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="api" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> api</h3>
-					<div class="tsd-signature tsd-kind-icon">api<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AxiosInstance</span></div>
+					<a name="rpc" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> rpc</h3>
+					<div class="tsd-signature tsd-kind-icon">rpc<span class="tsd-signature-symbol">:</span> <a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6713f93/src/driver/fortinet/AuthConfigurator.ts#L13">src/driver/fortinet/AuthConfigurator.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/4e605f4/src/connector/classwrapper/AuthConfigurator.ts#L6">src/connector/classwrapper/AuthConfigurator.ts:6</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="targetId" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> target<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">target<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/4e605f4/src/connector/classwrapper/AuthConfigurator.ts#L7">src/connector/classwrapper/AuthConfigurator.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="addRADIUSServer" class="tsd-anchor"></a>
 					<h3>addRADIUSServer</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">addRADIUSServer<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, method<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_generic_RADIUS.RADIUSAuthMethod.html" class="tsd-signature-type" data-tsd-kind="Interface">RADIUSAuthMethod</a>, servers<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_generic_RADIUS.RADIUS.html" class="tsd-signature-type" data-tsd-kind="Interface">RADIUS</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="driver_generic_AuthConfigurator.GenericAuthConfigurator.html">GenericAuthConfigurator</a>.<a href="driver_generic_AuthConfigurator.GenericAuthConfigurator.html#addRADIUSServer">addRADIUSServer</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6713f93/src/driver/fortinet/AuthConfigurator.ts#L72">src/driver/fortinet/AuthConfigurator.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/4e605f4/src/connector/classwrapper/AuthConfigurator.ts#L26">src/connector/classwrapper/AuthConfigurator.ts:26</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -173,17 +194,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="deleteRADIUSServer" class="tsd-anchor"></a>
 					<h3>deleteRADIUSServer</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">deleteRADIUSServer<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="driver_generic_AuthConfigurator.GenericAuthConfigurator.html">GenericAuthConfigurator</a>.<a href="driver_generic_AuthConfigurator.GenericAuthConfigurator.html#deleteRADIUSServer">deleteRADIUSServer</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6713f93/src/driver/fortinet/AuthConfigurator.ts#L154">src/driver/fortinet/AuthConfigurator.ts:154</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/4e605f4/src/connector/classwrapper/AuthConfigurator.ts#L36">src/connector/classwrapper/AuthConfigurator.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -196,17 +218,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getRADIUSServers" class="tsd-anchor"></a>
 					<h3>getRADIUSServers</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">getRADIUSServers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>authMethod<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_generic_RADIUS.RADIUSAuthMethod.html" class="tsd-signature-type" data-tsd-kind="Interface">RADIUSAuthMethod</a><span class="tsd-signature-symbol">; </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>servers<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_generic_RADIUS.RADIUS.html" class="tsd-signature-type" data-tsd-kind="Interface">RADIUS</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="driver_generic_AuthConfigurator.GenericAuthConfigurator.html">GenericAuthConfigurator</a>.<a href="driver_generic_AuthConfigurator.GenericAuthConfigurator.html#getRADIUSServers">getRADIUSServers</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6713f93/src/driver/fortinet/AuthConfigurator.ts#L19">src/driver/fortinet/AuthConfigurator.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/4e605f4/src/connector/classwrapper/AuthConfigurator.ts#L16">src/connector/classwrapper/AuthConfigurator.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>authMethod<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_generic_RADIUS.RADIUSAuthMethod.html" class="tsd-signature-type" data-tsd-kind="Interface">RADIUSAuthMethod</a><span class="tsd-signature-symbol">; </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>servers<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_generic_RADIUS.RADIUS.html" class="tsd-signature-type" data-tsd-kind="Interface">RADIUS</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -222,7 +245,7 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/driver_fortinet_AuthConfigurator.html">driver/fortinet/<wbr>Auth<wbr>Configurator</a>
+						<a href="../modules/connector_classwrapper_AuthConfigurator.html">connector/classwrapper/<wbr>Auth<wbr>Configurator</a>
 					</li>
 				</ul>
 			</nav>
@@ -231,22 +254,25 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html" class="tsd-kind-icon">Auth<wbr>Configurator</a>
+						<a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html" class="tsd-kind-icon">RPCAuth<wbr>Configurator</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#api" class="tsd-kind-icon">api</a>
+								<a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#rpc" class="tsd-kind-icon">rpc</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#addRADIUSServer" class="tsd-kind-icon">addRADIUSServer</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#targetId" class="tsd-kind-icon">target<wbr>Id</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#deleteRADIUSServer" class="tsd-kind-icon">deleteRADIUSServer</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#addRADIUSServer" class="tsd-kind-icon">addRADIUSServer</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="driver_fortinet_AuthConfigurator.AuthConfigurator.html#getRADIUSServers" class="tsd-kind-icon">getRADIUSServers</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#deleteRADIUSServer" class="tsd-kind-icon">deleteRADIUSServer</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="connector_classwrapper_AuthConfigurator.RPCAuthConfigurator.html#getRADIUSServers" class="tsd-kind-icon">getRADIUSServers</a>
 							</li>
 						</ul>
 					</li>
