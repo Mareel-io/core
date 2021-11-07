@@ -1,7 +1,7 @@
 // Fortigate-specific types
 
 export interface FortiAuthToken {
-    type: 'token' | 'pki',
+    type: string,
     allowInvalidCertificate: boolean,
     ca?: string,
     credential: string | {cert: string, key: string},

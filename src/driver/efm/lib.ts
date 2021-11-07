@@ -14,6 +14,7 @@ import { SwitchQoS } from '../generic/SwitchQoS';
 import { AuthError, UnsupportedFeatureError, MethodNotImplementedError } from '../../error/MarilError';
 import { RouteConfigurator } from '../generic/RouteConfigurator';
 import { TrafficStatMonitor } from '../generic/monitor/TrafficStatMonitor';
+import { GenericAuthConfigurator } from '../generic/AuthConfigurator';
 
 export interface EFMCredential {
     id: string,
@@ -187,6 +188,10 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getTrafficStatMonitor(): TrafficStatMonitor {
+        throw new UnsupportedFeatureError();
+    }
+
+    public getAuthConfigurator(): GenericAuthConfigurator {
         throw new UnsupportedFeatureError();
     }
 }

@@ -10,6 +10,7 @@ import { WLANUserDeviceStat } from '../generic/WLANUserDeviceStat';
 import { SwitchConfigurator as DummySwitchConfigurator } from './SwitchConfigurator';
 import { TrafficStatMonitor } from '../generic/monitor/TrafficStatMonitor';
 import { logger } from '../../util/logger';
+import { GenericAuthConfigurator } from '../generic/AuthConfigurator';
 
 export class ControllerFactory extends GenericControllerFactory {
     constructor(deviceaddress = 'nowhere') {
@@ -52,6 +53,9 @@ export class ControllerFactory extends GenericControllerFactory {
         throw new MethodNotImplementedError();
     }
     public getTrafficStatMonitor(): TrafficStatMonitor {
+        throw new MethodNotImplementedError();
+    }
+    public getAuthConfigurator(): GenericAuthConfigurator {
         throw new MethodNotImplementedError();
     }
 }

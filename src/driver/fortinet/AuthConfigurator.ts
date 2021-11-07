@@ -1,6 +1,7 @@
 import { AxiosInstance } from "axios";
 import { EmitFlags } from "typescript";
 import { UnsupportedFeatureError } from "../../error/MarilError";
+import { GenericAuthConfigurator } from "../generic/AuthConfigurator";
 import { RADIUSAuthMethod, RADIUS } from "../generic/RADIUS";
 import { FortigateElement, FortigateRADIUS } from "./util/types";
 
@@ -9,10 +10,11 @@ interface RadiusServers {
     method: RADIUSAuthMethod,
 }
 
-export class AuthConfigurator {
+export class FortiAuthConfigurator extends GenericAuthConfigurator {
     private api: AxiosInstance;
 
     constructor(api: AxiosInstance) {
+        super();
         this.api = api;
     }
 

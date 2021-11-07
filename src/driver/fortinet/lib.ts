@@ -14,6 +14,7 @@ import { FirewallConfigurator } from './FirewallConfigurator';
 import { FortiTrafficStatMonitor } from './monitor/TrafficStat';
 import { FortiAuthToken } from './util/types';
 import { logger } from '../../util/logger';
+import { FortiAuthConfigurator } from './AuthConfigurator';
 
 export class ControllerFactory extends GenericControllerFactory {
     private api: AxiosInstance;
@@ -114,5 +115,9 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getTrafficStatMonitor(): FortiTrafficStatMonitor {
         return new FortiTrafficStatMonitor(this.api);
+    }
+
+    public getAuthConfigurator(): FortiAuthConfigurator {
+        return new FortiAuthConfigurator(this.api);
     }
 }
