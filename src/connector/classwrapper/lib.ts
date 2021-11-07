@@ -6,6 +6,7 @@ import { MarilError, MarilRPCTimeoutError } from '../../error/MarilError';
 import { ConnectorDevice } from '../../types/lib';
 import { logger } from '../../util/logger';
 import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
+import { RPCAuthConfigurator } from './AuthConfigurator';
 import { RPCFirewallConfigurator } from './FireallConfigurator';
 import { RPCLogman } from './Logman';
 import { RPCRouteConfigurator } from './RouteConfigurator';
@@ -208,5 +209,9 @@ export class RPCControllerFactory extends GenericControllerFactory {
 
     public getTrafficStatMonitor(targetId: string): RPCTrafficStatMonitor {
         return new RPCTrafficStatMonitor(this.rpc, targetId);
+    }
+
+    public getAuthConfigurator(targetId: string): RPCAuthConfigurator {
+        return new RPCAuthConfigurator(this.rpc, targetId);
     }
 }

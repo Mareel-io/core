@@ -1,4 +1,5 @@
 import { NetTester } from "../efm/monitor/NetTester";
+import { GenericAuthConfigurator } from "./AuthConfigurator";
 import { FirewallConfigurator } from "./FirewallConfigurator";
 import { Logman } from "./Logman";
 import { TrafficStatMonitor } from "./monitor/TrafficStatMonitor";
@@ -40,4 +41,5 @@ export abstract class ControllerFactory {
     public abstract getNetTester(deviceId?: string): NetTester;
     public abstract getRouteConfigurator(deviceId?: string): RouteConfigurator;
     public abstract getTrafficStatMonitor(deviceId?: string): TrafficStatMonitor;
+    public abstract getAuthConfigurator(deviceId?: string): GenericAuthConfigurator;
 }

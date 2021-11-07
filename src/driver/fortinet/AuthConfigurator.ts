@@ -10,7 +10,7 @@ interface RadiusServers {
     method: RADIUSAuthMethod,
 }
 
-export class AuthConfigurator extends GenericAuthConfigurator {
+export class FortiAuthConfigurator extends GenericAuthConfigurator {
     private api: AxiosInstance;
 
     constructor(api: AxiosInstance) {
