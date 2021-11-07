@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VPNConfigurator | @mareel/core</title>
+	<title>RPCVPNConfigurator | @mareel/core</title>
 	<meta name="description" content="Documentation for @mareel/core">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">@mareel/core</a>
 				</li>
 				<li>
-					<a href="../modules/driver_generic_VPNConfigurator.html">driver/generic/VPNConfigurator</a>
+					<a href="../modules/connector_classwrapper_VPNConfigurator.html">connector/classwrapper/VPNConfigurator</a>
 				</li>
 				<li>
-					<a href="driver_generic_VPNConfigurator.VPNConfigurator.html">VPNConfigurator</a>
+					<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html">RPCVPNConfigurator</a>
 				</li>
 			</ul>
-			<h1>Class VPNConfigurator</h1>
+			<h1>Class RPCVPNConfigurator</h1>
 		</div>
 	</div>
 </header>
@@ -72,13 +72,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">VPNConfigurator</span>
+						<a href="driver_generic_VPNConfigurator.VPNConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">VPNConfigurator</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">RPCVPNConfigurator</a>
-							</li>
-							<li>
-								<a href="driver_fortinet_VPNConfigurator.FortiVPNConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">FortiVPNConfigurator</a>
+								<span class="target">RPCVPNConfigurator</span>
 							</li>
 						</ul>
 					</li>
@@ -91,16 +88,23 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="driver_generic_VPNConfigurator.VPNConfigurator.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#rpc" class="tsd-kind-icon">rpc</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#targetId" class="tsd-kind-icon">target<wbr>Id</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_generic_VPNConfigurator.VPNConfigurator.html#addVPNConfiguration" class="tsd-kind-icon">addVPNConfiguration</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_generic_VPNConfigurator.VPNConfigurator.html#deleteVPNConfiguration" class="tsd-kind-icon">deleteVPNConfiguration</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_generic_VPNConfigurator.VPNConfigurator.html#getVPNConfigurations" class="tsd-kind-icon">getVPNConfigurations</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_generic_VPNConfigurator.VPNConfigurator.html#setVPNConfiguration" class="tsd-kind-icon">setVPNConfiguration</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#addVPNConfiguration" class="tsd-kind-icon">addVPNConfiguration</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#deleteVPNConfiguration" class="tsd-kind-icon">deleteVPNConfiguration</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#getVPNConfigurations" class="tsd-kind-icon">getVPNConfigurations</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#setVPNConfiguration" class="tsd-kind-icon">setVPNConfiguration</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,34 +112,71 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new VPNConfigurator<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="driver_generic_VPNConfigurator.VPNConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">VPNConfigurator</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new RPCVPNConfigurator<span class="tsd-signature-symbol">(</span>rpc<span class="tsd-signature-symbol">: </span><a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a>, targetId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">RPCVPNConfigurator</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="driver_generic_VPNConfigurator.VPNConfigurator.html">VPNConfigurator</a>.<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/connector/classwrapper/VPNConfigurator.ts#L8">src/connector/classwrapper/VPNConfigurator.ts:8</a></li>
+								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="driver_generic_VPNConfigurator.VPNConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">VPNConfigurator</a></h4>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>rpc: <a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a></h5>
+								</li>
+								<li>
+									<h5>targetId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html" class="tsd-signature-type" data-tsd-kind="Class">RPCVPNConfigurator</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="rpc" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> rpc</h3>
+					<div class="tsd-signature tsd-kind-icon">rpc<span class="tsd-signature-symbol">:</span> <a href="connector_jsonrpcv2.RPCProvider.html" class="tsd-signature-type" data-tsd-kind="Class">RPCProvider</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/connector/classwrapper/VPNConfigurator.ts#L5">src/connector/classwrapper/VPNConfigurator.ts:5</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="targetId" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> target<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">target<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/connector/classwrapper/VPNConfigurator.ts#L6">src/connector/classwrapper/VPNConfigurator.ts:6</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="addVPNConfiguration" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> addVPNConfiguration</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3>addVPNConfiguration</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">addVPNConfiguration<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="driver_generic_VPNConfigurator.VPNConfigurator.html">VPNConfigurator</a>.<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#addVPNConfiguration">addVPNConfiguration</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/driver/generic/VPNConfigurator.ts#L5">src/driver/generic/VPNConfigurator.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/connector/classwrapper/VPNConfigurator.ts#L42">src/connector/classwrapper/VPNConfigurator.ts:42</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -151,17 +192,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="deleteVPNConfiguration" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> deleteVPNConfiguration</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3>deleteVPNConfiguration</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">deleteVPNConfiguration<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="driver_generic_VPNConfigurator.VPNConfigurator.html">VPNConfigurator</a>.<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#deleteVPNConfiguration">deleteVPNConfiguration</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/driver/generic/VPNConfigurator.ts#L4">src/driver/generic/VPNConfigurator.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/connector/classwrapper/VPNConfigurator.ts#L33">src/connector/classwrapper/VPNConfigurator.ts:33</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -177,17 +219,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getVPNConfigurations" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> getVPNConfigurations</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3>getVPNConfigurations</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">getVPNConfigurations<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="driver_generic_VPNConfigurator.VPNConfigurator.html">VPNConfigurator</a>.<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#getVPNConfigurations">getVPNConfigurations</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/driver/generic/VPNConfigurator.ts#L2">src/driver/generic/VPNConfigurator.ts:2</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/connector/classwrapper/VPNConfigurator.ts#L15">src/connector/classwrapper/VPNConfigurator.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -200,17 +243,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="setVPNConfiguration" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> setVPNConfiguration</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3>setVPNConfiguration</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">setVPNConfiguration<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, idx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="driver_generic_VPNConfigurator.VPNConfigurator.html">VPNConfigurator</a>.<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#setVPNConfiguration">setVPNConfiguration</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/driver/generic/VPNConfigurator.ts#L3">src/driver/generic/VPNConfigurator.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/63fe865/src/connector/classwrapper/VPNConfigurator.ts#L24">src/connector/classwrapper/VPNConfigurator.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -238,7 +282,7 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/driver_generic_VPNConfigurator.html">driver/generic/VPNConfigurator</a>
+						<a href="../modules/connector_classwrapper_VPNConfigurator.html">connector/classwrapper/VPNConfigurator</a>
 					</li>
 				</ul>
 			</nav>
@@ -247,22 +291,28 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="driver_generic_VPNConfigurator.VPNConfigurator.html" class="tsd-kind-icon">VPNConfigurator</a>
+						<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html" class="tsd-kind-icon">RPCVPNConfigurator</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#addVPNConfiguration" class="tsd-kind-icon">addVPNConfiguration</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#rpc" class="tsd-kind-icon">rpc</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#deleteVPNConfiguration" class="tsd-kind-icon">deleteVPNConfiguration</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#targetId" class="tsd-kind-icon">target<wbr>Id</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#getVPNConfigurations" class="tsd-kind-icon">getVPNConfigurations</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#addVPNConfiguration" class="tsd-kind-icon">addVPNConfiguration</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="driver_generic_VPNConfigurator.VPNConfigurator.html#setVPNConfiguration" class="tsd-kind-icon">setVPNConfiguration</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#deleteVPNConfiguration" class="tsd-kind-icon">deleteVPNConfiguration</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#getVPNConfigurations" class="tsd-kind-icon">getVPNConfigurations</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="connector_classwrapper_VPNConfigurator.RPCVPNConfigurator.html#setVPNConfiguration" class="tsd-kind-icon">setVPNConfiguration</a>
 							</li>
 						</ul>
 					</li>
@@ -291,6 +341,9 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 			</ul>
 		</div>
 	</div>
