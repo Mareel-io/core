@@ -13,6 +13,7 @@ import { RPCRouteConfigurator } from './RouteConfigurator';
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
 import { RPCSwitchQoS } from './SwitchQoS';
 import { RPCTrafficStatMonitor } from './TrafficStatMonitor';
+import { RPCVPNConfigurator } from './VPNConfigurator';
 import { RPCWLANConfigurator } from './WLANConfigurator';
 import { RPCWLANUserDeviceStat } from './WLANUserDeviceStat';
 
@@ -213,5 +214,9 @@ export class RPCControllerFactory extends GenericControllerFactory {
 
     public getAuthConfigurator(targetId: string): RPCAuthConfigurator {
         return new RPCAuthConfigurator(this.rpc, targetId);
+    }
+
+    public getVPNConfigurator(targetId: string): RPCVPNConfigurator {
+        return new RPCVPNConfigurator(this.rpc, targetId);
     }
 }

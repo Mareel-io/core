@@ -15,6 +15,7 @@ import { AuthError, UnsupportedFeatureError, MethodNotImplementedError } from '.
 import { RouteConfigurator } from '../generic/RouteConfigurator';
 import { TrafficStatMonitor } from '../generic/monitor/TrafficStatMonitor';
 import { GenericAuthConfigurator } from '../generic/AuthConfigurator';
+import { VPNConfigurator } from '../generic/VPNConfigurator';
 
 export interface EFMCredential {
     id: string,
@@ -192,6 +193,10 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getAuthConfigurator(): GenericAuthConfigurator {
+        throw new UnsupportedFeatureError();
+    }
+
+    public getVPNConfigurator(): VPNConfigurator {
         throw new UnsupportedFeatureError();
     }
 }

@@ -15,6 +15,7 @@ import { FortiTrafficStatMonitor } from './monitor/TrafficStat';
 import { FortiAuthToken } from './util/types';
 import { logger } from '../../util/logger';
 import { FortiAuthConfigurator } from './AuthConfigurator';
+import { FortiVPNConfigurator } from './VPNConfigurator';
 
 export class ControllerFactory extends GenericControllerFactory {
     private api: AxiosInstance;
@@ -119,5 +120,9 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getAuthConfigurator(): FortiAuthConfigurator {
         return new FortiAuthConfigurator(this.api);
+    }
+
+    public getVPNConfigurator(): FortiVPNConfigurator {
+        return new FortiVPNConfigurator(this.api);
     }
 }
