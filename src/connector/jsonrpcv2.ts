@@ -83,8 +83,8 @@ export class RPCProvider extends EventEmitter {
 
 
         const timerValue = timeout != null ? timeout : this.defaultTimeout;
-        logger.info('DEBUG: Timeout is '+ timeout);
-        logger.info('DEBUG: Final timeout value is '+ timerValue);
+        logger.debug('DEBUG: Timeout is '+ timeout);
+        logger.debug('DEBUG: Final timeout value is '+ timerValue);
         const ret: Promise<unknown> = new Promise((ful, rej) => {
             const timer = setTimeout(() => {
                 this.callHandlerTable[curCallId] = undefined;
