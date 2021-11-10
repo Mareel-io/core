@@ -1,11 +1,12 @@
 import { CiscoCredential } from "../driver/cisco/lib";
 import { EFMCredential } from "../driver/efm/lib";
+import { FortiAuthToken } from "../driver/fortinet/util/types";
 
 export interface ConnectorDevice {
     id: string,
     addr: string,
     type: 'efm' | 'cisco' | 'fortinet' | 'dummy',
-    credential: EFMCredential | CiscoCredential,
+    credential: EFMCredential | CiscoCredential | FortiAuthToken,
 }
 
 export interface ConnectorClientConfig {

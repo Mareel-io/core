@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 import { MethodNotImplementedError, UnsupportedFeatureError } from "../../error/MarilError";
-import { FortiSSLVPN } from "./util/types";
+import { FortigateSSLVPN } from "./util/types";
 import { VPNConfigurator as GenericVPNConfigurator } from "../generic/VPNConfigurator";
 
 // URLs
@@ -16,10 +16,11 @@ export class FortiVPNConfigurator extends GenericVPNConfigurator {
 
     private async getSSLVPNConfiguration() {
         const res = await this.api.get('/api/v2/cmdb/vpn.ssl/settings');
-        const sslvpnConfigs: FortiSSLVPN= res.data.results;
+        const sslvpnConfigs: FortigateSSLVPN = res.data.results;
+        return sslvpnConfigs;
     }
 
-    private async setSSLVPNConfiguration(config: FortiSSLVPN) {
+    private async setSSLVPNConfiguration(config: FortigateSSLVPN) {
         const res = await this.api.put('/api/v2/cmdb/vpn.ssl/settings', config);
     }
 
