@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FortiTrafficStat | @mareel/core</title>
+	<title>FortigateUserGroup | @mareel/core</title>
 	<meta name="description" content="Documentation for @mareel/core">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/driver_fortinet_util_types.html">driver/fortinet/util/types</a>
 				</li>
 				<li>
-					<a href="driver_fortinet_util_types.FortiTrafficStat.html">FortiTrafficStat</a>
+					<a href="driver_fortinet_util_types.FortigateUserGroup.html">FortigateUserGroup</a>
 				</li>
 			</ul>
-			<h1>Interface FortiTrafficStat</h1>
+			<h1>Interface FortigateUserGroup</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">FortiTrafficStat</span>
+						<a href="driver_fortinet_util_types.FortigateElement.html" class="tsd-signature-type" data-tsd-kind="Interface">FortigateElement</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">FortigateUserGroup</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -83,7 +88,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_fortinet_util_types.FortiTrafficStat.html#details" class="tsd-kind-icon">details</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_fortinet_util_types.FortigateUserGroup.html#group_type" class="tsd-kind-icon">group-<wbr>type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_fortinet_util_types.FortigateUserGroup.html#guest" class="tsd-kind-icon">guest</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_fortinet_util_types.FortigateUserGroup.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="driver_fortinet_util_types.FortigateUserGroup.html#member" class="tsd-kind-icon">member</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="driver_fortinet_util_types.FortigateUserGroup.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="driver_fortinet_util_types.FortigateUserGroup.html#q_origin_key" class="tsd-kind-icon">q_<wbr>origin_<wbr>key</a></li>
 							</ul>
 						</section>
 					</div>
@@ -92,12 +102,64 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="details" class="tsd-anchor"></a>
-					<h3>details</h3>
-					<div class="tsd-signature tsd-kind-icon">details<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>apps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>count<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>port<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>protocol<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>protocol_str<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>country<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>country_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>dst_port<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>dstaddr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>dstintf<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>protocol<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>rcvdbyte<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>resolved<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>rx_bandwidth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>rx_packets<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>rx_shaper_drops<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>sentbyte<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>sessions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>srcaddr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>srcintf<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>tx_bandwidth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>tx_packets<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>tx_shaper_drops<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="group_type" class="tsd-anchor"></a>
+					<h3>group-<wbr>type</h3>
+					<div class="tsd-signature tsd-kind-icon">group-<wbr>type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/cc003f4/src/driver/fortinet/util/types.ts#L462">src/driver/fortinet/util/types.ts:462</a></li>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/cc003f4/src/driver/fortinet/util/types.ts#L175">src/driver/fortinet/util/types.ts:175</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="guest" class="tsd-anchor"></a>
+					<h3>guest</h3>
+					<div class="tsd-signature tsd-kind-icon">guest<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/cc003f4/src/driver/fortinet/util/types.ts#L178">src/driver/fortinet/util/types.ts:178</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/cc003f4/src/driver/fortinet/util/types.ts#L174">src/driver/fortinet/util/types.ts:174</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="member" class="tsd-anchor"></a>
+					<h3>member</h3>
+					<div class="tsd-signature tsd-kind-icon">member<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/cc003f4/src/driver/fortinet/util/types.ts#L177">src/driver/fortinet/util/types.ts:177</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="driver_fortinet_util_types.FortigateElement.html">FortigateElement</a>.<a href="driver_fortinet_util_types.FortigateElement.html#name">name</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/cc003f4/src/driver/fortinet/util/types.ts#L11">src/driver/fortinet/util/types.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="q_origin_key" class="tsd-anchor"></a>
+					<h3>q_<wbr>origin_<wbr>key</h3>
+					<div class="tsd-signature tsd-kind-icon">q_<wbr>origin_<wbr>key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="driver_fortinet_util_types.FortigateElement.html">FortigateElement</a>.<a href="driver_fortinet_util_types.FortigateElement.html#q_origin_key">q_origin_key</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/Mareel-io/core/blob/cc003f4/src/driver/fortinet/util/types.ts#L12">src/driver/fortinet/util/types.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -125,18 +187,9 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="driver_fortinet_util_types.FortiResponse.html" class="tsd-kind-icon">Forti<wbr>Response</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="driver_fortinet_util_types.FortiTrafficStat.html" class="tsd-kind-icon">Forti<wbr>Traffic<wbr>Stat</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="driver_fortinet_util_types.FortiTrafficStat.html#details" class="tsd-kind-icon">details</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="driver_fortinet_util_types.FortigateAuthRule.html" class="tsd-kind-icon">Fortigate<wbr>Auth<wbr>Rule</a>
 					</li>
@@ -164,9 +217,33 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="driver_fortinet_util_types.FortigateShapingPolicy.html" class="tsd-kind-icon">Fortigate<wbr>Shaping<wbr>Policy</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
 						<a href="driver_fortinet_util_types.FortigateUserGroup.html" class="tsd-kind-icon">Fortigate<wbr>User<wbr>Group</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="driver_fortinet_util_types.FortigateUserGroup.html#group_type" class="tsd-kind-icon">group-<wbr>type</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="driver_fortinet_util_types.FortigateUserGroup.html#guest" class="tsd-kind-icon">guest</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="driver_fortinet_util_types.FortigateUserGroup.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="driver_fortinet_util_types.FortigateUserGroup.html#member" class="tsd-kind-icon">member</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="driver_fortinet_util_types.FortigateUserGroup.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="driver_fortinet_util_types.FortigateUserGroup.html#q_origin_key" class="tsd-kind-icon">q_<wbr>origin_<wbr>key</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="driver_fortinet_util_types.FortigateVPNAuthRule.html" class="tsd-kind-icon">FortigateVPNAuth<wbr>Rule</a>
 					</li>
