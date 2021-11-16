@@ -170,8 +170,10 @@ export interface FortigateRADIUS extends FortigateElement {
     ]
 }
 
-export interface FortigateUserGroup extends FortigateElement {
-    id: number,
+export interface FortigateUserGroup {
+    id?: number,
+    name?: string,
+    "q_origin_key"?: string,
     "group-type": string,
     // Some elements omitted
     member: {name: string}[],

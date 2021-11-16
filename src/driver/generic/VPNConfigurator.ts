@@ -6,6 +6,14 @@ export interface SSLVPN {
         bannedCipher?: string,
     },
     port: number,
+    ipaddr: {
+        dns: string[],
+        dnsv6: string[],
+        wins: string[],
+        winsv6: string[],
+        ippool: string,
+        ipv6pool: string,
+    }
 }
 
 export interface IPSECVPN {

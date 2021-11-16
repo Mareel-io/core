@@ -26,7 +26,7 @@ export class RPCProfileManager extends GenericProfileManager {
         throw new Error("Method not implemented.");
     }
 
-    public async getUserGroupProfile(id?: string): Promise<GenericUserGroupProfile> {
+    public async getUserGroupProfiles(id?: string): Promise<GenericUserGroupProfile[]> {
         throw new Error("Method not implemented.");
     }
 
