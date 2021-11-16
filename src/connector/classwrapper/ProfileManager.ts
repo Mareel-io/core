@@ -22,11 +22,11 @@ export class RPCProfileManager extends GenericProfileManager {
         }) as string[];
     }
 
-    public async createUserGroupProfile(): Promise<void> {
+    public async createUserGroupProfile(profile: GenericUserGroupProfile): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
-    public async getUserGroupProfile(id?: string): Promise<GenericUserGroupProfile> {
+    public async getUserGroupProfiles(id?: string): Promise<GenericUserGroupProfile[]> {
         throw new Error("Method not implemented.");
     }
 

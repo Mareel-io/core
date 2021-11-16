@@ -1,4 +1,4 @@
-import { VPNConfigurator as GenericVPNConfigurator } from "../../driver/generic/VPNConfigurator";
+import { IPSECVPN, SSLVPN, VPNConfigurator as GenericVPNConfigurator } from "../../driver/generic/VPNConfigurator";
 import { RPCProvider } from "../jsonrpcv2";
 
 export class RPCVPNConfigurator extends GenericVPNConfigurator {
@@ -21,7 +21,7 @@ export class RPCVPNConfigurator extends GenericVPNConfigurator {
             params: [],
         }) as Promise<any[]>;
     }
-    public async setVPNConfiguration(type: string, idx: number, config: any): Promise<void> {
+    public async setVPNConfiguration(type: string, idx: number, config: SSLVPN | IPSECVPN): Promise<void> {
         await this.rpc.remoteCall({
             jsonrpc: '2.0',
             target: this.targetId,
