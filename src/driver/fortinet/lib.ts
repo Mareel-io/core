@@ -16,6 +16,7 @@ import { FortiAuthToken } from './util/types';
 import { logger } from '../../util/logger';
 import { FortiAuthConfigurator } from './AuthConfigurator';
 import { FortiVPNConfigurator } from './VPNConfigurator';
+import { FortiProfileManager } from './ProfileManager';
 
 export class ControllerFactory extends GenericControllerFactory {
     private api: AxiosInstance;
@@ -124,5 +125,9 @@ export class ControllerFactory extends GenericControllerFactory {
 
     public getVPNConfigurator(): FortiVPNConfigurator {
         return new FortiVPNConfigurator(this.api);
+    }
+
+    public getProfileManager(): FortiProfileManager {
+        return new FortiProfileManager(this.api);
     }
 }

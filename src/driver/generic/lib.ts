@@ -3,6 +3,7 @@ import { GenericAuthConfigurator } from "./AuthConfigurator";
 import { FirewallConfigurator } from "./FirewallConfigurator";
 import { Logman } from "./Logman";
 import { TrafficStatMonitor } from "./monitor/TrafficStatMonitor";
+import { GenericProfileManager } from "./ProfileManager";
 import { RouteConfigurator } from "./RouteConfigurator";
 import { SwitchConfigurator } from "./SwitchConfigurator";
 import { SwitchQoS } from "./SwitchQoS";
@@ -44,4 +45,5 @@ export abstract class ControllerFactory {
     public abstract getTrafficStatMonitor(deviceId?: string): TrafficStatMonitor;
     public abstract getAuthConfigurator(deviceId?: string): GenericAuthConfigurator;
     public abstract getVPNConfigurator(deviceId?: string): VPNConfigurator;
+    public abstract getProfileManager(deviceId?: string): GenericProfileManager;
 }

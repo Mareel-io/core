@@ -12,6 +12,7 @@ import { TrafficStatMonitor } from '../generic/monitor/TrafficStatMonitor';
 import { logger } from '../../util/logger';
 import { GenericAuthConfigurator } from '../generic/AuthConfigurator';
 import { VPNConfigurator } from '../generic/VPNConfigurator';
+import { GenericProfileManager } from '../generic/ProfileManager';
 
 export class ControllerFactory extends GenericControllerFactory {
     constructor(deviceaddress = 'nowhere') {
@@ -60,6 +61,9 @@ export class ControllerFactory extends GenericControllerFactory {
         throw new MethodNotImplementedError();
     }
     public getVPNConfigurator(): VPNConfigurator {
+        throw new MethodNotImplementedError();
+    }
+    public getProfileManager(): GenericProfileManager {
         throw new MethodNotImplementedError();
     }
 }

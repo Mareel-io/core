@@ -9,6 +9,7 @@ import { RPCProvider, RPCv2Request } from '../jsonrpcv2';
 import { RPCAuthConfigurator } from './AuthConfigurator';
 import { RPCFirewallConfigurator } from './FireallConfigurator';
 import { RPCLogman } from './Logman';
+import { RPCProfileManager } from './ProfileManager';
 import { RPCRouteConfigurator } from './RouteConfigurator';
 import { RPCSwitchConfigurator } from "./SwitchConfigurator";
 import { RPCSwitchQoS } from './SwitchQoS';
@@ -218,5 +219,9 @@ export class RPCControllerFactory extends GenericControllerFactory {
 
     public getVPNConfigurator(targetId: string): RPCVPNConfigurator {
         return new RPCVPNConfigurator(this.rpc, targetId);
+    }
+
+    public getProfileManager(targetId: string): RPCProfileManager {
+        return new RPCProfileManager(this.rpc, targetId);
     }
 }

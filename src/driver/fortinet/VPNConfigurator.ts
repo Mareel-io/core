@@ -15,6 +15,8 @@ export class FortiVPNConfigurator extends GenericVPNConfigurator {
     }
 
     private async getSSLVPNConfiguration() {
+        // TODO: setup auth provider
+        //
         const res = await this.api.get('/api/v2/cmdb/vpn.ssl/settings');
         const sslvpnConfigs: FortigateSSLVPN = res.data.results;
         return sslvpnConfigs;

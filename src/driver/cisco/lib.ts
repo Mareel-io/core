@@ -17,6 +17,7 @@ import { RouteConfigurator } from '../generic/RouteConfigurator';
 import { TrafficStatMonitor } from '../generic/monitor/TrafficStatMonitor';
 import { GenericAuthConfigurator } from '../generic/AuthConfigurator';
 import { VPNConfigurator } from '../generic/VPNConfigurator';
+import { GenericProfileManager } from '../generic/ProfileManager';
 
 export interface CiscoCredential {
     snmpCredential: SNMPClientConfig,
@@ -115,6 +116,10 @@ export class ControllerFactory extends GenericControllerFactory {
     }
 
     public getVPNConfigurator(): VPNConfigurator {
+        throw new MethodNotImplementedError();
+    }
+
+    public getProfileManager(): GenericProfileManager {
         throw new MethodNotImplementedError();
     }
 }
