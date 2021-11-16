@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { MethodNotImplementedError, UnsupportedFeatureError } from "../../error/MarilError";
 import { FortigateSSLVPN } from "./util/types";
-import { VPNConfigurator as GenericVPNConfigurator } from "../generic/VPNConfigurator";
+import { SSLVPN, VPNConfigurator as GenericVPNConfigurator } from "../generic/VPNConfigurator";
 
 // URLs
 // https://192.168.1.99/api/v2/cmdb/vpn.ssl/settings
@@ -47,7 +47,7 @@ export class FortiVPNConfigurator extends GenericVPNConfigurator {
         }
     }
 
-    public async setVPNConfiguration(type: string, idx: number, config: any): Promise<void> {
+    public async setVPNConfiguration(type: string, idx: number, config: SSLVPN): Promise<void> {
         switch (type) {
             case 'fortissl':
                 //await this.setSSLVPNConfiguration();

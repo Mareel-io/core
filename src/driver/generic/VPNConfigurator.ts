@@ -1,18 +1,18 @@
 export interface SSLVPN {
     ssl?: {
         maxProto: string,
-        milProto: string,
+        minProto: string,
         allowedCipher?: string,
         bannedCipher?: string,
     },
     port: number,
     ipaddr: {
-        dns: string[],
-        dnsv6: string[],
-        wins: string[],
-        winsv6: string[],
-        ippool: string,
-        ipv6pool: string,
+        dns?: string[],
+        dnsv6?: string[],
+        wins?: string[],
+        winsv6?: string[],
+        ippool?: string,
+        ipv6pool?: string,
     }
 }
 

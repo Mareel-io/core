@@ -1,5 +1,5 @@
 export interface GenericUserGroupProfile {
-    id: string,
+    id?: string,
     name: string,
     members?: {
         ref: string,
