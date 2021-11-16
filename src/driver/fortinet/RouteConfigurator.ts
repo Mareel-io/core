@@ -12,7 +12,7 @@ export class RouteConfigurator extends GenericRoutingConfigurator {
         super();
         this.api = api;
     }
-    
+
     private convertFromFortiV4Range(ipstr: string) {
         const ipaddrList = ipstr.split(' ');
         if (ipaddrList.length === 2) {
