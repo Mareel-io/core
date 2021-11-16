@@ -99,7 +99,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_generic_ProfileManager.GenericProfileManager.html#createUserGroupProfile" class="tsd-kind-icon">create<wbr>User<wbr>Group<wbr>Profile</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_generic_ProfileManager.GenericProfileManager.html#getAvailableProfiles" class="tsd-kind-icon">get<wbr>Available<wbr>Profiles</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_generic_ProfileManager.GenericProfileManager.html#getUserGroupProfile" class="tsd-kind-icon">get<wbr>User<wbr>Group<wbr>Profile</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_generic_ProfileManager.GenericProfileManager.html#getUserGroupProfiles" class="tsd-kind-icon">get<wbr>User<wbr>Group<wbr>Profiles</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="driver_generic_ProfileManager.GenericProfileManager.html#removeUserGroupProfile" class="tsd-kind-icon">remove<wbr>User<wbr>Group<wbr>Profile</a></li>
 							</ul>
 						</section>
@@ -129,15 +129,21 @@
 					<a name="createUserGroupProfile" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> create<wbr>User<wbr>Group<wbr>Profile</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>User<wbr>Group<wbr>Profile<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>User<wbr>Group<wbr>Profile<span class="tsd-signature-symbol">(</span>profile<span class="tsd-signature-symbol">: </span><a href="../interfaces/driver_generic_ProfileManager.GenericUserGroupProfile.html" class="tsd-signature-type" data-tsd-kind="Interface">GenericUserGroupProfile</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/edbbd32/src/driver/generic/ProfileManager.ts#L9">src/driver/generic/ProfileManager.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6356ab0/src/driver/generic/ProfileManager.ts#L14">src/driver/generic/ProfileManager.ts:14</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>profile: <a href="../interfaces/driver_generic_ProfileManager.GenericUserGroupProfile.html" class="tsd-signature-type" data-tsd-kind="Interface">GenericUserGroupProfile</a></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -152,7 +158,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/edbbd32/src/driver/generic/ProfileManager.ts#L8">src/driver/generic/ProfileManager.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6356ab0/src/driver/generic/ProfileManager.ts#L13">src/driver/generic/ProfileManager.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -160,16 +166,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getUserGroupProfile" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> get<wbr>User<wbr>Group<wbr>Profile</h3>
+					<a name="getUserGroupProfiles" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> get<wbr>User<wbr>Group<wbr>Profiles</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>User<wbr>Group<wbr>Profile<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/driver_generic_ProfileManager.GenericUserGroupProfile.html" class="tsd-signature-type" data-tsd-kind="Interface">GenericUserGroupProfile</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>User<wbr>Group<wbr>Profiles<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/driver_generic_ProfileManager.GenericUserGroupProfile.html" class="tsd-signature-type" data-tsd-kind="Interface">GenericUserGroupProfile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/edbbd32/src/driver/generic/ProfileManager.ts#L10">src/driver/generic/ProfileManager.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6356ab0/src/driver/generic/ProfileManager.ts#L15">src/driver/generic/ProfileManager.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -178,7 +184,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/driver_generic_ProfileManager.GenericUserGroupProfile.html" class="tsd-signature-type" data-tsd-kind="Interface">GenericUserGroupProfile</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/driver_generic_ProfileManager.GenericUserGroupProfile.html" class="tsd-signature-type" data-tsd-kind="Interface">GenericUserGroupProfile</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -192,7 +198,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/edbbd32/src/driver/generic/ProfileManager.ts#L11">src/driver/generic/ProfileManager.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/Mareel-io/core/blob/6356ab0/src/driver/generic/ProfileManager.ts#L16">src/driver/generic/ProfileManager.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -235,7 +241,7 @@
 								<a href="driver_generic_ProfileManager.GenericProfileManager.html#getAvailableProfiles" class="tsd-kind-icon">get<wbr>Available<wbr>Profiles</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="driver_generic_ProfileManager.GenericProfileManager.html#getUserGroupProfile" class="tsd-kind-icon">get<wbr>User<wbr>Group<wbr>Profile</a>
+								<a href="driver_generic_ProfileManager.GenericProfileManager.html#getUserGroupProfiles" class="tsd-kind-icon">get<wbr>User<wbr>Group<wbr>Profiles</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="driver_generic_ProfileManager.GenericProfileManager.html#removeUserGroupProfile" class="tsd-kind-icon">remove<wbr>User<wbr>Group<wbr>Profile</a>
