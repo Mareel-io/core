@@ -38,6 +38,6 @@ wss.on('connection', async function connection(ws) {
         type: 'ipv4',
         dstaddr: '10.132.1.1',
         dstif: 'internal',
-        gateway: '10.1.1.1',
+        gateway: '10.1.1.1', // Unlike others, Fortigate *mandates* gateway
     });
 });
