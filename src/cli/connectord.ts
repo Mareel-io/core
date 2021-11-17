@@ -463,15 +463,15 @@ export class ConnectorClient {
                 // Let's test-authenticate it
                 await controllerfactory.authenticate(device.credential);
                 logger.info('Device successfully initialized');
+
+                this.controllerFactoryTable[device.id] = {
+                    device: device,
+                    controllerFactory: controllerfactory as GenericControllerFactory,
+                };
             } catch (e) {
                 logger.warning(`Failed to initialize device ${device.id}`);
                 logger.warning(e);
             }
-
-            this.controllerFactoryTable[device.id] = {
-                device: device,
-                controllerFactory: controllerfactory as GenericControllerFactory,
-            };
         }
     }
 
