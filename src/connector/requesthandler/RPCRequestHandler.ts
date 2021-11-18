@@ -31,7 +31,7 @@ export abstract class RPCRequestHandler {
         };
     }
 
-    private async handleRPCRequest(req: RPCv2Request): Promise<RPCReturnType<any>> {
+    protected async handleRPCRequest(req: RPCv2Request): Promise<RPCReturnType<any>> {
         if (req.class != this.className) {
             return {handled: false, result: null};
         }
