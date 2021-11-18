@@ -40,4 +40,10 @@ wss.on('connection', async function connection(ws) {
         dstif: 'internal',
         gateway: '10.1.1.1', // Unlike others, Fortigate *mandates* gateway
     });
+
+    const routes = routeController.getRoutes();
+    console.log(routes);
+
+    // Uncomment me to delete the first route
+    //routeController.deleteRoute(routes[0].id);
 });
