@@ -82,7 +82,7 @@
     "source-map-support": "^0.5.19",
     "ssh2": "^1.5.0",
     "stream-json": "^1.7.1",
-    "tftp": "git://github.com/Mareel-io/node-tftp.git#staging",
+    "tftp": "https://github.com/Mareel-io/node-tftp.git#staging",
     "ts-custom-error": "^3.2.0",
     "uuid": "^8.3.2",
     "winston": "^3.3.3",
