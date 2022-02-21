@@ -1,539 +1,91 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@mareel/core</title>
-	<meta name="description" content="Documentation for @mareel/core">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">@mareel/core</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>@mareel/core</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<p><a href="https://app.fossa.com/projects/git%2Bgithub.com%2FMareel-io%2Fcore?ref=badge_shield"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FMareel-io%2Fcore.svg?type=shield" alt="FOSSA Status"></a></p>
-				<a href="#mareel-core" id="mareel-core" style="color: inherit; text-decoration: none;">
-					<h1>Mareel Core</h1>
-				</a>
-				<p>Universal network device control module by using Javascript.</p>
-				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
-					<h2>Installation</h2>
-				</a>
-				<pre><code class="language-bash"><span style="color: #000000">$ yarn add @mareel/core</span>
-<span style="color: #008000"># npm i @mareel/core</span>
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@mareel/core</title><meta name="description" content="Documentation for @mareel/core"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@mareel/core</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>@mareel/core</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography"><p><a href="https://app.fossa.com/projects/git%2Bgithub.com%2FMareel-io%2Fcore?ref=badge_shield"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FMareel-io%2Fcore.svg?type=shield" alt="FOSSA Status"></a></p>
+
+<a href="#mareel-core" id="mareel-core" style="color: inherit; text-decoration: none;">
+  <h1>Mareel Core</h1>
+</a>
+<p>Universal network device control module by using Javascript.</p>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<pre><code class="language-bash"><span class="hl-0">$ yarn add @mareel/core</span><br/><span class="hl-1"># npm i @mareel/core</span>
 </code></pre>
-				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
-					<h2>Documentation</h2>
-				</a>
-				<p>This project uses typedoc to generate library documentation automatically.</p>
-				<p>Please run following command to generate library documentation (or, visit <a href="https://mareel-io.github.io/core/">https://mareel-io.github.io/core/</a>)</p>
-				<pre><code class="language-bash"><span style="color: #000000">yarn doc</span>
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h2>Documentation</h2>
+</a>
+<p>This project uses typedoc to generate library documentation automatically.</p>
+<p>Please run following command to generate library documentation (or, visit <a href="https://mareel-io.github.io/core/">https://mareel-io.github.io/core/</a>)</p>
+<pre><code class="language-bash"><span class="hl-0">yarn doc</span>
 </code></pre>
-				<a href="#efm-captcha-access-flow" id="efm-captcha-access-flow" style="color: inherit; text-decoration: none;">
-					<h2>(EFM) CAPTCHA access flow</h2>
-				</a>
-				<p><img src="./flow.png" alt="flow diagram"></p>
-				<a href="#access-flow-example" id="access-flow-example" style="color: inherit; text-decoration: none;">
-					<h2>Access flow example</h2>
-				</a>
-				<pre><code><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">maril</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;../&#039;</span><span style="color: #000000">);</span>
 
-<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">main</span><span style="color: #000000">() {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// Initialize controller factory with target IP address</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">efmController</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">maril</span><span style="color: #000000">.</span><span style="color: #795E26">EFMControllerFactory</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;http://192.168.0.1/&#039;</span><span style="color: #000000">);</span>
+<a href="#efm-captcha-access-flow" id="efm-captcha-access-flow" style="color: inherit; text-decoration: none;">
+  <h2>(EFM) CAPTCHA access flow</h2>
+</a>
+<p><img src="./flow.png" alt="flow diagram"></p>
 
-<span style="color: #000000">    </span><span style="color: #008000">// Get captcha challenge from EFM</span>
-<span style="color: #000000">    </span><span style="color: #008000">// Implementer should hand CAPTCHA image to user(or automatic captcha solver) and get response from it.</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">resp</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">efmController</span><span style="color: #000000">.</span><span style="color: #795E26">getCaptchaChallenge</span><span style="color: #000000">();</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// Authenticate using CAPTCHA challenge response</span>
-<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">efmController</span><span style="color: #000000">.</span><span style="color: #795E26">authenticate</span><span style="color: #000000">({</span>
-<span style="color: #000000">        </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;admin&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #001080">pass:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;admin&#039;</span>
-<span style="color: #000000">    }, {</span>
-<span style="color: #000000">        </span><span style="color: #001080">filename:</span><span style="color: #000000"> </span><span style="color: #001080">resp</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #001080">code:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;captcha_challenge_response_from_user&#039;</span>
-<span style="color: #000000">    });</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// Get WLAN configurator with session cookie</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">wlanconfigurator</span><span style="color: #000000"> = </span><span style="color: #001080">efmController</span><span style="color: #000000">.</span><span style="color: #795E26">getWLANConfigurator</span><span style="color: #000000">();</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// Get device configuration of device &#039;wlan5g&#039; using configurator</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">deviceCfg</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wlanconfigurator</span><span style="color: #000000">.</span><span style="color: #795E26">getDeviceCfg</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;wlan5g&#039;</span><span style="color: #000000">);</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// Get interface configuration of 0th interface of &#039;wlan5g&#039;</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">ifaceCfg</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wlanconfigurator</span><span style="color: #000000">.</span><span style="color: #795E26">getIFaceCfg</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;wlan5g&#039;</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">);</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// Change Wi-Fi security parameters.</span>
-<span style="color: #000000">    </span><span style="color: #008000">// Use WPA2-PSK CCMP only mode</span>
-<span style="color: #000000">    </span><span style="color: #001080">ifaceCfg</span><span style="color: #000000">.</span><span style="color: #001080">encryption</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;psk2+ccmp&#039;</span><span style="color: #000000">;</span>
-<span style="color: #000000">    </span><span style="color: #008000">// Use password &#039;Pa55w0rd!@&#039;</span>
-<span style="color: #000000">    </span><span style="color: #001080">ifaceCfg</span><span style="color: #000000">.</span><span style="color: #001080">key</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Pa55w0rd!@&#039;</span>
-<span style="color: #000000">    </span><span style="color: #008000">// Set Wi-Fi SSID to &#039;MarilForever-5G&#039;</span>
-<span style="color: #000000">    </span><span style="color: #001080">ifaceCfg</span><span style="color: #000000">.</span><span style="color: #001080">ssid</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;MarilForever-5G&#039;</span><span style="color: #000000">;</span>
-<span style="color: #000000">    </span><span style="color: #008000">// Enable interface</span>
-<span style="color: #000000">    </span><span style="color: #001080">ifaceCfg</span><span style="color: #000000">.</span><span style="color: #001080">disabled</span><span style="color: #000000"> = </span><span style="color: #0000FF">false</span><span style="color: #000000">;</span>
-<span style="color: #000000">    </span><span style="color: #008000">// enable beacon broadcast (to show up in Wi-Fi scan result)</span>
-<span style="color: #000000">    </span><span style="color: #001080">ifaceCfg</span><span style="color: #000000">.</span><span style="color: #001080">hidden</span><span style="color: #000000"> = </span><span style="color: #0000FF">false</span><span style="color: #000000">;</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// Apply new config</span>
-<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">wlanconfigurator</span><span style="color: #000000">.</span><span style="color: #795E26">setIFaceCfg</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;wlan5g&#039;</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #001080">ifaceCfg</span><span style="color: #000000">);</span>
-<span style="color: #000000">}</span>
-
-<span style="color: #795E26">main</span><span style="color: #000000">();</span>
+<a href="#access-flow-example" id="access-flow-example" style="color: inherit; text-decoration: none;">
+  <h2>Access flow example</h2>
+</a>
+<pre><code><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">maril</span><span class="hl-0"> = </span><span class="hl-4">require</span><span class="hl-0">(</span><span class="hl-5">&#39;../&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-2">async</span><span class="hl-0"> </span><span class="hl-2">function</span><span class="hl-0"> </span><span class="hl-4">main</span><span class="hl-0">() {</span><br/><span class="hl-0">    </span><span class="hl-1">// Initialize controller factory with target IP address</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">efmController</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-6">maril</span><span class="hl-0">.</span><span class="hl-4">EFMControllerFactory</span><span class="hl-0">(</span><span class="hl-5">&#39;http://192.168.0.1/&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-0">    </span><span class="hl-1">// Get captcha challenge from EFM</span><br/><span class="hl-0">    </span><span class="hl-1">// Implementer should hand CAPTCHA image to user(or automatic captcha solver) and get response from it.</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">resp</span><span class="hl-0"> = </span><span class="hl-7">await</span><span class="hl-0"> </span><span class="hl-6">efmController</span><span class="hl-0">.</span><span class="hl-4">getCaptchaChallenge</span><span class="hl-0">();</span><br/><br/><span class="hl-0">    </span><span class="hl-1">// Authenticate using CAPTCHA challenge response</span><br/><span class="hl-0">    </span><span class="hl-7">await</span><span class="hl-0"> </span><span class="hl-6">efmController</span><span class="hl-0">.</span><span class="hl-4">authenticate</span><span class="hl-0">({</span><br/><span class="hl-0">        </span><span class="hl-6">id:</span><span class="hl-0"> </span><span class="hl-5">&#39;admin&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-6">pass:</span><span class="hl-0"> </span><span class="hl-5">&#39;admin&#39;</span><br/><span class="hl-0">    }, {</span><br/><span class="hl-0">        </span><span class="hl-6">filename:</span><span class="hl-0"> </span><span class="hl-6">resp</span><span class="hl-0">.</span><span class="hl-6">name</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-6">code:</span><span class="hl-0"> </span><span class="hl-5">&#39;captcha_challenge_response_from_user&#39;</span><br/><span class="hl-0">    });</span><br/><br/><span class="hl-0">    </span><span class="hl-1">// Get WLAN configurator with session cookie</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">wlanconfigurator</span><span class="hl-0"> = </span><span class="hl-6">efmController</span><span class="hl-0">.</span><span class="hl-4">getWLANConfigurator</span><span class="hl-0">();</span><br/><br/><span class="hl-0">    </span><span class="hl-1">// Get device configuration of device &#39;wlan5g&#39; using configurator</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">deviceCfg</span><span class="hl-0"> = </span><span class="hl-7">await</span><span class="hl-0"> </span><span class="hl-6">wlanconfigurator</span><span class="hl-0">.</span><span class="hl-4">getDeviceCfg</span><span class="hl-0">(</span><span class="hl-5">&#39;wlan5g&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-0">    </span><span class="hl-1">// Get interface configuration of 0th interface of &#39;wlan5g&#39;</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">ifaceCfg</span><span class="hl-0"> = </span><span class="hl-7">await</span><span class="hl-0"> </span><span class="hl-6">wlanconfigurator</span><span class="hl-0">.</span><span class="hl-4">getIFaceCfg</span><span class="hl-0">(</span><span class="hl-5">&#39;wlan5g&#39;</span><span class="hl-0">, </span><span class="hl-8">0</span><span class="hl-0">);</span><br/><br/><span class="hl-0">    </span><span class="hl-1">// Change Wi-Fi security parameters.</span><br/><span class="hl-0">    </span><span class="hl-1">// Use WPA2-PSK CCMP only mode</span><br/><span class="hl-0">    </span><span class="hl-6">ifaceCfg</span><span class="hl-0">.</span><span class="hl-6">encryption</span><span class="hl-0"> = </span><span class="hl-5">&#39;psk2+ccmp&#39;</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">// Use password &#39;Pa55w0rd!@&#39;</span><br/><span class="hl-0">    </span><span class="hl-6">ifaceCfg</span><span class="hl-0">.</span><span class="hl-6">key</span><span class="hl-0"> = </span><span class="hl-5">&#39;Pa55w0rd!@&#39;</span><br/><span class="hl-0">    </span><span class="hl-1">// Set Wi-Fi SSID to &#39;MarilForever-5G&#39;</span><br/><span class="hl-0">    </span><span class="hl-6">ifaceCfg</span><span class="hl-0">.</span><span class="hl-6">ssid</span><span class="hl-0"> = </span><span class="hl-5">&#39;MarilForever-5G&#39;</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">// Enable interface</span><br/><span class="hl-0">    </span><span class="hl-6">ifaceCfg</span><span class="hl-0">.</span><span class="hl-6">disabled</span><span class="hl-0"> = </span><span class="hl-2">false</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">// enable beacon broadcast (to show up in Wi-Fi scan result)</span><br/><span class="hl-0">    </span><span class="hl-6">ifaceCfg</span><span class="hl-0">.</span><span class="hl-6">hidden</span><span class="hl-0"> = </span><span class="hl-2">false</span><span class="hl-0">;</span><br/><br/><span class="hl-0">    </span><span class="hl-1">// Apply new config</span><br/><span class="hl-0">    </span><span class="hl-7">await</span><span class="hl-0"> </span><span class="hl-6">wlanconfigurator</span><span class="hl-0">.</span><span class="hl-4">setIFaceCfg</span><span class="hl-0">(</span><span class="hl-5">&#39;wlan5g&#39;</span><span class="hl-0">, </span><span class="hl-8">0</span><span class="hl-0">, </span><span class="hl-6">ifaceCfg</span><span class="hl-0">);</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-4">main</span><span class="hl-0">();</span>
 </code></pre>
-				<a href="#example-codes" id="example-codes" style="color: inherit; text-decoration: none;">
-					<h2>Example codes</h2>
-				</a>
-				<p>Please refer to</p>
-				<p><a href="https://github.com/Mareel-io/core/tree/main/examples">https://github.com/Mareel-io/core/tree/main/examples</a></p>
-				<a href="#implementation-status" id="implementation-status" style="color: inherit; text-decoration: none;">
-					<h2>Implementation status</h2>
-				</a>
-				<a href="#efm-networks" id="efm-networks" style="color: inherit; text-decoration: none;">
-					<h3>EFM Networks</h3>
-				</a>
-				<p>Currently tested on A8004T model</p>
-				<a href="#implemented-features" id="implemented-features" style="color: inherit; text-decoration: none;">
-					<h4>Implemented features</h4>
-				</a>
-				<p>WLAN interface</p>
-				<ul>
-					<li>SSID broadcast enable / disable</li>
-					<li>IFace disable / enable</li>
-					<li>SSID change</li>
-					<li>WMM support enable / disable</li>
-					<li>Set WPA2 personal wireless authentication (field value rework pending)</li>
-				</ul>
-				<p>WLAN device</p>
-				<ul>
-					<li>Channel configuration</li>
-					<li>Channel bandwidth </li>
-					<li>TXpower (field value rework pending)</li>
-					<li>Diversity configuration (partially working)</li>
-					<li>Regdom configuration (field value rework pending)</li>
-					<li>Beacon interval configuration</li>
-				</ul>
-				<a href="#rpc-support" id="rpc-support" style="color: inherit; text-decoration: none;">
-					<h2>RPC support</h2>
-				</a>
-				<p>Documentation in progress</p>
-				<a href="#test-client-spinup" id="test-client-spinup" style="color: inherit; text-decoration: none;">
-					<h3>Test client spinup</h3>
-				</a>
-				<p>This library has simple dummy implementation to reduce real device interaction while integrating this into system</p>
-				<p>To spin up test client, do this</p>
-				<ol>
-					<li>Clone this repository</li>
-					<li>Copy <code>config.yaml.example</code> to <code>config.yaml</code></li>
-					<li>Modify <code>config.yaml</code>&#39;s <code>remote</code> section</li>
-					<li>Build this project using <code>yarn &amp;&amp; yarn build</code></li>
-					<li>Run client using <code>yarn start</code></li>
-				</ol>
-				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
-					<h2>License</h2>
-				</a>
-				<p><a href="https://app.fossa.com/projects/git%2Bgithub.com%2FMareel-io%2Fcore?ref=badge_large"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FMareel-io%2Fcore.svg?type=large" alt="FOSSA Status"></a></p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/cli_connectord.html">cli/connectord</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_AuthConfigurator.html">connector/classwrapper/<wbr>Auth<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_FireallConfigurator.html">connector/classwrapper/<wbr>Fireall<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_Logman.html">connector/classwrapper/<wbr>Logman</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_ProfileManager.html">connector/classwrapper/<wbr>Profile<wbr>Manager</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_RouteConfigurator.html">connector/classwrapper/<wbr>Route<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_SwitchConfigurator.html">connector/classwrapper/<wbr>Switch<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_SwitchQoS.html">connector/classwrapper/<wbr>Switch<wbr>QoS</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_TrafficStatMonitor.html">connector/classwrapper/<wbr>Traffic<wbr>Stat<wbr>Monitor</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_VPNConfigurator.html">connector/classwrapper/VPNConfigurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_WLANConfigurator.html">connector/classwrapper/WLANConfigurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_WLANUserDeviceStat.html">connector/classwrapper/WLANUser<wbr>Device<wbr>Stat</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_classwrapper_lib.html">connector/classwrapper/lib</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_jsonrpcv2.html">connector/jsonrpcv2</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_AuthConfiguratorRequestHandler.html">connector/requesthandler/<wbr>Auth<wbr>Configurator<wbr>Request<wbr>Handler</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_FirewallConfigurator.html">connector/requesthandler/<wbr>Firewall<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_Logman.html">connector/requesthandler/<wbr>Logman</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_RPCRequestHandler.html">connector/requesthandler/RPCRequest<wbr>Handler</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_RouteConfigurator.html">connector/requesthandler/<wbr>Route<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_SwitchConfigurator.html">connector/requesthandler/<wbr>Switch<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_SwitchQoS.html">connector/requesthandler/<wbr>Switch<wbr>QoS</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_TrafficStatMonitor.html">connector/requesthandler/<wbr>Traffic<wbr>Stat<wbr>Monitor</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_VPNConfigurator.html">connector/requesthandler/VPNConfigurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_WLANConfigurator.html">connector/requesthandler/WLANConfigurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/connector_requesthandler_WLANUserDeviceStat.html">connector/requesthandler/WLANUser<wbr>Device<wbr>Stat</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/def_net_snmp.html">def/net-<wbr>snmp</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/def_tftp.html">def/tftp</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_cisco_EthernetPort.html">driver/cisco/<wbr>Ethernet<wbr>Port</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_cisco_Logman.html">driver/cisco/<wbr>Logman</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_cisco_SwitchConfigurator.html">driver/cisco/<wbr>Switch<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_cisco_SwitchQoS.html">driver/cisco/<wbr>Switch<wbr>QoS</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_cisco_VLAN.html">driver/cisco/VLAN</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_cisco_configedit_configeditor.html">driver/cisco/configedit/configeditor</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_cisco_lib.html">driver/cisco/lib</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_cisco_util_ConfigUtil.html">driver/cisco/util/<wbr>Config<wbr>Util</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_cisco_util_TFTPUtil.html">driver/cisco/util/TFTPUtil</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_dummy_EthernetPort.html">driver/dummy/<wbr>Ethernet<wbr>Port</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_dummy_SwitchConfigurator.html">driver/dummy/<wbr>Switch<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_dummy_VLAN.html">driver/dummy/VLAN</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_dummy_lib.html">driver/dummy/lib</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_ARPMon.html">driver/efm/ARPMon</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_CredentialConfigurator.html">driver/efm/<wbr>Credential<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_EthernetPort.html">driver/efm/<wbr>Ethernet<wbr>Port</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_FirewallConfigurator.html">driver/efm/<wbr>Firewall<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_Logman.html">driver/efm/<wbr>Logman</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_ResponseChecker.html">driver/efm/<wbr>Response<wbr>Checker</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_SwitchConfigurator.html">driver/efm/<wbr>Switch<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_User80211Device.html">driver/efm/<wbr>User80211<wbr>Device</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_UserDevice.html">driver/efm/<wbr>User<wbr>Device</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_VLAN.html">driver/efm/VLAN</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_WLANDevConfiguration.html">driver/efm/WLANDev<wbr>Configuration</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_WLANIFaceCfg.html">driver/efm/WLANIFace<wbr>Cfg</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_WLANUserDeviceStat.html">driver/efm/WLANUser<wbr>Device<wbr>Stat</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_lib.html">driver/efm/lib</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_monitor_NetTester.html">driver/efm/monitor/<wbr>Net<wbr>Tester</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_efm_wlan.html">driver/efm/wlan</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_AuthConfigurator.html">driver/fortinet/<wbr>Auth<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_FirewallConfigurator.html">driver/fortinet/<wbr>Firewall<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_FortigateQoS.html">driver/fortinet/<wbr>Fortigate<wbr>QoS</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_Logman.html">driver/fortinet/<wbr>Logman</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_ProfileManager.html">driver/fortinet/<wbr>Profile<wbr>Manager</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_RouteConfigurator.html">driver/fortinet/<wbr>Route<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_SwitchConfigurator.html">driver/fortinet/<wbr>Switch<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_VPNConfigurator.html">driver/fortinet/VPNConfigurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_lib.html">driver/fortinet/lib</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_monitor_TrafficStat.html">driver/fortinet/monitor/<wbr>Traffic<wbr>Stat</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_fortinet_util_types.html">driver/fortinet/util/types</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_AuthConfigurator.html">driver/generic/<wbr>Auth<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_EthernetPort.html">driver/generic/<wbr>Ethernet<wbr>Port</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_FirewallConfigurator.html">driver/generic/<wbr>Firewall<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_Logman.html">driver/generic/<wbr>Logman</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_ProfileManager.html">driver/generic/<wbr>Profile<wbr>Manager</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_QDisc.html">driver/generic/QDisc</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_QOSController.html">driver/generic/QOSController</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_QoSConfigurator.html">driver/generic/<wbr>QoSConfigurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_RADIUS.html">driver/generic/RADIUS</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_Route.html">driver/generic/<wbr>Route</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_RouteConfigurator.html">driver/generic/<wbr>Route<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_SwitchConfigurator.html">driver/generic/<wbr>Switch<wbr>Configurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_SwitchQoS.html">driver/generic/<wbr>Switch<wbr>QoS</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_User80211Device.html">driver/generic/<wbr>User80211<wbr>Device</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_UserDevice.html">driver/generic/<wbr>User<wbr>Device</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_VLAN.html">driver/generic/VLAN</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_VLANTag.html">driver/generic/VLANTag</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_VPNConfigurator.html">driver/generic/VPNConfigurator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_WLANDevConfiguration.html">driver/generic/WLANDev<wbr>Configuration</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_WLANIFaceCfg.html">driver/generic/WLANIFace<wbr>Cfg</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_WLANUserDeviceStat.html">driver/generic/WLANUser<wbr>Device<wbr>Stat</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_lib.html">driver/generic/lib</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_monitor_TrafficStatMonitor.html">driver/generic/monitor/<wbr>Traffic<wbr>Stat<wbr>Monitor</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/driver_generic_wlan.html">driver/generic/wlan</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/error_MarilError.html">error/<wbr>Maril<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/index.html">index</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/testhelper_testproxy.html">testhelper/testproxy</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/types_lib.html">types/lib</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_logger.html">util/logger</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_msgpack_rpc.html">util/msgpack-<wbr>rpc</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_serial.html">util/serial</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_sleep.html">util/sleep</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_snmp_mibloader.html">util/snmp/mibloader</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_snmp_snmp.html">util/snmp/snmp</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_ssh.html">util/ssh</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_svcrunner.html">util/svcrunner</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/util_tftp.html">util/tftp</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+
+<a href="#example-codes" id="example-codes" style="color: inherit; text-decoration: none;">
+  <h2>Example codes</h2>
+</a>
+<p>Please refer to</p>
+<p><a href="https://github.com/Mareel-io/core/tree/main/examples">https://github.com/Mareel-io/core/tree/main/examples</a></p>
+
+<a href="#implementation-status" id="implementation-status" style="color: inherit; text-decoration: none;">
+  <h2>Implementation status</h2>
+</a>
+
+<a href="#efm-networks" id="efm-networks" style="color: inherit; text-decoration: none;">
+  <h3>EFM Networks</h3>
+</a>
+<p>Currently tested on A8004T model</p>
+
+<a href="#implemented-features" id="implemented-features" style="color: inherit; text-decoration: none;">
+  <h4>Implemented features</h4>
+</a>
+<p>WLAN interface</p>
+<ul>
+<li>SSID broadcast enable / disable</li>
+<li>IFace disable / enable</li>
+<li>SSID change</li>
+<li>WMM support enable / disable</li>
+<li>Set WPA2 personal wireless authentication (field value rework pending)</li>
+</ul>
+<p>WLAN device</p>
+<ul>
+<li>Channel configuration</li>
+<li>Channel bandwidth </li>
+<li>TXpower (field value rework pending)</li>
+<li>Diversity configuration (partially working)</li>
+<li>Regdom configuration (field value rework pending)</li>
+<li>Beacon interval configuration</li>
+</ul>
+
+<a href="#rpc-support" id="rpc-support" style="color: inherit; text-decoration: none;">
+  <h2>RPC support</h2>
+</a>
+<p>Documentation in progress</p>
+
+<a href="#test-client-spinup" id="test-client-spinup" style="color: inherit; text-decoration: none;">
+  <h3>Test client spinup</h3>
+</a>
+<p>This library has simple dummy implementation to reduce real device interaction while integrating this into system</p>
+<p>To spin up test client, do this</p>
+<ol>
+<li>Clone this repository</li>
+<li>Copy <code>config.yaml.example</code> to <code>config.yaml</code></li>
+<li>Modify <code>config.yaml</code>&#39;s <code>remote</code> section</li>
+<li>Build this project using <code>yarn &amp;&amp; yarn build</code></li>
+<li>Run client using <code>yarn start</code></li>
+</ol>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p><a href="https://app.fossa.com/projects/git%2Bgithub.com%2FMareel-io%2Fcore?ref=badge_large"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FMareel-io%2Fcore.svg?type=large" alt="FOSSA Status"></a></p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class"><a href="classes/CiscoControllerFactory.html" class="tsd-kind-icon">Cisco<wbr/>Controller<wbr/>Factory</a></li><li class="tsd-kind-class"><a href="classes/CiscoTFTPServer.html" class="tsd-kind-icon">CiscoTFTPServer</a></li><li class="tsd-kind-class"><a href="classes/EFMControllerFactory.html" class="tsd-kind-icon">EFMController<wbr/>Factory</a></li><li class="tsd-kind-class"><a href="classes/GenericControllerFactory.html" class="tsd-kind-icon">Generic<wbr/>Controller<wbr/>Factory</a></li><li class="tsd-kind-class"><a href="classes/MIBLoader.html" class="tsd-kind-icon">MIBLoader</a></li><li class="tsd-kind-class"><a href="classes/Mareel.html" class="tsd-kind-icon">Mareel</a></li><li class="tsd-kind-class"><a href="classes/RPCControllerFactory.html" class="tsd-kind-icon">RPCController<wbr/>Factory</a></li><li class="tsd-kind-class"><a href="classes/RPCFirewallConfigurator.html" class="tsd-kind-icon">RPCFirewall<wbr/>Configurator</a></li><li class="tsd-kind-class"><a href="classes/RPCLogman.html" class="tsd-kind-icon">RPCLogman</a></li><li class="tsd-kind-class"><a href="classes/RPCSwitchConfigurator.html" class="tsd-kind-icon">RPCSwitch<wbr/>Configurator</a></li><li class="tsd-kind-class"><a href="classes/RPCWLANConfigurator.html" class="tsd-kind-icon">RPCWLANConfigurator</a></li><li class="tsd-kind-class"><a href="classes/RPCWLANUserDeviceStat.html" class="tsd-kind-icon">RPCWLANUser<wbr/>Device<wbr/>Stat</a></li><li class="tsd-kind-class"><a href="classes/SvcRunner.html" class="tsd-kind-icon">Svc<wbr/>Runner</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li><li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
